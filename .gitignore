@@ -2,4 +2,4 @@ logs
 project
 target
 .idea
-.ensime
+.ensime*
