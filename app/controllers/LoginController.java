@@ -1,5 +1,6 @@
 package controllers;
 
+
 import com.google.inject.Inject;
 import models.loginForm;
 import play.data.Form;
@@ -7,6 +8,7 @@ import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import javax.validation.Validator;
 
 
 /**
@@ -19,25 +21,23 @@ import play.mvc.Result;
  */
 public class LoginController extends Controller {
 
-    @Inject FormFactory formFactory;
 
-
+    //Provides loginForm to viewLogin to render page
+    @Inject
+    FormFactory formFactory;
     public Result renderViewLogin(){
-        Form<loginForm> userForm = formFactory.form(loginForm.class);
-        return ok(views.html.viewLogin.render(userForm));
+
+        Form<loginForm> loginForm = formFactory.form(loginForm.class);
+        return ok(views.html.viewLogin.render(loginForm));
     }
 
+    //Needs users authentication
     public Result login() {
-        Form<loginForm> userForm = formFactory.form(loginForm.class);
 
-        loginForm loginForm = new loginForm("me@test.com", "mypassword");
-
-        Form<loginForm> form = formFactory.form(loginForm.class);
-
-        Form<loginForm> filledForm = form.fill(loginForm);
-
-        return ok(views.html.viewLogin.render(filledForm));
+        return TODO;
     }
+
+
 
 
 }

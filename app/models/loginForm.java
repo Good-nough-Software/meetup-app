@@ -1,14 +1,16 @@
 package models;
 
+import play.data.validation.Constraints;
+
 /**
  * @author: Lucas Buccilli
- * Class: CS1131
  * Date: 10/19/18
  * Time: 2:42 PM
  * Project Name: meetup-app
  * File Name: loginForm
  */
 public class loginForm {
+
     public String username;
     public String password;
     public boolean rememberMe;
@@ -38,4 +40,6 @@ public class loginForm {
         this.username = null;
         this.password = null;
     }
+
+
 }
