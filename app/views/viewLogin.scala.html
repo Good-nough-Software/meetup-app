@@ -1,0 +1,11 @@
+@(myForm: Form[loginForm])
+
+@helper.form(action = routes.LoginController.login()) {
+
+    @helper.inputText(myForm("username"))
+
+    @helper.inputPassword(myForm("password"))
+
+    <input type="submit">
+
+}
