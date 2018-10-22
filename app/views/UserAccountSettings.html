@@ -1,0 +1,58 @@
+@()
+
+@main("Login to meetup") {
+
+<head>
+
+</head>
+
+<body>
+
+<h1>Account Settings</h1>
+
+
+<table style="width:20%">
+    <tr>
+        <th></th>
+        <th></th>
+    </tr>
+
+    <!-- Allows the User to update their username -->
+    <tr>
+        <td>Update Username</td>
+        <td> <input type="text" name="Username" placeholder="Your Name" required> </td>
+    </tr>
+
+    <!-- Allows the User to update their email, if it has changed -->
+    <tr>
+        <td>Update Email</td>
+        <td> <input type="text" name="email" placeholder="example@email.com" required> </td>
+    </tr>
+
+    <!-- Allows the User to update their phone number, if it has changed -->
+    <tr>
+        <td>Update Phone Number</td>
+        <td> <input type="text" name="phone" placeholder="(000) - 000 - 0000" required> </td>
+    </tr>
+
+    <!-- Button to send a Password Reset Email to the email above -->
+    <tr>
+        <td>Reset Password</td>
+        <td>  <button type="button">Send Email</button> </td>
+    </tr>
+
+    <!-- List of places the User has been from the DB -->
+    <tr>
+        <td>Places I've Been</td>
+        <td> <input type="text" name="userLocations" placeholder="Example High School, Example University" required> </td>
+    </tr>
+
+</table>
+
+<br>
+<input type="submit" value="Save">
+<br>
+
+</body>
+
+}
