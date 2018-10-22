@@ -1,12 +1,12 @@
 package controllers;
 
 import com.google.inject.Inject;
+import models.newUserForm;
+import models.resetPasswordForm;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
-
-import models.newUserForm;
 
 /**
  * @author Lucas Buccilli
@@ -16,18 +16,18 @@ import models.newUserForm;
  * Project Name: meetup-app
  * File Name: newUserController
  */
-public class newUserController extends Controller {
+public class resetPasswordController extends Controller {
 
 
     @Inject
     FormFactory formFactory;
-    public Result renderViewNewUser(){
+    public Result renderViewResetPassword(){
 
-        Form<newUserForm> newUserForm = formFactory.form(newUserForm.class);
-        return ok(views.html.viewNewUser.render(newUserForm));
+        Form<resetPasswordForm> resetPasswordForm = formFactory.form(resetPasswordForm.class);
+        return ok(views.html.viewResetPassword.render(resetPasswordForm));
     }
 
-    public Result createNewUser(){
+    public Result resetPassword(){
         return TODO;
     }
 }
