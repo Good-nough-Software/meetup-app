@@ -1,5 +1,19 @@
 @()
 
-@viewMain("Welcome to Play") {
-  <h1>Welcome to Play!</h1>
+@main("Meetup App - Home") {
+    <h1>Welcome to meetup app</h1>
+    <form method="post" class="meetup-search">
+	<input type="search" id="meetup-search-box"
+	       placeholder="Search locations and events">
+	<input type="submit">
+    </form>
+
+    <ul>
+	<li>Connect with old friends and colleague</li>
+	<li>Organize events</li>
+    </ul>
+
+    <footer>
+	Copyright © 2018 Good 'nough Software
+    </footer>
 }
