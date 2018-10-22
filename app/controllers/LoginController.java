@@ -1,11 +1,19 @@
 package controllers;
 
+
+import com.google.inject.Inject;
+import models.loginForm;
+import play.data.Form;
+import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import javax.validation.Validator;
+
+
 /**
  * @author: Lucas Buccilli
- * Class: CS1131
+ * Class: CS3141
  * Date: 10/15/18
  * Time: 2:21 PM
  * Project Name: meetup-app
@@ -13,8 +21,23 @@ import play.mvc.Result;
  */
 public class LoginController extends Controller {
 
-    public Result index() {
-        return ok(views.html.Login.render());
+
+    //Provides loginForm to viewLogin to render page
+    @Inject
+    FormFactory formFactory;
+    public Result renderViewLogin(){
+
+        Form<loginForm> loginForm = formFactory.form(loginForm.class);
+        return ok(views.html.viewLogin.render(loginForm));
     }
+
+    //Needs users authentication
+    public Result login() {
+
+        return TODO;
+    }
+
+
+
 
 }
