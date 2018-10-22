@@ -10,9 +10,12 @@ GET         /assets/*file              controllers.Assets.versioned(path="/publi
 
 GET         /viewNewUser               controllers.newUserController.renderViewNewUser
 
-GET         /viewForgotPassword        controllers.forgotPasswordController.renderViewForgotPassword
+
+GET         /viewResetPassword        controllers.resetPasswordController.renderViewResetPassword
 
 
 POST        /login                     controllers.LoginController.login()
 
 POST        /createNewUser             controllers.newUserController.createNewUser()
+
+POST        /resetPasswrod             controllers.resetPasswordController.resetPassword()
