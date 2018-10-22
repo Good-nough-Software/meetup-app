@@ -1,8 +1,12 @@
 package controllers;
 
+import com.google.inject.Inject;
+import play.data.Form;
+import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Results;
+
+import models.newUserForm;
 
 /**
  * @author Lucas Buccilli
@@ -14,7 +18,16 @@ import play.mvc.Results;
  */
 public class newUserController extends Controller {
 
-    public Result renderNewUser() {
+
+    @Inject
+    FormFactory formFactory;
+    public Result renderViewNewUser(){
+
+        Form<newUserForm> newUserForm = formFactory.form(newUserForm.class);
+        return ok(views.html.viewNewUser.render(newUserForm));
+    }
+
+    public Result createNewUser(){
         return TODO;
     }
 }
