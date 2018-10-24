@@ -1,17 +1,12 @@
 @()
 
-@main("Login to meetup") {
+@main("UserAccountSettings") {
 
-<head>
-
-</head>
-
-<body>
-
+<!-- mariadb 10.1 SQL database -->
 <h1>Account Settings</h1>
 
 
-<table style="width:20%">
+<table style="width:30%">
     <tr>
         <th></th>
         <th></th>
@@ -19,20 +14,20 @@
 
     <!-- Allows the User to update their username -->
     <tr>
-        <td>Update Username</td>
-        <td> <input type="text" name="Username" placeholder="Your Name" required> </td>
+        <td width="30">Update Username</td>
+        <td> <input type="text" name="Username" placeholder="Your Name"> </td>
     </tr>
 
     <!-- Allows the User to update their email, if it has changed -->
     <tr>
         <td>Update Email</td>
-        <td> <input type="text" name="email" placeholder="example@email.com" required> </td>
+        <td> <input type="text" name="email" placeholder="example@email.com"> </td>
     </tr>
 
     <!-- Allows the User to update their phone number, if it has changed -->
     <tr>
         <td>Update Phone Number</td>
-        <td> <input type="text" name="phone" placeholder="(000) - 000 - 0000" required> </td>
+        <td> <input type="text" name="phone" placeholder="(000) - 000 - 0000"> </td>
     </tr>
 
     <!-- Button to send a Password Reset Email to the email above -->
@@ -44,15 +39,21 @@
     <!-- List of places the User has been from the DB -->
     <tr>
         <td>Places I've Been</td>
-        <td> <input type="text" name="userLocations" placeholder="Example High School, Example University" required> </td>
+        <td> <input type="text" name="userLocations" placeholder="Example High School" size="50"> </td>
+    </tr>
+
+    <!-- Allows the User to update where they live -->
+    <tr>
+        <td>Home Address</td>
+        <td> <input type="text" name="userHome" placeholder="My Home" size="50"> </td>
     </tr>
 
 </table>
 
 <br>
-<input type="submit" value="Save">
+<!-- Saves changes to the Database -->
+<input type="submit" value="Save Changes">
 <br>
 
-</body>
 
 }
