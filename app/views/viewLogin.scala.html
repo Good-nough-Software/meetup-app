@@ -1,8 +1,8 @@
 @*
-Form[loginForm] is needed to consruct page
+Form[loginForm] is needed to construct page
 *@
 @import helper._
-@(form: Form[loginForm])
+@(form: Form[loginForm], message: String)
 @viewMain("Login to Meet-up") {
     @*
     Tells the action of the form is to use the run the Post login in LoginController
@@ -14,8 +14,17 @@ Form[loginForm] is needed to consruct page
         @*
         This creates the neceessary html to populate the fields of the loginForm
         *@
-        @helper.inputText(form("Username"), 'required -> "required")
-        @helper.inputPassword(form("Password"), 'required -> "required")
+        <p>@message</p>
+        @helper.inputText(form("username"),
+            'required -> "required",
+            '_label -> "Username",
+            'placeholder -> "username",
+            'id -> "username")
+        @helper.inputPassword(form("password"),
+            'required -> "required",
+            '_label -> "Password",
+            'placeholder -> "password",
+            'id -> "password")
         @*
         This is left here to show how play can create html based off of forms
         <p>
@@ -29,8 +38,10 @@ Form[loginForm] is needed to consruct page
             <button type="submit">Login</button>
         </p>
 
+
+
         <a href="/viewNewUser">Sign up!</a>
-        <a href="/viewForgotPassword">Forgot password?</a>
+        <a href="/viewResetPassword">Forgot password?</a>
 
     }
 
