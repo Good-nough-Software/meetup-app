@@ -2,7 +2,7 @@
 /**
  * Location object to pull data from database
  */
-public class Location() {
+public class Location {
   public String country;
   public String state;
   public String city;
