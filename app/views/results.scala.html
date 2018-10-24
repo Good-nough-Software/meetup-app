@@ -1,5 +1,4 @@
-@* @(locations: List[Location]) *@
-@()
+@(locations: List[models.Location])
 
 @viewMain("Meetup App - Results") {
     <h1>Meetup App</h1>
@@ -10,9 +9,15 @@
     </form>
 
     <div>
-	@* @for(location <- locations) {
-	    <div> @location.name </div>
-	} *@
+	@for(location <- locations) {
+	    <ul>
+	    <li>@location.address</li>
+	    <li>@location.city</li>
+	    <li>@location.state</li>
+	    <li>@location.zip</li>
+	    <li>@location.country</li>
+	    </ul>
+	}
     </div>
 
     <footer>
