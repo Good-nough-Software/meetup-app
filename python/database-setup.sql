@@ -2,6 +2,10 @@
 
 CREATE DATABASE IF NOT EXISTS meetup;
 
+CREATE USER 'meet'@'%';
+GRANT ALL ON meetup.* to 'meet'@'%';
+-- GRANT SELECT ON meetup.* to 'meet'@'%';
+
 USE meetup;
 
 CREATE TABLE users (
