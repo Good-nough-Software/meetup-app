@@ -1,6 +1,7 @@
-@(locations: List[Location])
+@* @(locations: List[Location]) *@
+@()
 
-@main("Meetup App - Results") {
+@viewMain("Meetup App - Results") {
     <h1>Meetup App</h1>
     <form method="post" class="meetup-search">
 	<input type="search" id="meetup-search-box"
@@ -9,9 +10,9 @@
     </form>
 
     <div>
-	@for(location <- locations) {
+	@* @for(location <- locations) {
 	    <div> @location.name </div>
-	}
+	} *@
     </div>
 
     <footer>
