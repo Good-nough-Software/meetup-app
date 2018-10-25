@@ -2,7 +2,7 @@
 Form[newUserForm] is needed to construct page
 *@
 @import helper._
-@(form: Form[newUserForm])
+@(form: Form[newUserForm], message: String)
 @viewMain("New User") {
     @*
     Tells the action of the form is to use the run the Post login in LoginController
@@ -14,10 +14,33 @@ Form[newUserForm] is needed to construct page
         @*
         This creates the neceessary html to populate the fields of the loginForm
         *@
-        @helper.inputText(form("First name"), 'required -> "required")
-        @helper.inputPassword(form("Last name"), 'required -> "required")
-        @helper.inputText(form("Username"), 'required -> "required")
-        @helper.inputPassword(form("Password"), 'required -> "required")
+        <p>@message</p>
+        @helper.inputText(form("firstName"),
+            'required -> "required",
+            '_label -> "First Name",
+            'placeholder -> "First name",
+            'id -> "firstName")
+        @helper.inputText(form("lastName"),
+            'required -> "required",
+            '_label -> "Last Name",
+            'placeholder -> "Last Name",
+            'id -> "lastName")
+        @helper.inputText(form("email"),
+            'required -> "required",
+            '_label -> "Email",
+            'placeholder -> "Email",
+            'id -> "email")
+        @helper.inputText(form("username"),
+            'required -> "required",
+            '_label -> "Username",
+            'placeholder -> "username",
+            'id -> "username")
+        @helper.inputPassword(form("password"),
+            'required -> "required",
+            '_label -> "Password",
+            'placeholder -> "password",
+            'id -> "password")
+
 
         <p>
             <button type="submit">Create new user!</button>

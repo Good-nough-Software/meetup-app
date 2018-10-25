@@ -57,7 +57,7 @@ public class LoginController extends Controller {
     }
 
     //validates user login
-    private int validateUser(String username, String password) {
+    protected static int validateUser(String username, String password) {
         HashMap<String, String> userDb = new HashMap<>();
         userDb.put("test", "password");
 
