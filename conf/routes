@@ -3,13 +3,32 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET        /                    controllers.LoginController.index
+GET         /                          controllers.LoginController.renderViewLogin
+GET 	    /home		       controllers.HomeController.index
 
 # Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file              controllers.Assets.versioned(path="/public", file: Asset)
 
-# Controller for the User Account Settings
-GET        /UserAccountSettings controllers.UserAccountSettingsController.UserAccountSettings
+<<<<<<< HEAD
 
-# Controller for the User Profile
-GET        /UserProfile controllers.UserProfileController.UserProfile
+
+
+GET         /viewNewUser               controllers.newUserController.renderViewNewUser
+
+
+GET         /viewResetPassword         controllers.resetPasswordController.renderViewResetPassword
+
+
+GET         /UserAccountSettings       controllers.UserAccountSettingsController.renderViewUserAccountSettings
+
+
+POST        /login                     controllers.LoginController.login()
+
+POST        /createNewUser             controllers.newUserController.createNewUser()
+
+POST        /resetPasswrod             controllers.resetPasswordController.resetPassword()
+
+POST         /UserAccountSettings       controllers.UserAccountSettingsController.UserAccount
+
+POST         /UserProfile               controllers.UserProfileController.UserProfile
+>>>>>>> dce3ba1714b7f31a716177645e9f33f5c628aac7

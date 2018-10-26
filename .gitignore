@@ -2,3 +2,6 @@ logs
 project
 target
 .idea
+.ensime*
+*~
+*.log
