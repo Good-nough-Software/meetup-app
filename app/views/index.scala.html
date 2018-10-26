@@ -1,8 +1,10 @@
 @()
 
+@import helper._
+
 @viewMain("Meetup App - Home") {
     <h1>Welcome to meetup app</h1>
-    <form action="/home" method="get" class="meetup-search">
+    <form action="/results" method="get" class="meetup-search">
 	<input type="search" id="meetup-search-box" name="search-query"
 	       placeholder="Search locations and events">
 	<input type="submit">

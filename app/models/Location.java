@@ -1,4 +1,4 @@
-
+package models;
 /**
  * Location object to pull data from database
  */
