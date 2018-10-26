@@ -1,6 +1,5 @@
 package models;
 
-import play.data.validation.Constraints;
 
 public class userAccountSettingsForm {
 
@@ -54,15 +53,6 @@ public class userAccountSettingsForm {
         this.home = home;
     }
 
-    public loginForm(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public loginForm(){
-        this.username = null;
-        this.password = null;
-    }
 
 
 }
