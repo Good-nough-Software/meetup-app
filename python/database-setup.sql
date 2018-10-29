@@ -29,10 +29,21 @@ CREATE TABLE users (
        PRIMARY KEY (id, username, email)
 );
 
-CREATE TABLE relations (
-       id         INT AUTO_INCREMENT PRIMARY KEY,
-       userid     INT,
-       locationid INT,
-       FOREIGN KEY (userid) REFERENCES users (id),
+CREATE TABLE events (
+       id		INT AUTO_INCREMENT PRIMARY KEY,
+       locationid	INT,
+	summary	VARCHAR(240),
+	userid		INT,
+	start		DATE,
+	end		DATE,
+	name		VARCHAR(40),
        FOREIGN KEY (locationid) REFERENCES locations (id)
+);
+
+CREATE TABLE relations (
+	id		INT AUTO_INCREMENT PRIMARY KEY,
+	eventid	INT,
+	userid		INT,
+	FOREIGN KEY (eventid) REFERENCES events (id),
+	FOREIGN KEY (userid) REFERENCES users (id)
 );
