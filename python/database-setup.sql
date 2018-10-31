@@ -31,13 +31,14 @@ CREATE TABLE users (
 );
 
 CREATE TABLE events (
-       id		INT AUTO_INCREMENT PRIMARY KEY,
+       id		INT AUTO_INCREMENT UNIQUE,
        locationid	INT,
 	summary	VARCHAR(240),
 	userid		INT,
-	start		DATE,
-	end		DATE,
+	startDate	DATE,
+	endDate	DATE,
 	name		VARCHAR(40),
+	PRIMARY KEY (name, locationid, startDate)
        FOREIGN KEY (locationid) REFERENCES locations (id)
 );
 
