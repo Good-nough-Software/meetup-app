@@ -1,25 +1,34 @@
 package controllers;
 
-import com.google.inject.Inject;
 import models.userAccountSettingsForm;
 import play.data.Form;
 import play.data.FormFactory;
-import play.mvc.Controller;
-import play.mvc.Result;
+import play.mvc.*;
 
-import javax.validation.Validator;
+import javax.inject.Inject;
 
-public class UserAccountSettingsController extends controller {
+import java.util.List;
 
-    @inject
-    FormFactor formFactory;
-    public Result renderViewUserAccountSettings() {
-        Form<userAccountSettingsForm> userAccountSettingsFormForm = formFactory.form(userAccountSettingsForm.class);
-        return ok(views.html.UserAccountSettings.render(userAccountSettingsFormForm));
+public class UserAccountSettingsController extends Controller {
+
+    private final Form<UserAccountSettingsData> form;
+    private final List<userAccountSettingsForm> userAccountSettings;
+
+
+    @Inject
+    public UserAccountSettingsController(FormFactory formFactory) {
+        this.form = formFactory.form(UserAccountSettingsData.class);
+        this.userAccountSettings = com.google.common.collect.Lists.newArrayList();
     }
 
-    public Result UserAccount(){
+    public Result UserAccountSettings(){
+        return ok(views.html.UserAccountSettings.render());
+    }
+
+    public Result createUserAccountSettings() {
+
         //TODO
+        flash("info", "Settings Updated");
         return null;
     }
 

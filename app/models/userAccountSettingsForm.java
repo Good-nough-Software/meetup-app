@@ -3,7 +3,6 @@ package models;
 
 public class userAccountSettingsForm {
 
-
     public String username;
     public String password;
     public String phone;
@@ -11,48 +10,13 @@ public class userAccountSettingsForm {
     public String locations;
     public String home;
 
-    public String getUsername() {
-        return username;
-    }
-    public void setUsername(String username) {
+    public userAccountSettingsForm(String username, String password, String phone, String email, String locations, String home){
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-    public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String eamil) {
         this.email = email;
-    }
-
-    public String getlocations() {
-        return locations;
-    }
-    public void setLocations(String locations) {
         this.locations = locations;
-    }
-
-    public String getHome() {
-        return home;
-    }
-    public void setHome(String home) {
         this.home = home;
     }
-
-
 
 }
