@@ -1,52 +1,61 @@
-#/usr/bin/python3
-import os
-import mysql.connector as mariadb
+#!/usr/bin/python3
+# Author Jerry Marek
 
-verison = "0.1"
-author = "Jerry Marek"
+import hashlib
+import pymysql as mariadb
+from subprocess import call
 
 # Currently untested
-def main(host=None, port=None):
-
-    # Check for user@host[port]
-    if (self.host == None):
-        print("Host not provided")
-        self.host = raw_input("Host ip: ")
-
-    if (self.port == None):
-        print("Port not provided")
-        self.port = raw_input("port number: ")
-
-    if (self.user == None):
-        print("User not provided")
-        self.user = raw_input("user name: ")
+def main(host="127.0.0.1", user="meet", password=''):
 
     # Attempt to connect to database
-    mariadb.connect(self.user, self.password, self.host)
-    cursor = mariadb.cursor()
+    db = mariadb.connect(host, user, password, db='meetup')
+    cursor = db.cursor()
+    init_good_state(cursor)
+    db.commit()
+    db.close()
 
 def init_good_state(cursor):
-    # ["table", "a1, a2, a3, ... an"]
-    users = {"User": ["blob", "user", "abc@gmail.com", "Alice", "12318675309"],
-            "User": ["blob", "user", "cde@gmail.com", "Bob", "12311234567"]
+    # user[id int auto_inc, username varchar(32), password char(40) usertype enum, 
+    #       email varchar(32), name varchar(32), phone char(11), location int]
+    password = hashlib.sha1(b'password').hexdigest()
+    users = {"John": ("jsmith", password, "user", "jsmith@gmail.com", "John Smith",
+                        "12345678910"),
+            "Jane": ("jnsmith", password, "user", "cde@gmail.com", "Jane Smith",
+                        "12311234567")
             };
-    locations = {"Locations": ["US", "Michigan", "Houghton", "1701 Townsend Drive"]
+    # locations [id int auto_inc, country varchar(20), state varchar(2), city varchar(2),
+    #               zip varchar(9), address varchar(64)]
+    locations = {"Wads": ("United States", "Mi", "Houghton", "49931",
+                                "1701 Townsend Drive")
                 };
-    user_locs = {"UserLocations": ["ID", "enrolled at", "locFK", "startDate", "endData"],
-                        "UserLocations": ["ID", "worked at", "locFK", "startDate", "endData"]
-                    };
+    # relations [id int auto_inc, userid fk users:is, locationid fk location:id]
+    #
 
-    for user in user.list:
-        cursor.execute("INSERT %s %s %s %s %s INTO %s" % ((w for w in users[user]), user));
+    for user in users:
+        cursor.execute("INSERT INTO users (username, password, usertype, email, name, phone) values ('{}', '{}', '{}', '{}', '{}', '{}');".format(*users[user]))
 
-    for location in locations.list:
-        cursor.execute("INSERT (%s %s %s %s) INTO %s" % ((w for w in locations[location]), location));
+    for location in locations:
+        cursor.execute("INSERT INTO locations (country, state, city, zip, address) values ('{}', '{}', '{}', '{}', '{}')".format(*locations[location]))
 
-    for user_loc in user_locs.list:
-        cursor.execute("INSERT (%s %s %s %s %s) INTO %s" % ((w for w in locations[location]), location));
+    userids = ()
+    locationid=0
 
-def clean_database(cursor):
-    pass
+    cursor.execute("SELECT id from users")
+    a = cursor.fetchall()
+    userids = userids + a[0]
+    userids = userids + a[1]
+
+    cursor.execute("SELECT id from locations")
+    for id in cursor:
+        locationid = id[0]
+
+    relations = {"r1": (userids[0], locationid),
+                    "r2": (userids[1], locationid)
+                };
+
+    for relation in relations:
+        cursor.execute("INSERT INTO relations (userid, locationid) values ('{}', '{}')".format(*relations[relation]))
 
 if __name__ == "__main__":
     main()

@@ -8,7 +8,7 @@ GRANT ALL ON meetup.* to 'meet'@'%';
 
 USE meetup;
 CREATE TABLE locations (
-       id      INT PRIMARY KEY,
+       id      INT AUTO_INCREMENT PRIMARY KEY,
        country VARCHAR(20),
        state   VARCHAR(2),
        city    VARCHAR(32),
@@ -17,8 +17,8 @@ CREATE TABLE locations (
 );
 
 CREATE TABLE users (
-       id       INT,
-       username VARCHAR(32),
+       id       INT AUTO_INCREMENT,
+       username VARCHAR(32) UNIQUE,
        password CHAR(40), -- fixed size of hash size
        usertype ENUM('admin', 'user', 'organizer'),
        email    VARCHAR(32),
@@ -30,7 +30,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE relations (
-       id         INT PRIMARY KEY,
+       id         INT AUTO_INCREMENT PRIMARY KEY,
        userid     INT,
        locationid INT,
        FOREIGN KEY (userid) REFERENCES users (id),
