@@ -2,15 +2,20 @@ package controllers;
 
 
 import com.google.inject.Inject;
+import io.ebean.Ebean;
+import io.ebean.SqlQuery;
+import io.ebean.SqlRow;
 import models.loginForm;
+import org.apache.commons.codec.digest.DigestUtils;
 import play.data.Form;
 import play.data.FormFactory;
+import play.filters.csrf.CSRF;
+import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.viewLogin;
 
-import java.util.HashMap;
-
+import java.util.List;
 
 /**
  * @author: Lucas Buccilli
@@ -20,6 +25,7 @@ import java.util.HashMap;
  * Project Name: meetup-app
  * File Name: LoginController
  */
+
 public class LoginController extends Controller {
 
 
@@ -38,41 +44,69 @@ public class LoginController extends Controller {
         //populate form from viewLogin page
         Form<loginForm> filledForm = formFactory.form(loginForm.class).bindFromRequest();
         //parses the data from the form
-        String username = filledForm.field("username").getValue().get();
-        String password = filledForm.field("password").getValue().get();
 
-        //checks if user info is valid
-        if (validateUser(username, password) == 1) {
-            return ok("Username: " + username + "\nPassword: " + password);
-        } else if (validateUser(username, password) == -1) {
-            return ok(
-                    viewLogin.render(formFactory.form(loginForm.class), "Username not found"));
-        } else if (validateUser(username, password) == 0) {
-            return ok(
-                    viewLogin.render(formFactory.form(loginForm.class), "Invalid Password"));
+
+        loginForm validatedLoginForm = validateUser(filledForm);
+
+        if (validatedLoginForm.getCsrfToken() != null){
+            //can pass in loginForm with filled info and csrf token;
+            return redirect(routes.HomeController.index());
+        }else {
+            return ok(viewLogin.render(formFactory.form(loginForm.class), "ERROR"));
         }
-        return TODO;
+    }
+
+    @RequireCSRFCheck
+    public Result userLoggedIn(loginForm validatedLoginForm){
+
+        return ok();
 
 
     }
 
     //validates user login
-    protected static int validateUser(String username, String password) {
-        HashMap<String, String> userDb = new HashMap<>();
-        userDb.put("test", "password");
 
-        if (userDb.get(username) != null) {
-            if (userDb.get(username).compareTo(password) == 0) {
-                return 1;
-            } else {
-                return 0;
+
+
+    protected static loginForm validateUser(Form<loginForm> filledForm) {
+
+
+
+
+        String username = filledForm.field("username").getValue().get();
+        String password = filledForm.field("password").getValue().get();
+
+
+        loginForm validatedLoginForm = new loginForm();
+        validatedLoginForm.setUsername(username);
+        validatedLoginForm.setPassword(password);
+
+        String hashPassword = DigestUtils.sha1Hex(password);
+
+        String queryString = "SELECT * FROM users WHERE username = '" + username + "' AND password = '" + hashPassword + "'";
+        //returns list where username is username
+        SqlQuery query = Ebean.createSqlQuery(queryString);
+
+
+        List<SqlRow> rows = query.findList();
+
+        for (SqlRow row : rows) {
+
+            play.Logger.debug("Found user: " + row.getString("username"));
+            if (row.getString("username").equals(validatedLoginForm.getUsername())) {
+                if (row.getString("password").equals(hashPassword)) {
+                    validatedLoginForm.setCsrfToken(CSRF.getToken(request()).map(CSRF.Token::value).orElse("null"));
+                }
             }
 
-
-        } else {
-            return -1;
         }
+
+        return validatedLoginForm;
     }
+
+
+
+
 
 
 }
