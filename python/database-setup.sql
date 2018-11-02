@@ -38,7 +38,7 @@ CREATE TABLE events (
 	startDate	DATE,
 	endDate	DATE,
 	name		VARCHAR(40),
-	PRIMARY KEY (name, locationid, startDate)
+	PRIMARY KEY (name, locationid, startDate),
        FOREIGN KEY (locationid) REFERENCES locations (id)
 );
 
