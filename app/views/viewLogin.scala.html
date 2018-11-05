@@ -9,15 +9,7 @@ Form[loginForm] is needed to construct page
 
     Using CSRF authenticates and allows POST requests
     *@
-    @helper.form(routes.LoginController.login()) {
-        @*
-            Moved CSRF out of routes, doing so will remove it from url string and store it as
-            a value <input type="hidden" name="csrfToken" value="1234567890abcdef"/>
-
-            *@
-
-        @CSRF.formField
-
+    @helper.form(CSRF(routes.LoginController.login())) {
         <h1>Login</h1>
         @*
         This creates the neceessary html to populate the fields of the loginForm
