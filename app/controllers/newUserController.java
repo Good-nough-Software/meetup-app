@@ -38,14 +38,15 @@ public class newUserController extends Controller {
         String firstName = filledForm.field("firstName").getValue().get();
         String lastName = filledForm.field("lastName").getValue().get();
 
-        //username does not exist
-        if (LoginController.validateUser(username, password) != -1) {
-            Form<newUserForm> newUserForm = formFactory.form(newUserForm.class);
-            return ok(viewNewUser.render(newUserForm, "Username already taken"));
-        } else {
-            return ok("Username: " + username + "\nPassword: " + password + "\nEmail: " + email + "\nFirstname: " + firstName + "\nLastname: " + lastName);
-        }
+//        //username does not exist
+//        if (LoginController.validateUser(username, password) != -1) {
+//            Form<newUserForm> newUserForm = formFactory.form(newUserForm.class);
+//            return ok(viewNewUser.render(newUserForm, "Username already taken"));
+//        } else {
+//            return ok("Username: " + username + "\nPassword: " + password + "\nEmail: " + email + "\nFirstname: " + firstName + "\nLastname: " + lastName);
+//        }
 
+        return TODO;
 
     }
 }

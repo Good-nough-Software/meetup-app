@@ -9,10 +9,9 @@ import models.loginForm;
 import org.apache.commons.codec.digest.DigestUtils;
 import play.data.Form;
 import play.data.FormFactory;
-import play.filters.csrf.CSRF;
-import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.viewLogin;
 
 import java.util.List;
@@ -34,7 +33,9 @@ public class LoginController extends Controller {
     FormFactory formFactory;
 
     public Result renderViewLogin() {
-        return ok(viewLogin.render(formFactory.form(loginForm.class), ""));
+        return ok(
+                viewLogin.render(formFactory.form(loginForm.class), "")
+        );
     }
 
 
@@ -46,62 +47,67 @@ public class LoginController extends Controller {
         //parses the data from the form
 
 
-        loginForm validatedLoginForm = validateUser(filledForm);
-
-        if (validatedLoginForm.getCsrfToken() != null){
-            //can pass in loginForm with filled info and csrf token;
-            return redirect(routes.HomeController.index());
-        }else {
-            return ok(viewLogin.render(formFactory.form(loginForm.class), "ERROR"));
-        }
-    }
-
-    @RequireCSRFCheck
-    public Result userLoggedIn(loginForm validatedLoginForm){
-
-        return ok();
+        return authenticate(filledForm);
 
 
     }
 
-    //validates user login
+    @Security.Authenticated
+    public Result test() {
+        return ok(
+                viewLogin.render(formFactory.form(loginForm.class), "Username: " + session("username"))
+        );
+    }
+
+    public Result logout() {
+        session().clear();
+        flash("success", "You've been logged out");
+        return redirect(
+                routes.LoginController.renderViewLogin()
+        );
+    }
 
 
 
-    protected static loginForm validateUser(Form<loginForm> filledForm) {
 
+    //must have a method called authenticate to access authenticated methods in secured
+    public Result authenticate(Form<loginForm> filledForm) {
+        loginForm validatedLoginForm = filledForm.get();
 
+        String hashPassword = DigestUtils.sha1Hex(validatedLoginForm.getPassword());
 
-
-        String username = filledForm.field("username").getValue().get();
-        String password = filledForm.field("password").getValue().get();
-
-
-        loginForm validatedLoginForm = new loginForm();
-        validatedLoginForm.setUsername(username);
-        validatedLoginForm.setPassword(password);
-
-        String hashPassword = DigestUtils.sha1Hex(password);
-
-        String queryString = "SELECT * FROM users WHERE username = '" + username + "' AND password = '" + hashPassword + "'";
+        String queryString = "SELECT * FROM users WHERE username = '" + validatedLoginForm.getUsername() + "' AND password = '" + hashPassword + "'";
         //returns list where username is username
         SqlQuery query = Ebean.createSqlQuery(queryString);
 
 
         List<SqlRow> rows = query.findList();
 
+
+        session("username", "null");
+
         for (SqlRow row : rows) {
 
             play.Logger.debug("Found user: " + row.getString("username"));
             if (row.getString("username").equals(validatedLoginForm.getUsername())) {
                 if (row.getString("password").equals(hashPassword)) {
-                    validatedLoginForm.setCsrfToken(CSRF.getToken(request()).map(CSRF.Token::value).orElse("null"));
+                    session("username", filledForm.get().username);
                 }
             }
 
         }
 
-        return validatedLoginForm;
+        if (session().get("username").equals("null")){
+            return badRequest(
+                    viewLogin.render(formFactory.form(loginForm.class), "Could not login")
+            );
+        }else {
+
+            session("username", validatedLoginForm.getUsername());
+            return redirect(
+                    routes.LoginController.test()
+            );
+        }
     }
 
 

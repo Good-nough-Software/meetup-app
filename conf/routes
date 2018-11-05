@@ -15,6 +15,10 @@ GET         /viewNewUser               controllers.newUserController.renderViewN
 
 GET         /viewResetPassword        controllers.resetPasswordController.renderViewResetPassword
 
+GET         /logout                   controllers.LoginController.logout()
+
+GET         /test                   controllers.LoginController.test()
+
 
 POST        /login                     controllers.LoginController.login()
 

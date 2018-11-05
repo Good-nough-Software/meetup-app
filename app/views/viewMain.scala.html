@@ -18,6 +18,13 @@
     <body>
         @* And here's where we render the `Html` object containing
          * the page content. *@
+
+    <header>
+            <dd>
+                <a href="@routes.LoginController.logout()">Logout</a>
+            </dd>
+    </header>
+
         @content
 
         <script src="@routes.Assets.versioned("javascripts/main.js")" type="text/javascript"></script>
