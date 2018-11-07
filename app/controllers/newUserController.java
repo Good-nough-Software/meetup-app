@@ -1,14 +1,18 @@
 package controllers;
 
 import com.google.inject.Inject;
+import io.ebean.Ebean;
+import io.ebean.SqlQuery;
+import io.ebean.SqlRow;
 import models.loginForm;
+import models.newUserForm;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
-
-import models.newUserForm;
 import views.html.viewNewUser;
+
+import java.util.List;
 
 /**
  * @author Lucas Buccilli
@@ -38,15 +42,22 @@ public class newUserController extends Controller {
         String firstName = filledForm.field("firstName").getValue().get();
         String lastName = filledForm.field("lastName").getValue().get();
 
-//        //username does not exist
-//        if (LoginController.validateUser(username, password) != -1) {
-//            Form<newUserForm> newUserForm = formFactory.form(newUserForm.class);
-//            return ok(viewNewUser.render(newUserForm, "Username already taken"));
-//        } else {
-//            return ok("Username: " + username + "\nPassword: " + password + "\nEmail: " + email + "\nFirstname: " + firstName + "\nLastname: " + lastName);
-//        }
 
-        return TODO;
+
+        String queryString = "SELECT * FROM users WHERE username = '" + username + "'";
+        //returns list where username is username
+        SqlQuery query = Ebean.createSqlQuery(queryString);
+
+
+        List<SqlRow> rows = query.findList();
+
+        if (rows.isEmpty()){
+            return ok("create user");
+        }
+        else {
+            return ok("username taken");
+        }
+
 
     }
 }

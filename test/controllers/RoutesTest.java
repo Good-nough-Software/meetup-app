@@ -1,16 +1,16 @@
 package controllers;
 
+import junit.framework.TestCase;
 import org.junit.Test;
 import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;
 import play.mvc.Http;
 import play.mvc.Result;
+import play.test.Helpers;
 import play.test.WithApplication;
 
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static play.mvc.Http.Status.OK;
-import static play.test.Helpers.*;
+import static play.test.Helpers.GET;
+import static play.test.Helpers.route;
 
 public class RoutesTest extends WithApplication {
 
@@ -20,42 +20,64 @@ public class RoutesTest extends WithApplication {
     }
 
     @Test
-    public void testViewLogin() {
-        Http.RequestBuilder request = new Http.RequestBuilder()
+    public void testRoutes() {
+
+        Http.RequestBuilder request = Helpers.fakeRequest()
                 .method(GET)
                 .uri("/");
 
         Result result = route(app, request);
-        assertTrue(contentAsString(result).contains("Login"));
-    }
+        TestCase.assertEquals(200, result.status());
 
-    @Test
-    public void testViewHome() {
-        Http.RequestBuilder request = new Http.RequestBuilder()
+        request = Helpers.fakeRequest()
                 .method(GET)
                 .uri("/home");
 
-        Result result = route(app, request);
-        assertTrue(contentAsString(result).contains("meetup-search-box"));
-    }
+        result = route(app, request);
+        TestCase.assertEquals(200, result.status());
 
-    @Test
-    public void testViewNewUser() {
-        Http.RequestBuilder request = new Http.RequestBuilder()
+        request = Helpers.fakeRequest()
+                .method(GET)
+                .uri("/results");
+
+        result = route(app, request);
+        TestCase.assertEquals(200, result.status());
+
+        request = Helpers.fakeRequest()
                 .method(GET)
                 .uri("/viewNewUser");
 
-        Result result = route(app, request);
-        assertTrue(contentAsString(result).contains("Create new user"));
-    }
+        result = route(app, request);
+        TestCase.assertEquals(200, result.status());
 
-    @Test
-    public void testViewForgotPassword() {
-        Http.RequestBuilder request = new Http.RequestBuilder()
+        request = Helpers.fakeRequest()
                 .method(GET)
                 .uri("/viewResetPassword");
 
-        Result result = route(app, request);
-        assertTrue(contentAsString(result).contains("Reset Password"));
+        result = route(app, request);
+        TestCase.assertEquals(200, result.status());
+
+        request = Helpers.fakeRequest()
+                .method(GET)
+                .uri("/");
+
+        result = route(app, request);
+        TestCase.assertEquals(200, result.status());
+
+        request = Helpers.fakeRequest()
+                .method(GET)
+                .uri("/");
+
+        result = route(app, request);
+        TestCase.assertEquals(200, result.status());
+
+
+
+        request = Helpers.fakeRequest()
+                .method(GET)
+                .uri("/viewResetPassword");
+
+        result = route(app, request);
+        TestCase.assertEquals(200, result.status());
     }
 }
