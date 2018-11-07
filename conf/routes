@@ -8,20 +8,22 @@ GET 	    /home		       controllers.HomeController.index
 GET 	    /results		       controllers.HomeController.results
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file              controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file             controllers.Assets.versioned(path="/public", file: Asset)
 
-GET         /viewNewUser               controllers.newUserController.renderViewNewUser
+GET         /viewNewUser              controllers.newUserController.renderViewNewUser
 
 
 GET         /viewResetPassword        controllers.resetPasswordController.renderViewResetPassword
 
 GET         /logout                   controllers.LoginController.logout()
 
-GET         /test                   controllers.LoginController.test()
+GET         /test                     controllers.LoginController.test()
+
+GET         /debug                    controllers.DebugController.main
 
 
-POST        /login                     controllers.LoginController.login()
+POST        /login                    controllers.LoginController.login()
 
-POST        /createNewUser             controllers.newUserController.createNewUser()
+POST        /createNewUser            controllers.newUserController.createNewUser()
 
-POST        /resetPasswrod             controllers.resetPasswordController.resetPassword()
+POST        /resetPasswrod            controllers.resetPasswordController.resetPassword()

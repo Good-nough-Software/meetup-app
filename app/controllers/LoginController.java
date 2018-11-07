@@ -7,11 +7,14 @@ import io.ebean.SqlQuery;
 import io.ebean.SqlRow;
 import models.loginForm;
 import org.apache.commons.codec.digest.DigestUtils;
+import play.Logger;
+import play.api.Play;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import play.twirl.api.Content;
 import views.html.viewLogin;
 
 import java.util.List;
@@ -34,7 +37,7 @@ public class LoginController extends Controller {
 
     public Result renderViewLogin() {
         return ok(
-                viewLogin.render(formFactory.form(loginForm.class), "")
+                viewLogin.render(formFactory.form(loginForm.class))
         );
     }
 
@@ -55,13 +58,13 @@ public class LoginController extends Controller {
     @Security.Authenticated
     public Result test() {
         return ok(
-                viewLogin.render(formFactory.form(loginForm.class), "Username: " + session("username"))
+                viewLogin.render(formFactory.form(loginForm.class))
         );
     }
 
     public Result logout() {
         session().clear();
-        flash("success", "You've been logged out");
+        flash("Message", "You've been logged out");
         return redirect(
                 routes.LoginController.renderViewLogin()
         );
@@ -72,8 +75,11 @@ public class LoginController extends Controller {
 
     //must have a method called authenticate to access authenticated methods in secured
     public Result authenticate(Form<loginForm> filledForm) {
+
+        //get loginForm information from the form that was filled inside of viewLogin
         loginForm validatedLoginForm = filledForm.get();
 
+        //get hased password
         String hashPassword = DigestUtils.sha1Hex(validatedLoginForm.getPassword());
 
         String queryString = "SELECT * FROM users WHERE username = '" + validatedLoginForm.getUsername() + "' AND password = '" + hashPassword + "'";
@@ -88,22 +94,24 @@ public class LoginController extends Controller {
 
         for (SqlRow row : rows) {
 
-            play.Logger.debug("Found user: " + row.getString("username"));
             if (row.getString("username").equals(validatedLoginForm.getUsername())) {
                 if (row.getString("password").equals(hashPassword)) {
+                    //username with password exists, add username to session
                     session("username", filledForm.get().username);
                 }
             }
 
         }
 
+        //user was not found or had incorrect password
         if (session().get("username").equals("null")){
-            return badRequest(
-                    viewLogin.render(formFactory.form(loginForm.class), "Could not login")
-            );
-        }else {
 
-            session("username", validatedLoginForm.getUsername());
+            flash("Message", "Wrong username or password");
+            return redirect(
+                    routes.LoginController.renderViewLogin()
+            );
+
+        }else {
             return redirect(
                     routes.LoginController.test()
             );

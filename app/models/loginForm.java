@@ -11,17 +11,6 @@ public class loginForm {
 
     public String username;
     public String password;
-    public String csrfToken;
-
-    public String getCsrfToken() {
-        return csrfToken;
-    }
-
-    public void setCsrfToken(String csrfToken) {
-        this.csrfToken = csrfToken;
-    }
-
-    public boolean rememberMe;
 
     public String getUsername() {
         return username;

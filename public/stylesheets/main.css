@@ -1,0 +1,94 @@
+body {
+    background: lightgray;
+}
+
+div.header {
+    width: 100% +50px;
+    height: 80px;
+    margin-top: -50px;
+    position: relative;
+    margin-left: -50vw;
+    left: 50%;
+    text-align: center;
+    background: lightslategray;
+    color: white;
+    font-size: 30px;
+    border-bottom: 1px solid black;
+}
+
+h1.header {
+    text-align: left;
+    padding-top: 8px;
+    padding-left: 15px;
+}
+
+button.header {
+    background-color: lightskyblue;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 40%;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+
+}
+
+div.loginPage {
+    border: 1px solid black;
+    background: lightseagreen;
+    width: 300px;
+    padding: 10px;
+    margin: 0 auto;
+    margin-top: 100px;
+
+}
+
+button.loginPage {
+    background-color: lightskyblue;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 40%;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+
+}
+
+h1.loginPage {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+
+input.loginPage {
+    display: block;
+    margin: 0 auto;
+}
+
+dl.loginPage {
+
+    text-align: center;
+
+}
+
+dl.loginPage dt:after {
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+}
+
+dd {
+    text-align: center;
+    margin: 0 auto;
+}
+
+/*form.loginPage{*/
+/*display: block;*/
+/*margin: 0 auto;*/
+/*}*/
