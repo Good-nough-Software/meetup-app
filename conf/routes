@@ -19,7 +19,7 @@ GET         /logout                   controllers.LoginController.logout()
 
 GET         /test                     controllers.LoginController.test()
 
-GET         /debug                    controllers.DebugController.main
+GET         /debug                    controllers.debugController.main
 
 
 POST        /login                    controllers.LoginController.login()
