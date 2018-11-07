@@ -1,0 +1,57 @@
+@import helper._
+@(form: Form[userAccountSettingsForm], message: String)
+@viewMain("Account Settings") {
+
+    @helper.form(routes.UserAccountSettingsController.UserAccountSettings()) {
+
+        <h1>Account Settings</h1>
+
+
+        @helper.inputText(form("username"),
+        '_label -> "Username",
+        'placeholder -> "Username",
+        'id -> "username")
+
+
+        @helper.inputText(form("name"),
+        '_label -> "Name",
+        'placeholder -> "John Doe",
+        'id -> "name")
+
+
+        @helper.inputText(form("password"),
+        '_label -> "Password",
+        'placeholder -> "Pa55w0rd",
+        'id -> "password")
+
+
+        @helper.inputText(form("email"),
+        '_label -> "Email",
+        'placeholder -> "example@email.gov",
+        'id -> "email")
+
+
+        @helper.inputText(form("phone"),
+        '_label -> "Phone",
+        'placeholder -> "(000) - 000 - 0000",
+        'id -> "phone")
+
+
+        @helper.inputText(form("address"),
+        '_label -> "Address",
+        'placeholder -> "1234 Example Lane, Example City, Ex 12345",
+        'id -> "address")
+
+
+        <br>
+            <button type="submit">Save Changes</button>
+        <br>
+
+
+        <br>
+            <button type="submit">Reset Password</button>
+        <br>
+
+    }
+
+}
