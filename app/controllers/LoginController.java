@@ -2,6 +2,9 @@ package controllers;
 
 
 import com.google.inject.Inject;
+import io.ebean.Ebean;
+import io.ebean.SqlQuery;
+import io.ebean.SqlRow;
 import models.loginForm;
 import org.apache.commons.codec.digest.DigestUtils;
 import play.Logger;
@@ -15,6 +18,7 @@ import play.twirl.api.Content;
 import views.html.viewLogin;
 
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -97,7 +101,7 @@ public class LoginController extends Controller {
                     session("username", filledForm.get().username);
                 }
             }
-
+        }
 
         //user was not found or had incorrect password
         if (session().get("username").equals("null")){
@@ -113,6 +117,4 @@ public class LoginController extends Controller {
             );
         }
     }
-
-
 }
