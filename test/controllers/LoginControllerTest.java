@@ -1,43 +1,24 @@
 package controllers;
 
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.ImmutableMap;
-import com.google.inject.Inject;
-import controllers.routes;
-import models.loginForm;
 import org.junit.Test;
-import play.Application;
 import play.api.test.CSRFTokenHelper;
-import play.data.DynamicForm;
-import play.data.Form;
-import play.data.FormFactory;
-import play.filters.csrf.CSRF;
-import play.inject.guice.GuiceApplicationBuilder;
-import play.mvc.Call;
 import play.mvc.Http;
 import play.mvc.Result;
-import play.mvc.Security;
 import play.test.Helpers;
 import play.test.WithApplication;
-import play.twirl.api.Content;
-import play.twirl.api.Html;
-import views.html.viewLogin;
 
-import java.util.HashMap;
 import java.util.Map;
 
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
 import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.*;
 
 public class LoginControllerTest extends WithApplication {
 
-    @Override
-    protected Application provideApplication() {
-        return new GuiceApplicationBuilder().build();
-    }
 
     @Test
     public void testViewLogin() {
@@ -54,62 +35,74 @@ public class LoginControllerTest extends WithApplication {
         assertTrue(contentAsString(result).contains("Password"));
     }
 
+
+//    Application fakeApp = fakeApplication();
+//
+//    Application fakeAppWithMemoryDb = fakeApplication(inMemoryDatabase("test"));
+//
+//    @Before
+//    public void setup() {
+//        Module testModule = new AbstractModule() {
+//            @Override
+//            public void configure() {
+//                // Install custom test binding here
+//            }
+//        };
+//
+//        GuiceApplicationBuilder builder = new GuiceApplicationLoader()
+//                .builder(new ApplicationLoader.Context(Environment.simple()))
+//                .overrides(testModule);
+//        Guice.createInjector(builder.applicationModule()).injectMembers(this);
+//
+//        Helpers.start(fakeApp);
+//    }
+
     @Test
-    public void testLogin() {
+    public void testBadRoute() {
+        Http.RequestBuilder request = Helpers.fakeRequest()
+                .method(GET)
+                .uri("/xx/Kiwi");
 
-        //test post request with user: test password: password
-        //Sucessful login
-        try {
-            JsonNode jsonNode = (new ObjectMapper()).readTree("{ \"username\": \"test\", \"password\": \"password\"  }");
-            Http.RequestBuilder request = new Http.RequestBuilder().method("POST")
-                    .bodyJson(jsonNode)
-                    .uri(controllers.routes.LoginController.login().url());
-            request = CSRFTokenHelper.addCSRFToken(request);
-            Result result = route(request);
-
-
-            assertEquals(OK, result.status());
-            assertTrue(contentAsString(result).contains("Username: test"));
-
-        } catch (Exception e) {
-            assertTrue(false);
-        }
-
-        //test post request with user: test password: p
-        //password is not correct
-        try {
-            JsonNode jsonNode = (new ObjectMapper()).readTree("{ \"username\": \"test\", \"password\": \"p\"  }");
-            Http.RequestBuilder request = new Http.RequestBuilder().method("POST")
-                    .bodyJson(jsonNode)
-                    .uri(controllers.routes.LoginController.login().url());
-            request = CSRFTokenHelper.addCSRFToken(request);
-            Result result = route(request);
-
-
-            assertEquals(OK, result.status());
-            assertTrue(contentAsString(result).contains("Invalid Password"));
-
-        } catch (Exception e) {
-            assertTrue(false);
-        }
-
-        //test post request with user: notAUser password: p
-        //password is not correct
-        try {
-            JsonNode jsonNode = (new ObjectMapper()).readTree("{ \"username\": \"notAUser\", \"password\": \"p\"  }");
-            Http.RequestBuilder request = new Http.RequestBuilder().method("POST")
-                    .bodyJson(jsonNode)
-                    .uri(controllers.routes.LoginController.login().url());
-            request = CSRFTokenHelper.addCSRFToken(request);
-            Result result = route(request);
-
-
-            assertEquals(OK, result.status());
-            assertTrue(contentAsString(result).contains("Username not found"));
-
-        } catch (Exception e) {
-            assertTrue(false);
-        }
+        Result result = route(app, request);
+        assertEquals(NOT_FOUND, result.status());
     }
+
+
+
+    @Test
+    public void authenticateUser() throws Exception {
+
+        JsonNode jsonNode = (new ObjectMapper()).readTree("{ \"username\": \"jsmith\", \"password\": \"password\"  }");
+        Http.RequestBuilder request = new Http.RequestBuilder()
+                .method("POST")
+                .bodyJson(jsonNode)
+                .uri(controllers.routes.LoginController.login().url());
+
+        request = CSRFTokenHelper.addCSRFToken(request);
+        Result result = route(request);
+
+
+        Map<String, String> sessionMap = result.session();
+
+
+        assertEquals(sessionMap.get("username"), "jsmith");
+
+        jsonNode = (new ObjectMapper()).readTree("{ \"username\": \"noone\", \"password\": \"password\"  }");
+        request = new Http.RequestBuilder()
+                .method("POST")
+                .bodyJson(jsonNode)
+                .uri(controllers.routes.LoginController.login().url());
+
+        request = CSRFTokenHelper.addCSRFToken(request);
+        result = route(request);
+
+        sessionMap = result.session();
+
+
+        assertEquals(sessionMap.get("username"), "null");
+    }
+
+
+
 
 }
