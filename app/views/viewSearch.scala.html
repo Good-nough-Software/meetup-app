@@ -1,0 +1,12 @@
+@import helper._
+@(form: Form[Search])
+
+<div class="search-container">
+@helper.form(action = routes.HomeController.results()) {
+    @helper.inputText(form("Search"),
+		      'placeholder -> "Search locations..",
+		      'id -> "search",
+		      'class -> "search-box")
+    <input class="submit" type="submit" value="&#128270;">
+}
+</div>

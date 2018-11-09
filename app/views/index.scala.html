@@ -1,21 +1,13 @@
-@()
 
-@import helper._
+@(form: Form[Search])
 
 @viewMain("Meetup App - Home") {
-    <h1>Welcome to meetup app</h1>
-    <form action="/results" method="get" class="meetup-search">
-	<input type="search" id="meetup-search-box" name="search-query"
-	       placeholder="Search locations and events">
-	<input type="submit">
-    </form>
+
+    @viewSearch(form)
 
     <ul>
 	<li>Connect with old friends and colleague</li>
 	<li>Organize events</li>
     </ul>
 
-    <footer>
-	Copyright © 2018 Good 'nough Software
-    </footer>
 }
