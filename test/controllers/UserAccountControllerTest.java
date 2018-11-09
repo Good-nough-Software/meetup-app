@@ -7,7 +7,6 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.test.WithApplication;
 
-
 import static play.test.Helpers.*;
 import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.assertEquals;
