@@ -1,27 +1,13 @@
 
-@import helper._
 @(form: Form[Search])
 
 @viewMain("Meetup App - Home") {
 
-<nav>
-  <a href="/">Login</a>
-</nav>
-<h1>Welcome to meetup app</h1>
+    @viewSearch(form)
 
-@helper.form(action = routes.HomeController.results()) {
-    @helper.inputText(form("Search"),
-		      'placeholder -> "Search locations..",
-		      'id -> "search",
-		      'label -> "")
-    <input type="submit" value="&#128270;">
-}
     <ul>
 	<li>Connect with old friends and colleague</li>
 	<li>Organize events</li>
     </ul>
 
-    <footer>
-	Copyright © 2018 Good 'nough Software
-    </footer>
 }

@@ -1,15 +1,10 @@
 @(form: Form[Search], locations: List[models.Location], search: String)
 
 @viewMain("Meetup App - Results") {
-    <h1>Meetup App</h1>
 
-@helper.form(action = routes.HomeController.results()) {
-    @helper.inputText(form("Search"),
-		      'placeholder -> search,
-		      'id -> "search")
-    <input type="submit" value="&#128270;">
-}
-    <div>
+    @viewSearch(form)
+
+    <div class="result">
 	@if(locations.isEmpty()){
 	    <h2>No results found ☹, try searching something else!</h2>
 	} else {
@@ -24,10 +19,5 @@
 	    }
 	}
 
-
     </div>
-
-    <footer>
-	Copyright © 2018 Good 'nough Software
-    </footer>
 }
