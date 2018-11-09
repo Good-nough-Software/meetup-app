@@ -9,7 +9,8 @@ Form[newUserForm] is needed to construct page
 
     Using CSRF authenticates and allows POST requests
     *@
-    @helper.form(CSRF(routes.newUserController.createNewUser())) {
+    @helper.form(routes.newUserController.createNewUser()) {
+        @CSRF.formField
         <h1>Create new user</h1>
         @*
         This creates the neceessary html to populate the fields of the loginForm

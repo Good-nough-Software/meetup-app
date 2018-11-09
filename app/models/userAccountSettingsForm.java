@@ -19,4 +19,13 @@ public class userAccountSettingsForm {
         this.home = home;
     }
 
+    public userAccountSettingsForm() {
+        this.username = null;
+        this.password = null;
+        this.phone = null;
+        this.email = null;
+        this.locations = null;
+        this.home = null;
+    }
+
 }
