@@ -1,26 +1,23 @@
-@(locations: List[models.Location])
+@(form: Form[Search], locations: List[models.Location], search: String)
 
 @viewMain("Meetup App - Results") {
-    <h1>Meetup App</h1>
-    <form method="post" class="meetup-search">
-	<input type="search" id="meetup-search-box"
-	       placeholder="Search locations and events">
-	<input type="submit">
-    </form>
 
-    <div>
-	@for(location <- locations) {
-	    <ul>
-	    <li>@location.address</li>
-	    <li>@location.city</li>
-	    <li>@location.state</li>
-	    <li>@location.zip</li>
-	    <li>@location.country</li>
-	    </ul>
+    @viewSearch(form)
+
+    <div class="result">
+	@if(locations.isEmpty()){
+	    <h2>No results found ☹, try searching something else!</h2>
+	} else {
+	    @for(location <- locations) {
+		<ul>
+		<li>@location.address</li>
+		<li>@location.city</li>
+		<li>@location.state</li>
+		<li>@location.zip</li>
+		<li>@location.country</li>
+		</ul>
+	    }
 	}
-    </div>
 
-    <footer>
-	Copyright © 2018 Good 'nough Software
-    </footer>
+    </div>
 }

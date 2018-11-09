@@ -28,7 +28,8 @@ public class UserProfileController extends Controller {
         String password = filledForm.field("password").getValue().get();
 
 
-        if(LoginController.validateUser(username, password) != 1){
+        // if(LoginController.validateUser(username, password) != 1){
+        if (session().get("username").equals("null")) { // TODO replace with new authentication method
             Form<userProfileForm> userProfileForm = formFactory.form(models.userProfileForm.class);
             return ok(viewUserProfile.render(userProfileForm, "Username Taken"));
         } else{

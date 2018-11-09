@@ -29,4 +29,24 @@ public class HomeControllerTest extends WithApplication {
         assertEquals(OK, result.status());
     }
 
+    @Test
+    public void testResultsEmpty() {
+        Http.RequestBuilder request = new Http.RequestBuilder()
+            .method(GET)
+            .uri("/results");
+
+        Result result = route(app, request);
+        assertEquals(OK, result.status());
+    }
+
+    @Test
+    public void testResultsQuery() {
+        Http.RequestBuilder request = new Http.RequestBuilder()
+            .method(GET)
+            .uri("/results?Search=6");
+
+        Result result = route(app, request);
+        assertEquals(OK, result.status());
+    }
+
 }

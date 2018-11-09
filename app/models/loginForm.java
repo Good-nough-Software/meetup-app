@@ -13,7 +13,7 @@ public class loginForm {
 
     public String username;
     public String password;
-    public boolean rememberMe;
+  
 
     public String getUsername() {
         return username;
