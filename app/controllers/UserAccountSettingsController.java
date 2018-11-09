@@ -31,9 +31,9 @@ public class UserAccountSettingsController extends Controller {
         String address = filledForm.field("address").getValue().get();
 
         // if(LoginController.validateUser(username, password) != 1){
-        if (true) { // TODO replace with new method of autheication
+        if (session().get("username").equals("null")) { // TODO replace with new method of autheication
             Form<userAccountSettingsForm> userAccountSettingsForm = formFactory.form(models.userAccountSettingsForm.class);
-            return ok(viewUserAccountSettings.render(userAccountSettingsForm, "Username already taken"));
+            return ok(viewUserAccountSettings.render(userAccountSettingsForm, "Invalid Username or Password"));
         } else {
             return ok("Username: " + username + "\nPassword: " + password + "\nName: " + name + "\nEmail: " + email + "\nPhone: " + phone + "\nAddress" + address);
         }
