@@ -1,0 +1,14 @@
+@import helper._
+@(form: Form[userProfileForm], message: String)
+@viewMain("Your Profile") {
+
+    @helper.form(routes.UserProfileController.UserProfile()) {
+        <h1>Welcome to Your Profile</h1>
+
+
+        Places You May Know Me From: <p> Example High School</p>
+        <br/><br/>
+
+    }
+
+}

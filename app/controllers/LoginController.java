@@ -2,9 +2,6 @@ package controllers;
 
 
 import com.google.inject.Inject;
-import io.ebean.Ebean;
-import io.ebean.SqlQuery;
-import io.ebean.SqlRow;
 import models.loginForm;
 import org.apache.commons.codec.digest.DigestUtils;
 import play.Logger;
@@ -17,7 +14,8 @@ import play.mvc.Security;
 import play.twirl.api.Content;
 import views.html.viewLogin;
 
-import java.util.List;
+import java.util.HashMap;
+
 
 /**
  * @author: Lucas Buccilli
@@ -27,7 +25,6 @@ import java.util.List;
  * Project Name: meetup-app
  * File Name: LoginController
  */
-
 public class LoginController extends Controller {
 
 
@@ -48,11 +45,11 @@ public class LoginController extends Controller {
         //populate form from viewLogin page
         Form<loginForm> filledForm = formFactory.form(loginForm.class).bindFromRequest();
         //parses the data from the form
+        String username = filledForm.field("username").getValue().get();
+        String password = filledForm.field("password").getValue().get();
 
 
         return authenticate(filledForm);
-
-
     }
 
     @Security.Authenticated
@@ -101,7 +98,6 @@ public class LoginController extends Controller {
                 }
             }
 
-        }
 
         //user was not found or had incorrect password
         if (session().get("username").equals("null")){
@@ -111,16 +107,12 @@ public class LoginController extends Controller {
                     routes.LoginController.renderViewLogin()
             );
 
-        }else {
+        } else {
             return redirect(
                     routes.LoginController.test()
             );
         }
     }
-
-
-
-
 
 
 }

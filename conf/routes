@@ -12,8 +12,13 @@ GET         /assets/*file             controllers.Assets.versioned(path="/public
 
 GET         /viewNewUser              controllers.newUserController.renderViewNewUser
 
+GET         /viewResetPassword         controllers.resetPasswordController.renderViewResetPassword
 
-GET         /viewResetPassword        controllers.resetPasswordController.renderViewResetPassword
+
+GET         /viewUserAccountSettings   controllers.UserAccountSettingsController.renderViewUserAccountSettings
+
+
+GET         /viewUserProfile           controllers.UserProfileController.renderViewUserProfile
 
 GET         /logout                   controllers.LoginController.logout()
 
@@ -21,9 +26,12 @@ GET         /test                     controllers.LoginController.test()
 
 GET         /debug                    controllers.debugController.main
 
-
 POST        /login                    controllers.LoginController.login()
 
 POST        /createNewUser            controllers.newUserController.createNewUser()
 
 POST        /resetPassword            controllers.resetPasswordController.resetPassword()
+
+POST        /UserAccountSettings       controllers.UserAccountSettingsController.UserAccountSettings()
+
+POST        /UserProfile               controllers.UserProfileController.UserProfile()

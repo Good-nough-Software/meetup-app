@@ -1,5 +1,7 @@
 package models;
 
+import play.data.validation.Constraints;
+
 /**
  * @author: Lucas Buccilli
  * Date: 10/19/18
@@ -11,6 +13,7 @@ public class loginForm {
 
     public String username;
     public String password;
+  
 
     public String getUsername() {
         return username;

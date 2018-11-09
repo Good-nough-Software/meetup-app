@@ -2,18 +2,19 @@
 
 CREATE DATABASE IF NOT EXISTS meetup;
 
-CREATE USER IF NOT EXISTS 'meet'@'%';
-GRANT ALL ON meetup.* to 'meet'@'%';
+CREATE USER IF NOT EXISTS 'meet'@'localhost';
+GRANT ALL ON meetup.* to 'meet'@'localhost';
 -- GRANT SELECT ON meetup.* to 'meet'@'%';
 
 USE meetup;
 CREATE TABLE locations (
-       id      INT AUTO_INCREMENT PRIMARY KEY,
+       id      INT AUTO_INCREMENT UNIQUE,
        country VARCHAR(20),
        state   VARCHAR(2),
        city    VARCHAR(32),
        zip     VARCHAR(9),
-       address VARCHAR(64)
+       address VARCHAR(64),
+	PRIMARY KEY (country, state, city, zip, address)
 );
 
 CREATE TABLE users (
@@ -29,10 +30,22 @@ CREATE TABLE users (
        PRIMARY KEY (id, username, email)
 );
 
-CREATE TABLE relations (
-       id         INT AUTO_INCREMENT PRIMARY KEY,
-       userid     INT,
-       locationid INT,
-       FOREIGN KEY (userid) REFERENCES users (id),
+CREATE TABLE events (
+       id		INT AUTO_INCREMENT UNIQUE,
+       locationid	INT,
+	summary	VARCHAR(240),
+	userid		INT,
+	startDate	DATE,
+	endDate	DATE,
+	name		VARCHAR(40),
+	PRIMARY KEY (name, locationid, startDate),
        FOREIGN KEY (locationid) REFERENCES locations (id)
+);
+
+CREATE TABLE relations (
+	id		INT AUTO_INCREMENT PRIMARY KEY,
+	eventid	INT,
+	userid		INT,
+	FOREIGN KEY (eventid) REFERENCES events (id),
+	FOREIGN KEY (userid) REFERENCES users (id)
 );
