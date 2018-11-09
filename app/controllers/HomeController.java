@@ -1,16 +1,27 @@
 package controllers;
 
+import com.google.inject.Inject;
 import play.mvc.*;
+import play.data.Form;
+import play.data.FormFactory;
+import io.ebean.Ebean;
+import io.ebean.SqlQuery;
+import io.ebean.SqlRow;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
+import models.Search;
 import models.Location;
-
+import play.db.*;
 
 /**
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
  */
 public class HomeController extends Controller {
+
+    @Inject
+    FormFactory formFactory;
 
     /**
      * An action that renders an HTML page with a welcome message.
@@ -19,10 +30,18 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result index() {
-        return ok(views.html.index.render());
+        Form<Search> form = formFactory.form(Search.class);
+        return ok(views.html.index.render(form));
     }
 
     public Result results() {
+        Form<Search> resultsForm = formFactory.form(Search.class).bindFromRequest();
+        Search search = resultsForm.get();
+        String query = search.getSearch();
+        if (query == null) {
+            return index();
+        }
+
         // Test Data
         List<Location> locations = new ArrayList<Location>();
         Location l = new Location();
@@ -40,7 +59,42 @@ public class HomeController extends Controller {
         l2.address = "2391 Pepperidge Trl";
         locations.add(l2);
 
+        // Pull from databases instead
+        // if (query.matches("[\s]")) {
+        //     String[] tokens = query.split("\\s+");
+        // } else {
+        //     String[] tokens = {query};
+        // }
 
-        return ok(views.html.results.render(locations));
+        // // Very simple weighted search
+        // HashMap<Location,Integer> weight = new HashMap<Location,Integer>();
+        // for (String tok: tokens) {
+        //     String sqlstr = "SELECT id FROM locations WHERE country LIKE " + tok;
+        //     SqlQuery sqlquery = Ebean.createSqlQuery(sqlstr);
+
+        //     sqlstr = "SELECT id FROM locations WHERE city LIKE " + tok;
+        //     sqlquery = Ebean.createSqlQuery(sqlstr);
+
+        //     sqlstr = "SELECT id FROM locations WHERE state LIKE " + tok;
+        //     sqlquery = Ebean.createSqlQuery(sqlstr);
+
+        //     sqlstr = "SELECT id FROM locations WHERE zip LIKE " + tok;
+        //     sqlquery = Ebean.createSqlQuery(sqlstr);
+
+        //     sqlstr = "SELECT id FROM locations WHERE address LIKE " + tok;
+        //     sqlquery = Ebean.createSqlQuery(sqlstr);
+        // }
+
+        // String dbquery = "SELECT id FROM locations WHERE LIKE ";
+
+        List<Location> matches = new ArrayList<Location>();
+        for (Location location: locations) {
+            String address = location.toString();
+            if (address.contains(query))
+                matches.add(location);
+        }
+
+        Form<Search> form = formFactory.form(Search.class);
+        return ok(views.html.results.render(form, matches, query));
     }
 }
