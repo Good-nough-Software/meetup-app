@@ -1,23 +1,30 @@
-@(locations: List[models.Location])
+@(form: Form[Search], locations: List[models.Location], search: String)
 
 @viewMain("Meetup App - Results") {
     <h1>Meetup App</h1>
-    <form method="post" class="meetup-search">
-	<input type="search" id="meetup-search-box"
-	       placeholder="Search locations and events">
-	<input type="submit">
-    </form>
 
+@helper.form(action = routes.HomeController.results()) {
+    @helper.inputText(form("Search"),
+		      'placeholder -> search,
+		      'id -> "search")
+    <input type="submit" value="&#128270;">
+}
     <div>
-	@for(location <- locations) {
-	    <ul>
-	    <li>@location.address</li>
-	    <li>@location.city</li>
-	    <li>@location.state</li>
-	    <li>@location.zip</li>
-	    <li>@location.country</li>
-	    </ul>
+	@if(locations.isEmpty()){
+	    <h2>No results found ☹, try searching something else!</h2>
+	} else {
+	    @for(location <- locations) {
+		<ul>
+		<li>@location.address</li>
+		<li>@location.city</li>
+		<li>@location.state</li>
+		<li>@location.zip</li>
+		<li>@location.country</li>
+		</ul>
+	    }
 	}
+
+
     </div>
 
     <footer>
