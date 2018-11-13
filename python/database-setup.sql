@@ -77,4 +77,30 @@ CREATE PROCEDURE IF NOT EXISTS UserPasswordChange
 		update users set users.password = parameter_newPassword where user.password = parameter_newPassword and user.username = parameter_username;
 	END;//
 
+CREATE PROCEDURE IF NOT EXISTS UpdateUser
+	(parameter_username varchar(32),
+	parameter_password varchar(40),
+	parameter_name varchar(32),
+	parameter_email varchar(32),
+	parameter_phone char(11))
+	BEGIN
+
+	if parameter_password != null then
+		update users set password = parameter_password where user = parameter_username;
+	end if;
+
+	if parameter_name != null then
+		update users set name = parameter_name where user = parameter_username;
+	end if;
+
+	if parameter_email != null then
+		update users set email = parameter_email where user = parameter_username;
+	end if;
+
+	if parameter_phone != null then
+		update users set phone = parameter_phone where user = parameter_username;
+	end if;
+
+	END;//
+
 delimiter ;
