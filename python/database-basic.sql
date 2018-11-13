@@ -1,4 +1,3 @@
--- exec "./database-clean.sql"
 use meetup;
 
 insert into users (username, password, usertype, email, name, phone)
