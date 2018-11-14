@@ -18,7 +18,32 @@
         @* And here's where we render the `Html` object containing
          * the page content. *@
 	<div class="header">
-            <h1 class="header">Meet-up</h1>
+        <table class="header">
+            <tr><td>
+                <h1 class="header">Meet-up</h1>
+            </td>
+                <td class="header">
+
+
+                        @if(session().get("username").equals("null")){
+                            <form class="header" action="@routes.LoginController.renderViewLogin()" >
+                                <button type="submit" class="header">Login</button>
+                            </form>
+                        }else{
+                            <form class="header" action="@routes.UserProfileController.renderViewUserProfile()" >
+                                <button type="submit" class="header">Profile</button>
+                            </form>
+                        }
+
+                    <form class="header" action="@routes.LoginController.logout()" >
+                        <button type="submit" class="header">Logout</button>
+                    </form>
+
+
+            </td></tr>
+
+
+        </table>
 	</div>
 
         @content

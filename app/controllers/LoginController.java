@@ -7,17 +7,13 @@ import io.ebean.SqlQuery;
 import io.ebean.SqlRow;
 import models.loginForm;
 import org.apache.commons.codec.digest.DigestUtils;
-import play.Logger;
-import play.api.Play;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
-import play.twirl.api.Content;
 import views.html.viewLogin;
 
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -37,6 +33,7 @@ public class LoginController extends Controller {
     FormFactory formFactory;
 
     public Result renderViewLogin() {
+        session("username", "null");
         return ok(
                 viewLogin.render(formFactory.form(loginForm.class))
         );
@@ -75,46 +72,57 @@ public class LoginController extends Controller {
 
 
     //must have a method called authenticate to access authenticated methods in secured
-    public Result authenticate(Form<loginForm> filledForm) {
+    private Result authenticate(Form<loginForm> filledForm) {
 
         //get loginForm information from the form that was filled inside of viewLogin
         loginForm validatedLoginForm = filledForm.get();
 
-        //get hased password
-        String hashPassword = DigestUtils.sha1Hex(validatedLoginForm.getPassword());
-
-        String queryString = "SELECT * FROM users WHERE username = '" + validatedLoginForm.getUsername() + "' AND password = '" + hashPassword + "'";
-        //returns list where username is username
-        SqlQuery query = Ebean.createSqlQuery(queryString);
 
 
-        List<SqlRow> rows = query.findList();
-
-
-        session("username", "null");
-
-        for (SqlRow row : rows) {
-
-            if (row.getString("username").equals(validatedLoginForm.getUsername())) {
-                if (row.getString("password").equals(hashPassword)) {
-                    //username with password exists, add username to session
-                    session("username", filledForm.get().username);
-                }
-            }
-        }
 
         //user was not found or had incorrect password
-        if (session().get("username").equals("null")){
+        if (!userValidate(validatedLoginForm.getUsername(), validatedLoginForm.getPassword())){
 
+            session("username", "null");
             flash("Message", "Wrong username or password");
             return redirect(
                     routes.LoginController.renderViewLogin()
             );
 
         } else {
+            session("username", validatedLoginForm.getUsername());
             return redirect(
-                    routes.LoginController.test()
+                    routes.HomeController.index()
             );
         }
     }
+
+    //returns t/f if user name and password is valid
+    public boolean userValidate(String username, String password){
+
+        //get hased password
+        String hashPassword = DigestUtils.sha1Hex(password);
+
+        String queryString = "{call UserValidate('" + username + "','" + hashPassword + "')}";
+        //String queryString = "SELECT * FROM users WHERE username = '" + validatedLoginForm.getUsername() + "' AND password = '" + hashPassword + "'";
+        //returns list where username is username
+
+
+        SqlQuery query = Ebean.createSqlQuery(queryString);
+
+
+        List<SqlRow> rows = query.findList();
+
+        //Logger.debug(rows.toString());
+
+        for (SqlRow row : rows) {
+            if (!row.toString().equals("{count(*)=0}")){
+                //username with password exists, add username to session
+               return true;
+            }
+        }
+
+        return false;
+    }
+
 }

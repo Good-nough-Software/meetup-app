@@ -2,15 +2,26 @@ body {
     background: lightgray;
 }
 
+table.header{
+    width: 100%;
+}
+td.header{
+    padding-top: 25px;
+}
+
+form.header{
+    padding-top: 5px;
+}
+
 div.header {
-    width: 100% +50px;
-    height: 80px;
+    width: 105%;
+    height: 150px;
     margin-top: -50px;
     position: relative;
     margin-left: -50vw;
     left: 50%;
     text-align: center;
-    background: lightslategray;
+    background: lightslategrey;
     color: white;
     font-size: 30px;
     border-bottom: 1px solid black;
@@ -23,10 +34,9 @@ h1.header {
 }
 
 button.header {
-    background-color: lightskyblue;
-    color: white;
+    background-color: lightgray;
+    color: black;
     padding: 14px 20px;
-    margin: 8px 0;
     border: none;
     cursor: pointer;
     width: 40%;
@@ -35,10 +45,25 @@ button.header {
     text-align: center;
 
 }
+div.loginPageButtons{
+    width: 100%;
+    justify-content: center;
+    margin: 0 auto;
+}
 
+tr.loginPage{
+    margin: 0 auto;
+}
+
+table.loginPage{
+    width: 100%;
+}
+
+
+/*Container for login fields*/
 div.loginPage {
     border: 1px solid black;
-    background: lightseagreen;
+    background: lightslategrey;
     width: 300px;
     padding: 10px;
     margin: 0 auto;
@@ -46,17 +71,32 @@ div.loginPage {
 
 }
 
-button.loginPage {
-    background-color: lightskyblue;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 40%;
-    display: block;
-    margin: 0 auto;
+
+/*Text inside buttons on login page inside of*/
+p.buttonText{
     text-align: center;
+    position: relative;
+    margin:auto;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+}
+
+button.loginPage {
+    background-color: lightgray;
+    color: black;
+    padding: 14px 20px;
+    border: 1px solid dimgray;
+    cursor: pointer;
+    width: 120px;
+    height: 25px;
+    display: block;
+    margin: auto;
+    text-align: center;
+    vertical-align: center;
+
+
 
 }
 
@@ -72,7 +112,6 @@ input.loginPage {
 }
 
 dl.loginPage {
-
     text-align: center;
 
 }
@@ -88,7 +127,3 @@ dd {
     margin: 0 auto;
 }
 
-/*form.loginPage{*/
-/*display: block;*/
-/*margin: 0 auto;*/
-/*}*/

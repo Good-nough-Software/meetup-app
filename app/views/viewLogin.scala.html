@@ -52,23 +52,33 @@ Form[loginForm] is needed to construct page
             <input type="password" name="password" placeholder="Password" required>
             </p>
             *@
-            <p>
-                <button type="submit" class="loginPage">Login</button>
-            </p>
+            <div class="loginPageButtons">
+            <table class="loginPage">
+                <tr class="loginPage"><td>
+                    <button type="submit" class="loginPage"><p class="buttonText">Login</p></button>
+                </td></tr>
+
+                <tr><td>
+                    <form action="@routes.newUserController.renderViewNewUser()">
+                        <button type="submit" class="loginPage"><p class="buttonText">Sign Up!</p></button>
+                    </form>
+                </td></tr>
+
+                <tr><td>
+                    <form action="@routes.resetPasswordController.renderViewResetPassword()">
+                        <button type="submit" class="loginPage"><p class="buttonText">Forgot Password?</p></button>
+                    </form>
+                </td></tr>
+
+            </table>
+            </div>
 
         }
 
 
-        <form action="@routes.LoginController.logout()" >
-            <button type="submit" class="loginPage">Logout</button>
-        </form>
+
     </div>
 
-
-    <div>
-        <a href="/viewNewUser">Sign up!</a>
-        <a href="/viewResetPassword">Forgot password?</a>
-    </div>
 
 
     <form action="@routes.debugController.main()">
