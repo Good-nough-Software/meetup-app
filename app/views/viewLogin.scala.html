@@ -16,9 +16,10 @@ Form[loginForm] is needed to construct page
             a value <input type="hidden" name="csrfToken" value="1234567890abcdef"/>
 
             *@
-            @CSRF.formField
+
 
         @helper.form(routes.LoginController.login()) {
+            @CSRF.formField
 
             <h1 class="loginPage" >Login</h1>
             @*
