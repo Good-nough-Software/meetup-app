@@ -1,15 +1,25 @@
 package controllers;
 
 import com.google.inject.Inject;
+import io.ebean.Ebean;
+import io.ebean.SqlQuery;
+import io.ebean.SqlRow;
 import models.resetPasswordForm;
+import org.apache.commons.codec.digest.DigestUtils;
+import play.Logger;
 import play.data.Form;
 import play.data.FormFactory;
+import play.db.Database;
 import play.libs.mailer.Email;
 import play.libs.mailer.MailerClient;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.viewResetPassword;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -29,6 +39,8 @@ public class resetPasswordController extends Controller {
     //used to send email
     @Inject
     MailerClient mailerClient;
+    @Inject
+    Database db;
 
     public Result renderViewResetPassword() {
 
@@ -49,23 +61,45 @@ public class resetPasswordController extends Controller {
         Form<resetPasswordForm> filledForm = formFactory.form(resetPasswordForm.class).bindFromRequest();
         String email = filledForm.get().getEmail();
 
-        //get random code
-        String code = getSaltString();
+        String queryString = "SELECT * FROM users WHERE email = '" + email + "'";
+        //returns list where username is username
+        SqlQuery query = Ebean.createSqlQuery(queryString);
 
-        //send email to user specified email
-        sendEmail(email, code);
 
-        //sets session
-        session("resetCode", code);
+        List<SqlRow> rows = query.findList();
 
-        //returns to same page, but in view there is a condition to change if the reset code is set
-        return redirect(routes.resetPasswordController.renderViewResetPassword());
+        Logger.debug(rows.toString());
+
+        if (!rows.isEmpty()) {
+            //get random code
+            String code = getSaltString();
+
+            //send email to user specified email
+            sendEmail(email, code);
+
+            //sets session
+            session("resetCode", code);
+            session("resetEmail", email);
+
+            //returns to same page, but in view there is a condition to change if the reset code is set
+            return redirect(routes.resetPasswordController.renderViewResetPassword());
+        } else {
+            flash("Message", "Email not found");
+            session("resetCode", "");
+            response().discardCookie("resetEmail");
+            return redirect(
+                    routes.resetPasswordController.renderViewResetPassword()
+            );
+        }
+
+
     }
 
     //after user enters code
     public Result sendResetPassword() {
         Form<resetPasswordForm> filledForm = formFactory.form(resetPasswordForm.class).bindFromRequest();
         String codeEntered = filledForm.get().getResetCode();
+        String newPassword = DigestUtils.sha1Hex(filledForm.get().getTempNewPassword());
 
 
         //code should never be empty for session, only way they can enact this method is if
@@ -77,13 +111,56 @@ public class resetPasswordController extends Controller {
             //check if email is associated with a user
             //reset password
             session("resetCode", "");
-            return TODO;
+
+            //Must contain reset email so we can recover the password from db
+            if (session().containsKey("resetEmail")) {
+                String email = session("resetEmail");
+                String queryString = "SELECT * FROM users WHERE email = '" + email + "'";
+                //returns list where username is username
+                SqlQuery query = Ebean.createSqlQuery(queryString);
+
+
+                List<SqlRow> rows = query.findList();
+
+                //extract username and current password from db
+                String password = rows.get(0).getString("password");
+                String username = rows.get(0).getString("username");
+
+
+                //UserPasswordChange(username, oldPassword, newPassword)
+                String resetPassword = "{call UserPasswordChange('" + username + "','" + password + "','" + newPassword + "')}";
+
+                try {
+                    Connection con = db.getConnection();
+                    Logger.debug("Preparing call: " + resetPassword);
+                    CallableStatement stmt;
+                    stmt = con.prepareCall(resetPassword);
+                    Logger.debug("Prepared: " + stmt.toString());
+                    stmt.execute();
+                    Logger.debug("Executed");
+                    //set username to user
+                    flash("Message", "Password Reset");
+                    return redirect(
+                            routes.resetPasswordController.renderViewResetPassword()
+                    );
+
+                } catch (SQLException e) {
+                    Logger.debug(e.getMessage());
+                }
+
+
+            } else {
+                return badRequest();
+            }
+
+
         } else {
             flash("Message", "Incorrect code");
             return redirect(
                     routes.resetPasswordController.renderViewResetPassword()
             );
         }
+        return badRequest();
 
     }
 
