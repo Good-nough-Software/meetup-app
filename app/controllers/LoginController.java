@@ -34,6 +34,7 @@ public class LoginController extends Controller {
 
     public Result renderViewLogin() {
         session("username", "null");
+        session("resetCode", "");
         return ok(
                 viewLogin.render(formFactory.form(loginForm.class))
         );
@@ -69,8 +70,6 @@ public class LoginController extends Controller {
     }
 
 
-
-
     //must have a method called authenticate to access authenticated methods in secured
     private Result authenticate(Form<loginForm> filledForm) {
 
@@ -78,10 +77,8 @@ public class LoginController extends Controller {
         loginForm validatedLoginForm = filledForm.get();
 
 
-
-
         //user was not found or had incorrect password
-        if (!userValidate(validatedLoginForm.getUsername(), validatedLoginForm.getPassword())){
+        if (!userValidate(validatedLoginForm.getUsername(), validatedLoginForm.getPassword())) {
 
             session("username", "null");
             flash("Message", "Wrong username or password");
@@ -98,14 +95,13 @@ public class LoginController extends Controller {
     }
 
     //returns t/f if user name and password is valid
-    public boolean userValidate(String username, String password){
+    public boolean userValidate(String username, String password) {
 
         //get hased password
         String hashPassword = DigestUtils.sha1Hex(password);
 
+        //dont use this if the procedure does not return a table. Use the method in newUserController
         String queryString = "{call UserValidate('" + username + "','" + hashPassword + "')}";
-        //String queryString = "SELECT * FROM users WHERE username = '" + validatedLoginForm.getUsername() + "' AND password = '" + hashPassword + "'";
-        //returns list where username is username
 
 
         SqlQuery query = Ebean.createSqlQuery(queryString);
@@ -116,9 +112,9 @@ public class LoginController extends Controller {
         //Logger.debug(rows.toString());
 
         for (SqlRow row : rows) {
-            if (!row.toString().equals("{count(*)=0}")){
+            if (!row.toString().equals("{count(*)=0}")) {
                 //username with password exists, add username to session
-               return true;
+                return true;
             }
         }
 

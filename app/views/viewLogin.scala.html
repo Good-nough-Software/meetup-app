@@ -11,13 +11,14 @@ Form[loginForm] is needed to construct page
     Using CSRF authenticates and allows POST requests
     *@
     <div class="loginPage">
-        @helper.form(routes.LoginController.login()) {
             @*
             Moved CSRF out of routes, doing so will remove it from url string and store it as
             a value <input type="hidden" name="csrfToken" value="1234567890abcdef"/>
 
             *@
             @CSRF.formField
+
+        @helper.form(routes.LoginController.login()) {
 
             <h1 class="loginPage" >Login</h1>
             @*
@@ -54,9 +55,11 @@ Form[loginForm] is needed to construct page
             *@
             <div class="loginPageButtons">
             <table class="loginPage">
+
                 <tr class="loginPage"><td>
                     <button type="submit" class="loginPage"><p class="buttonText">Login</p></button>
                 </td></tr>
+            }
 
                 <tr><td>
                     <form action="@routes.newUserController.renderViewNewUser()">
@@ -73,7 +76,7 @@ Form[loginForm] is needed to construct page
             </table>
             </div>
 
-        }
+
 
 
 
@@ -81,16 +84,7 @@ Form[loginForm] is needed to construct page
 
 
 
-    <form action="@routes.debugController.main()">
-        <input type="submit" value="Debug" />
-    </form>
 
-
-    @if(flash.containsKey("debug")) {
-        <p class="debug">
-        @flash.get("debug")
-        </p>
-    }
 
 
 }

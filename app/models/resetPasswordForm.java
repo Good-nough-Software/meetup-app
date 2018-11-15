@@ -10,6 +10,16 @@ package models;
 public class resetPasswordForm {
     private String email;
 
+    public String getResetCode() {
+        return resetCode;
+    }
+
+    public void setResetCode(String resetCode) {
+        this.resetCode = resetCode;
+    }
+
+    private String resetCode;
+
     public resetPasswordForm(String email) {
         this.email = email;
     }

@@ -50,6 +50,18 @@
 
 	<footer>
 	    Copyright © 2018 Good 'nough Software
+
+            <form action="@routes.debugController.main()">
+                <input type="submit" value="Debug" />
+                <input type="hidden" name="previousURL" value="@request.uri"/>
+            </form>
+
+
+            @if(flash.containsKey("debug")) {
+                <p class="debug">
+                @flash.get("debug")
+                </p>
+            }
 	</footer>
 	<script src="@routes.Assets.versioned("javascripts/main.js")" type="text/javascript"></script>
     </body>
