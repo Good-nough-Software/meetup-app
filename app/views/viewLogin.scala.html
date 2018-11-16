@@ -25,11 +25,13 @@ Form[loginForm] is needed to construct page
             @*
             This creates the neceessary html to populate the fields of the loginForm
             *@
+            <div class="flash">
             @if(flash.containsKey("Message")) {
                 <p class="Error">
                 @flash.get("Message")
                 </p>
             }
+            </div>
 
             @helper.inputText(form("username"),
                 'required -> "required",
