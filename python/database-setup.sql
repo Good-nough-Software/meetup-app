@@ -50,8 +50,11 @@ CREATE TABLE IF NOT EXISTS relations (
 	FOREIGN KEY (userid) REFERENCES users (id)
 );
 
+
+
 delimiter  //
-CREATE PROCEDURE IF NOT EXISTS UserAdd
+DROP PROCEDURE IF EXISTS UserAdd//
+CREATE PROCEDURE UserAdd
 	(parameter_username VARCHAR(32),
 	parameter_email VARCHAR(40),
 	parameter_password CHAR(40),
@@ -61,7 +64,8 @@ CREATE PROCEDURE IF NOT EXISTS UserAdd
 		insert into users (username, email, password, name) values(parameter_username, parameter_email, parameter_password, parameter_name);
 	END;//
 
-CREATE PROCEDURE IF NOT EXISTS UserValidate
+DROP PROCEDURE IF EXISTS UserValidate//
+CREATE PROCEDURE UserValidate
 	(parameter_username VARCHAR(32),
 	parameter_password CHAR(40))
 	READS SQL DATA
@@ -69,7 +73,8 @@ CREATE PROCEDURE IF NOT EXISTS UserValidate
 		select count(*) from users where username=parameter_username and password=parameter_password;
 	END;//
 
-CREATE PROCEDURE IF NOT EXISTS UserPasswordChange
+DROP PROCEDURE IF EXISTS UserPasswordChange//
+CREATE PROCEDURE UserPasswordChange
 	(parameter_username varchar(32),
 	parameter_oldPassword varchar(40),
 	parameter_newPassword varchar(40))
@@ -78,7 +83,8 @@ CREATE PROCEDURE IF NOT EXISTS UserPasswordChange
 		update users set users.password = parameter_newPassword where users.password = parameter_oldPassword and users.username = parameter_username;
 	END;//
 
-CREATE PROCEDURE IF NOT EXISTS UpdateUser
+DROP PROCEDURE IF EXISTS UpdateUser//
+CREATE PROCEDURE UpdateUser
 	(parameter_username varchar(32),
 	parameter_password varchar(40),
 	parameter_name varchar(32),
