@@ -36,7 +36,7 @@ public class HomeControllerTest extends WithApplication {
             .uri("/results");
 
         Result result = route(app, request);
-        assertEquals(OK, result.status());
+        assertEquals(303, result.status());
     }
 
     @Test

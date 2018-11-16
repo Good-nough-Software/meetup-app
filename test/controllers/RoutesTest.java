@@ -40,8 +40,9 @@ public class RoutesTest extends WithApplication {
                 .method(GET)
                 .uri("/results");
 
+        // Empty /results request redirects to /home which gives a 303 status code
         result = route(app, request);
-        TestCase.assertEquals(200, result.status());
+        TestCase.assertEquals(303, result.status());
 
         request = Helpers.fakeRequest()
                 .method(GET)
