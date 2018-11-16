@@ -59,6 +59,11 @@ table.loginPage{
     width: 100%;
 }
 
+div.flash{
+    margin: 0 auto;
+    text-align: center;
+}
+
 
 /*Container for login fields*/
 div.loginPage {

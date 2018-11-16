@@ -11,6 +11,15 @@ public class resetPasswordForm {
     private String email;
     private String resetCode;
     private String tempNewPassword;
+    private String tempNewPasswordConfirm;
+
+    public String getTempNewPasswordConfirm() {
+        return tempNewPasswordConfirm;
+    }
+
+    public void setTempNewPasswordConfirm(String tempNewPasswordConfirm) {
+        this.tempNewPasswordConfirm = tempNewPasswordConfirm;
+    }
 
     public String getTempNewPassword() {
         return tempNewPassword;
