@@ -37,13 +37,13 @@ public class HomeController extends Controller {
     public Result results() {
         Form<Search> resultsForm = formFactory.form(Search.class).bindFromRequest();
         Search search = resultsForm.get();
-        String query = search.getSearch().toLowerCase();
+        String query = search.getSearch();
 
-        Form<Search> form = formFactory.form(Search.class);
-        if (query.isEmpty()) {
-            List<Location> empty = new ArrayList<>();
-            return ok(views.html.results.render(form, empty, query));
+        if (query == null || query.isEmpty()) {
+            return redirect("/home");
         }
+
+        query = query.toLowerCase();
 
         List<Location> locations = Location.find.all();
 
@@ -58,6 +58,7 @@ public class HomeController extends Controller {
             }
         }
 
+        Form<Search> form = formFactory.form(Search.class);
         return ok(views.html.results.render(form, matches, query));
     }
 }
