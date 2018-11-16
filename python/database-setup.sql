@@ -58,7 +58,7 @@ CREATE PROCEDURE IF NOT EXISTS UserAdd
 	parameter_name VARCHAR(32))
 	MODIFIES SQL DATA
 	BEGIN
-		insert into users (username, email, password, name) values(parameter_username, parameter_email, paramter_password, parameter_name);
+		insert into users (username, email, password, name) values(parameter_username, parameter_email, parameter_password, parameter_name);
 	END;//
 
 CREATE PROCEDURE IF NOT EXISTS UserValidate
