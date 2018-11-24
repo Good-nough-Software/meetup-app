@@ -21,7 +21,7 @@ public class User extends Model {
   public String email;
 	public String name;
   public String phone;
-  public Integer location;
+  public int location;
 
   public static final Finder<Long, User> find = new Finder<>(User.class);
 
