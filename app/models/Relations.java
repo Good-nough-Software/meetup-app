@@ -10,7 +10,7 @@ import io.ebean.*;
  */
 @Entity
 @Table(name="relations")
-public class Relation extends Model {
+public class Relations extends Model {
 
   @Id
   public int id;
@@ -18,9 +18,9 @@ public class Relation extends Model {
   public int eventid;
   public int userid;
 
-  public static final Finder<Long, Relation> find = new Finder<>(Relation.class);
+  public static final Finder<Long, Relations> find = new Finder<>(Relations.class);
 
-  public boolean equals(Relation other) {
+  public boolean equals(Relations other) {
     if (this.id == other.id) {
       return true;
     }
