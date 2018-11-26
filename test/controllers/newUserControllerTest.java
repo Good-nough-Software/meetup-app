@@ -10,8 +10,8 @@ import play.test.WithApplication;
 
 import java.io.IOException;
 
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
-import static play.test.Helpers.contentAsString;
 import static play.test.Helpers.route;
 
 /**
@@ -27,8 +27,7 @@ public class newUserControllerTest extends WithApplication {
     public void newUserTest() {
         JsonNode jsonNode = null;
         try {
-            jsonNode = (new ObjectMapper()).readTree("{ \"username\": \"jsmith\", \"password\": \"password\" , " +
-                    " \"email\": \"fake\", \"firstName\": \"fake\", \"lastName\": \"fake\" }");
+            jsonNode = (new ObjectMapper()).readTree("{ \"firstName\": \"fake\", \"lastName\": \"fake\", \"email\": \"fake\", \"username\": \"jsmith\", \"password\": \"password\" }");
             Http.RequestBuilder request = new Http.RequestBuilder()
                     .method("POST")
                     .bodyJson(jsonNode)
@@ -36,30 +35,13 @@ public class newUserControllerTest extends WithApplication {
 
             request = CSRFTokenHelper.addCSRFToken(request);
             Result result = route(request);
+           String flash = result.flash().get("Message");
 
-
-            assertTrue(contentAsString(result).contains("username taken"));
+            assertTrue(flash.contains("Username already exists"));
         } catch (IOException e) {
-            assertTrue(1 ==0);
+            assertEquals(1,0);
         }
 
-         jsonNode = null;
-        try {
-            jsonNode = (new ObjectMapper()).readTree("{ \"username\": \"noone\", \"password\": \"password\" , " +
-                    " \"email\": \"fake\", \"firstName\": \"fake\", \"lastName\": \"fake\" }");
-            Http.RequestBuilder request = new Http.RequestBuilder()
-                    .method("POST")
-                    .bodyJson(jsonNode)
-                    .uri(controllers.routes.newUserController.createNewUser().url());
-
-            request = CSRFTokenHelper.addCSRFToken(request);
-            Result result = route(request);
-
-
-            assertTrue(contentAsString(result).contains("create user"));
-        } catch (IOException e) {
-            assertTrue(1 ==0);
-        }
 
     }
 
