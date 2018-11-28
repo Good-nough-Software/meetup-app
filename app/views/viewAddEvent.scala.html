@@ -10,6 +10,14 @@
         @CSRF.formField
         <div class="loginPage">
             <h1 class="loginPage">Create a new Event!</h1>
+
+            <div class="flash">
+            @if(flash.containsKey("Message")) {
+                <p class="Error">
+                @flash.get("Message")
+                </p>
+            }
+            </div>
             <table>
                 <tr>
                     @helper.inputText(form("eventName"),
@@ -36,6 +44,7 @@
                         'class -> "loginPage",
                         '_class -> "loginPage",
                         'size -> 75)
+
 
                     <button type="submit" class="loginPage"><p class="buttonText">Create Event</p></button>
                 </tr>

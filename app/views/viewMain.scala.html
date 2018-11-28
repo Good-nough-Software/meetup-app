@@ -19,8 +19,14 @@
          * the page content. *@
 	<div class="header">
         <table class="header">
-            <tr><td>
-                <h1 class="header">Meet-up</h1>
+            <tr><td class="headerMU">
+
+                <div class="headerMU">
+                    <form action="@routes.HomeController.index()" class="headerMU">
+                    <button class="headerMU" ><h1 class="headerMU">Meet-up</h1></button>
+                    </form>
+                </div>
+
             </td>
 
                 @if(session().containsKey("username")) {

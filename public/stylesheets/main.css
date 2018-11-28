@@ -19,12 +19,16 @@ table.header {
 td.header {
     padding-top: 25px;
     width: 250px;
-
 }
 
 form.header {
     padding-top: 5px;
 }
+
+form.headerMU {
+    padding-top: 20px;
+}
+
 
 div.header {
     width: 105%;
@@ -44,17 +48,37 @@ div.header {
     font-size: 30px;
 }
 
-h1.header {
+div.headerMU {
+    display: inline-block;
+    height: 122px;
+
+}
+
+
+button.headerMU {
+    background: none;
+    border: none;
+    height: 100%;
+
+}
+
+h1.headerMU{
+    font-size: 65px;
+    font-family: 'Hind Guntur', sans-serif;
+    margin: 5px;
+
+}
+
+td.headerMU {
+    padding-top: 25px;
+    padding-left: 5px;
     text-align: left;
-    padding-top: 8px;
-    padding-left: 15px;
 }
 
 button.header {
 
     cursor: pointer;
     width: 40%;
-    margin: 0 auto;
     text-align: center;
 
     -webkit-border-radius: 3px;
@@ -189,7 +213,7 @@ button.loginPage {
     padding: 10px 10px 10px 10px;
     text-decoration: none;
     font-weight: bold;
-    color: #090909 ;
+    color: #090909;
     background-color: #f2f5f6;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#f2f5f6), to(#c8d7dc));
     background-image: -webkit-linear-gradient(top, #f2f5f6, #c8d7dc);
@@ -240,12 +264,12 @@ dd {
     margin: 0 auto;
 }
 
-textarea.addEventDescription{
+textarea.addEventDescription {
     width: 50%;
     height: 150px;
 }
 
-footer{
-    position:absolute;
-    bottom:0;
+footer {
+    position: absolute;
+    bottom: 0;
 }
