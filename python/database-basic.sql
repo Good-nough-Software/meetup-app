@@ -17,16 +17,16 @@ insert into users (username, password, usertype, email, name, phone)
 		"jmarek@mtu.edu", "Jerry Marek", "12311234567");
 
 insert into locations (country, state, city, zip, address) 
-	values ("United States", "Michigan", "Houghton", "49931", "1701 Woodland rd");
+	values ("United States", "Mi", "Houghton", "49931", "1701 Woodland rd");
 
 insert into locations (country, state, city, zip, address) 
-	values ("United States", "Michigan", "Traverse City", "49643", '529 W 8th st');
+	values ("United States", "Mi", "Traverse City", "49643", '529 W 8th st');
 
 insert into locations (country, state, city, zip, address) 
-	values ("United States", "Michigan", "Ann Arbor", "48110", "1313 deadend drive");
+	values ("United States", "Mi", "Ann Arbor", "48110", "1313 deadend drive");
 
 insert into locations (country, state, city, zip, address) 
-	values ("United States", "Pennsylvania", "Philadelphia", "19019", "6969 lovers lane");
+	values ("United States", "Pn", "Philadelphia", "19019", "6969 lovers lane");
 
 update users 
 	set location = (select id from locations where zip="49931")

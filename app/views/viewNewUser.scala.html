@@ -2,7 +2,7 @@
 Form[newUserForm] is needed to construct page
 *@
 @import helper._
-@(form: Form[newUserForm], message: String)
+@(form: Form[newUserForm])
 @viewMain("New User") {
     @*
     Tells the action of the form is to use the run the Post login in LoginController
@@ -11,41 +11,61 @@ Form[newUserForm] is needed to construct page
     *@
     @helper.form(routes.newUserController.createNewUser()) {
         @CSRF.formField
-        <h1>Create new user</h1>
+
         @*
         This creates the neceessary html to populate the fields of the loginForm
         *@
-        <p>@message</p>
+
+        <div class="loginPage">
+            <h1 class ="loginPage">Create new user</h1>
+            @if(flash.containsKey("Message")) {
+                <p class="Error">
+                @flash.get("Message")
+                </p>
+            }
+
         @helper.inputText(form("firstName"),
             'required -> "required",
             '_label -> "First Name",
             'placeholder -> "First name",
-            'id -> "firstName")
+            'id -> "firstName",
+            'class -> "loginPage",
+            '_class -> "loginPage")
         @helper.inputText(form("lastName"),
             'required -> "required",
             '_label -> "Last Name",
             'placeholder -> "Last Name",
-            'id -> "lastName")
+            'id -> "lastName",
+            'class -> "loginPage",
+            '_class -> "loginPage")
         @helper.inputText(form("email"),
             'required -> "required",
             '_label -> "Email",
             'placeholder -> "Email",
-            'id -> "email")
+            'id -> "email",
+            'class -> "loginPage",
+            '_class -> "loginPage")
         @helper.inputText(form("username"),
             'required -> "required",
             '_label -> "Username",
             'placeholder -> "username",
-            'id -> "username")
+            'id -> "username",
+            'class -> "loginPage",
+            '_class -> "loginPage")
         @helper.inputPassword(form("password"),
             'required -> "required",
             '_label -> "Password",
             'placeholder -> "password",
-            'id -> "password")
+            'id -> "password",
+            'class -> "loginPage",
+            '_class -> "loginPage")
+
 
 
         <p>
-            <button type="submit">Create new user!</button>
+            <button class="loginPage" type="submit">Create new user!</button>
         </p>
+        </div>
 
 
     }

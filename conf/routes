@@ -26,12 +26,16 @@ GET         /test                     controllers.LoginController.test()
 
 GET         /debug                    controllers.debugController.main
 
+GET         /viewNewEvent               controllers.AddNewEventController.renderViewAddEvent()
+
 POST        /login                    controllers.LoginController.login()
 
 POST        /createNewUser            controllers.newUserController.createNewUser()
 
-POST        /resetPassword            controllers.resetPasswordController.resetPassword()
+GET        /resetPassword            controllers.resetPasswordController.resetPassword()
 
 POST        /UserAccountSettings       controllers.UserAccountSettingsController.UserAccountSettings()
 
 POST        /UserProfile               controllers.UserProfileController.UserProfile()
+
+GET        /sendResetPassword          controllers.resetPasswordController.sendResetPassword()

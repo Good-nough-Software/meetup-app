@@ -55,8 +55,8 @@ CREATE TABLE IF NOT EXISTS friends (
 	userid		INT,
 	friendid	INT,
 	status		enum('pending', 'accepted', 'blocked'),
-	FOREIGN KEY (userid) REFERENCES user (id),
-	FOREIGN KEY (friendid) REFERENCES user (id),
+	FOREIGN KEY (userid) REFERENCES users (id),
+	FOREIGN KEY (friendid) REFERENCES users (id),
 	PRIMARY KEY (id, userid, friendid)
 );
 

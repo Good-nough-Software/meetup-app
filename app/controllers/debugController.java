@@ -3,6 +3,7 @@ package controllers;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import static play.mvc.Controller.request;
 import static play.mvc.Controller.session;
 import static play.mvc.Results.redirect;
 
@@ -16,9 +17,11 @@ import static play.mvc.Results.redirect;
 public class debugController {
 
     public Result main(){
-        Controller.flash("debug", "Session username: " + session("username"));
-        return redirect(
-                routes.LoginController.renderViewLogin()
-        );
+
+                Controller.flash("debug", session().toString());
+        String refererUrl = request().getHeader("referer");
+
+                return redirect(refererUrl);
+
     }
 }

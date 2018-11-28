@@ -6,12 +6,18 @@ import io.ebean.SqlQuery;
 import io.ebean.SqlRow;
 import models.loginForm;
 import models.newUserForm;
+import org.apache.commons.codec.digest.DigestUtils;
+import play.Logger;
 import play.data.Form;
 import play.data.FormFactory;
+import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.viewNewUser;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -24,15 +30,19 @@ import java.util.List;
 public class newUserController extends Controller {
 
 
+
+
     @Inject
     FormFactory formFactory;
     public Result renderViewNewUser(){
 
         Form<newUserForm> newUserForm = formFactory.form(newUserForm.class);
-        return ok(viewNewUser.render(newUserForm, ""));
+        return ok(viewNewUser.render(newUserForm));
     }
 
-    public Result createNewUser(){
+    @Inject
+    Database db;
+    public Result createNewUser() {
         //populate form from viewLogin page
         Form<loginForm> filledForm = formFactory.form(loginForm.class).bindFromRequest();
         //parses the data from the form
@@ -43,7 +53,6 @@ public class newUserController extends Controller {
         String lastName = filledForm.field("lastName").getValue().get();
 
 
-
         String queryString = "SELECT * FROM users WHERE username = '" + username + "'";
         //returns list where username is username
         SqlQuery query = Ebean.createSqlQuery(queryString);
@@ -51,13 +60,40 @@ public class newUserController extends Controller {
 
         List<SqlRow> rows = query.findList();
 
-        if (rows.isEmpty()){
-            return ok("create user");
-        }
-        else {
-            return ok("username taken");
-        }
+        if (rows.isEmpty()) {
+            //username does not exists
+            Logger.debug("User does not exist");
+            String hashPassword = DigestUtils.sha1Hex(password);
+            String addUserSQLString  = "{call UserAdd('" + username + "','" + email + "','" + hashPassword + "','" + firstName + " " + lastName + "')}";
+
+            try {
+                Connection con = db.getConnection();
+                Logger.debug("Preparing call: " + addUserSQLString);
+                CallableStatement userAddQuery;
+                userAddQuery = con.prepareCall(addUserSQLString);
+                Logger.debug("Prepared: " + userAddQuery.toString()) ;
+                userAddQuery.execute();
+                Logger.debug("Executed");
+                //set username to user
+                session("username", username);
+                return redirect(
+                        routes.HomeController.index()
+                );
+
+            } catch (SQLException e) {
+                Logger.debug(e.getMessage());
+                flash("Message", "Error creating user");
+                return ok();
+            }
 
 
+
+        }else {
+            //username taken
+            flash("Message", "Username already exists");
+            return redirect(
+                    routes.newUserController.renderViewNewUser()
+            );
+        }
     }
 }
