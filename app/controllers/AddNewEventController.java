@@ -1,6 +1,7 @@
 package controllers;
 
 import com.google.inject.Inject;
+import models.Search;
 import models.newEventForm;
 import play.Logger;
 import play.data.Form;
@@ -32,7 +33,7 @@ public class AddNewEventController {
 
     public Result renderViewAddEvent() {
         Result ok = ok(
-                viewAddEvent.render(formFactory.form(newEventForm.class))
+                viewAddEvent.render(formFactory.form(newEventForm.class),(formFactory.form(Search.class)))
         );
         return ok;
     }

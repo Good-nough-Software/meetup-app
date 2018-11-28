@@ -1,5 +1,5 @@
 @import helper._
-@(form: Form[userProfileForm], message: String)
+@(form: Form[userProfileForm], message: String)(searchHeaderForm: Form[Search])
 @viewMain("Your Profile") {
 
     @helper.form(routes.UserProfileController.UserProfile()) {
@@ -11,4 +11,4 @@
 
     }
 
-}
+}(searchHeaderForm)

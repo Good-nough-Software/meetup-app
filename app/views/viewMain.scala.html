@@ -4,7 +4,7 @@
 * two arguments, a `String` for the title of the page and an `Html`
 * object to insert into the body of the page.
 *@
-@(title: String)(content: Html)
+@(title: String)(content: Html)(form: Form[Search])
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,6 +28,10 @@
                 </div>
 
             </td>
+
+                <td class="header">
+                @viewSearch(form)
+                </td>
 
                 @if(session().containsKey("username")) {
                     <td class="header">

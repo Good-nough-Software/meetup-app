@@ -1,15 +1,15 @@
 package controllers;
 
-import models.userAccountSettingsForm;
-import views.html.viewUserAccountSettings;
+import models.Search;
 import models.loginForm;
-
-
-import javax.inject.Inject;
+import models.userAccountSettingsForm;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.viewUserAccountSettings;
+
+import javax.inject.Inject;
 
 public class UserAccountSettingsController extends Controller {
 
@@ -17,7 +17,7 @@ public class UserAccountSettingsController extends Controller {
     FormFactory formFactory;
     public Result renderViewUserAccountSettings(){
         Form<userAccountSettingsForm> userAccountSettingsForm = formFactory.form(userAccountSettingsForm.class);
-        return ok(viewUserAccountSettings.render(userAccountSettingsForm, ""));
+        return ok(viewUserAccountSettings.render(userAccountSettingsForm, "", formFactory.form(Search.class)));
     }
 
     public Result UserAccountSettings() {
@@ -33,7 +33,7 @@ public class UserAccountSettingsController extends Controller {
         // if(LoginController.validateUser(username, password) != 1){
         if (session().get("username").equals("null")) { // TODO replace with new method of autheication
             Form<userAccountSettingsForm> userAccountSettingsForm = formFactory.form(models.userAccountSettingsForm.class);
-            return ok(viewUserAccountSettings.render(userAccountSettingsForm, "Invalid Username or Password"));
+            return ok(viewUserAccountSettings.render(userAccountSettingsForm, "Invalid Username or Password", formFactory.form(Search.class)));
         } else {
             return ok("Username: " + username + "\nPassword: " + password + "\nName: " + name + "\nEmail: " + email + "\nPhone: " + phone + "\nAddress" + address);
         }

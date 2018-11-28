@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import io.ebean.Ebean;
 import io.ebean.SqlQuery;
 import io.ebean.SqlRow;
+import models.Search;
 import models.resetPasswordForm;
 import org.apache.commons.codec.digest.DigestUtils;
 import play.Logger;
@@ -50,7 +51,7 @@ public class resetPasswordController extends Controller {
             session("resetCode", "");
         }
 
-        Result ok = ok(viewResetPassword.render(resetPasswordForm));
+        Result ok = ok(viewResetPassword.render(resetPasswordForm, formFactory.form(Search.class)));
         return ok;
     }
 

@@ -2,7 +2,7 @@
 
 
 @import helper._
-@(form: Form[newEventForm])
+@(form: Form[newEventForm])(searchHeaderForm: Form[Search])
 @viewMain("Create a new event!") {
 
     @helper.form(routes.AddNewEventController.addNewEvent()){
@@ -52,4 +52,4 @@
         </div>
     }
 
-}
+}(searchHeaderForm)
