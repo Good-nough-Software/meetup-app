@@ -1,0 +1,46 @@
+
+
+
+@import helper._
+@(form: Form[newEventForm])
+@viewMain("Create a new event!") {
+
+    @helper.form(routes.AddNewEventController.renderViewAddEvent()){
+
+        @CSRF.formField
+        <div class="loginPage">
+            <h1 class="loginPage">Create a new Event!</h1>
+            <table>
+                <tr>
+                    @helper.inputText(form("eventName"),
+                        'required -> "required",
+                        '_label -> "Name",
+                        'placeholder -> "Event Name",
+                        'id -> "eventName",
+                        'class -> "loginPage",
+                        '_class -> "loginPage",
+                        'size -> 75)
+
+                    @helper.textarea(form("eventDescription"),
+                        'required -> "required",
+                        '_label -> "Description",
+                        'placeholder -> "Event Description",
+                        'id -> "eventDescription",
+                        'class -> "addEventDescription",
+                        '_class -> "loginPage")
+                    @helper.inputText(form("eventLocation"),
+                        'required -> "required",
+                        '_label -> "Location",
+                        'placeholder -> "Event Location",
+                        'id -> "eventLocation",
+                        'class -> "loginPage",
+                        '_class -> "loginPage",
+                        'size -> 75)
+
+                    <button type="submit" class="loginPage"><p class="buttonText">Create Event</p></button>
+                </tr>
+            </table>
+        </div>
+    }
+
+}

@@ -85,7 +85,7 @@ public class LoginControllerTest extends WithApplication {
         Map<String, String> sessionMap = result.session();
 
 
-        assertEquals(sessionMap.get("username"), "jsmith");
+        assertEquals( "jsmith",sessionMap.get("username"));
 
         jsonNode = (new ObjectMapper()).readTree("{ \"username\": \"noone\", \"password\": \"password\"  }");
         request = new Http.RequestBuilder()

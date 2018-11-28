@@ -9,12 +9,40 @@ package models;
  */
 public class resetPasswordForm {
     private String email;
+    private String resetCode;
+    private String tempNewPassword;
+    private String tempNewPasswordConfirm;
+
+    public String getTempNewPasswordConfirm() {
+        return tempNewPasswordConfirm;
+    }
+
+    public void setTempNewPasswordConfirm(String tempNewPasswordConfirm) {
+        this.tempNewPasswordConfirm = tempNewPasswordConfirm;
+    }
+
+    public String getTempNewPassword() {
+        return tempNewPassword;
+    }
+
+    public void setTempNewPassword(String tempNewPassword) {
+        this.tempNewPassword = tempNewPassword;
+    }
 
     public resetPasswordForm(String email) {
         this.email = email;
     }
+
     public resetPasswordForm() {
         this.email = null;
+    }
+
+    public String getResetCode() {
+        return resetCode;
+    }
+
+    public void setResetCode(String resetCode) {
+        this.resetCode = resetCode;
     }
 
     public String getEmail() {

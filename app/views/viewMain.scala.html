@@ -18,13 +18,57 @@
         @* And here's where we render the `Html` object containing
          * the page content. *@
 	<div class="header">
-            <h1 class="header">Meet-up</h1>
+        <table class="header">
+            <tr><td>
+                <h1 class="header">Meet-up</h1>
+            </td>
+
+                <td class="header">
+                    <form action="@routes.AddNewEventController.renderViewAddEvent()">
+                        <button type="submit" class="header"><p class="header">Create a new event</p></button>
+                    </form>
+                </td>
+                <td class="header">
+
+
+                        @if(session().get("username").equals("null")){
+                            <form class="header" action="@routes.LoginController.renderViewLogin()" >
+                                <button type="submit" class="header">Login</button>
+                            </form>
+                        }else{
+                            <form class="header" action="@routes.UserProfileController.renderViewUserProfile()" >
+                                <button type="submit" class="header">Profile</button>
+                            </form>
+                        }
+
+                    <form class="header" action="@routes.LoginController.logout()" >
+                        <button type="submit" class="header">Logout</button>
+                    </form>
+
+
+            </td></tr>
+
+
+        </table>
 	</div>
 
         @content
 
 	<footer>
+        <form action="@routes.debugController.main()">
+            <input type="submit" value="Debug" />
+            <input type="hidden" name="previousURL" value="@request.uri"/>
+        </form>
+
+
+        @if(flash.containsKey("debug")) {
+            <p class="debug">
+            @flash.get("debug")
+            </p>
+        }
 	    Copyright © 2018 Good 'nough Software
+
+
 	</footer>
 	<script src="@routes.Assets.versioned("javascripts/main.js")" type="text/javascript"></script>
     </body>
