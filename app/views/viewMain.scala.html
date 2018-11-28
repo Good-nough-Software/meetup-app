@@ -23,30 +23,35 @@
                 <h1 class="header">Meet-up</h1>
             </td>
 
-                <td class="header">
-                    <form action="@routes.AddNewEventController.renderViewAddEvent()">
-                        <button type="submit" class="header"><p class="header">Create a new event</p></button>
-                    </form>
-                </td>
-                <td class="header">
+                @if(session().containsKey("username")) {
+                    <td class="header">
+                    @if(!session().get("username").equals("null")) {
+                        <form action="@routes.AddNewEventController.renderViewAddEvent()">
+                            <button type="submit" class="header"><p class="header">Create a new event</p></button>
+                        </form>
+                    }
+                    </td>
+                    <td class="header">
 
 
-                        @if(session().get("username").equals("null")){
+                        @if(session().get("username").equals("null")) {
                             <form class="header" action="@routes.LoginController.renderViewLogin()" >
-                                <button type="submit" class="header">Login</button>
+                                <button type="submit" class="headerLogin">Login</button>
                             </form>
-                        }else{
+                        } else {
                             <form class="header" action="@routes.UserProfileController.renderViewUserProfile()" >
-                                <button type="submit" class="header">Profile</button>
+                                <button type="submit" class="headerLogin">Profile</button>
                             </form>
                         }
 
-                    <form class="header" action="@routes.LoginController.logout()" >
-                        <button type="submit" class="header">Logout</button>
-                    </form>
+                        <form class="header" action="@routes.LoginController.logout()" >
+                            <button type="submit" class="headerLogin">Logout</button>
+                        </form>
 
 
-            </td></tr>
+                    </td>
+                }
+            </tr>
 
 
         </table>
@@ -54,18 +59,20 @@
 
         @content
 
+
 	<footer>
         <form action="@routes.debugController.main()">
             <input type="submit" value="Debug" />
             <input type="hidden" name="previousURL" value="@request.uri"/>
         </form>
 
-
         @if(flash.containsKey("debug")) {
             <p class="debug">
             @flash.get("debug")
             </p>
         }
+
+
 	    Copyright © 2018 Good 'nough Software
 
 

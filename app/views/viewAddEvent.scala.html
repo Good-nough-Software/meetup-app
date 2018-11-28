@@ -5,7 +5,7 @@
 @(form: Form[newEventForm])
 @viewMain("Create a new event!") {
 
-    @helper.form(routes.AddNewEventController.renderViewAddEvent()){
+    @helper.form(routes.AddNewEventController.addNewEvent()){
 
         @CSRF.formField
         <div class="loginPage">
