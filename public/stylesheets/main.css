@@ -20,6 +20,7 @@ body {
     background: rgba(30, 87, 153, 1);
 }
 
+
 .header h1 {
     color: white;
 }
@@ -42,6 +43,8 @@ body {
 
 
 .header button {
+    cursor: pointer;
+    width: 40%;
     text-align: center;
     font-size: 14px;
     font-weight: bold;
@@ -120,7 +123,7 @@ button.loginPage {
     padding: 10px 10px 10px 10px;
     text-decoration: none;
     font-weight: bold;
-    color: #090909 ;
+    color: #090909;
     background-color: #f2f5f6;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#f2f5f6), to(#c8d7dc));
     background-image: -webkit-linear-gradient(top, #f2f5f6, #c8d7dc);
@@ -171,12 +174,12 @@ dd {
     margin: 0 auto;
 }
 
-textarea.addEventDescription{
+textarea.addEventDescription {
     width: 50%;
     height: 150px;
 }
 
-footer{
-    position:absolute;
-    bottom:0;
+footer {
+    position: absolute;
+    bottom: 0;
 }

@@ -9,20 +9,20 @@ package models;
  */
 public class newEventForm {
     private String eventName;
-    private String eventDiscription;
+    private String eventDescription;
     private String eventCreaterUsername;
     private String eventLocation;
 
-    public newEventForm(String eventName, String eventDiscription, String eventCreaterUsername, String eventLocation) {
+    public newEventForm(String eventName, String eventDescription, String eventCreaterUsername, String eventLocation) {
         this.eventName = eventName;
-        this.eventDiscription = eventDiscription;
+        this.eventDescription = eventDescription;
         this.eventCreaterUsername = eventCreaterUsername;
         this.eventLocation = eventLocation;
     }
 
     public newEventForm() {
         this.eventName = "";
-        this.eventDiscription = "";
+        this.eventDescription = "";
         this.eventCreaterUsername = "";
         this.eventLocation = "";
     }
@@ -37,12 +37,12 @@ public class newEventForm {
         this.eventName = eventName;
     }
 
-    public String getEventDiscription() {
-        return eventDiscription;
+    public String getEventDescription() {
+        return eventDescription;
     }
 
-    public void setEventDiscription(String eventDiscription) {
-        this.eventDiscription = eventDiscription;
+    public void setEventDescription(String eventDescription) {
+        this.eventDescription = eventDescription;
     }
 
     public String getEventCreaterUsername() {

@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import io.ebean.Ebean;
 import io.ebean.SqlQuery;
 import io.ebean.SqlRow;
+import models.Search;
 import models.loginForm;
 import models.newUserForm;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -37,7 +38,7 @@ public class newUserController extends Controller {
     public Result renderViewNewUser(){
 
         Form<newUserForm> newUserForm = formFactory.form(newUserForm.class);
-        return ok(viewNewUser.render(newUserForm));
+        return ok(viewNewUser.render(newUserForm, formFactory.form(Search.class)));
     }
 
     @Inject
