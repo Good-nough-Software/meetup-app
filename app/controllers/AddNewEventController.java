@@ -1,6 +1,7 @@
 package controllers;
 
 import com.google.inject.Inject;
+import models.Search;
 import models.newEventForm;
 import play.Logger;
 import play.data.Form;
@@ -14,6 +15,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import static play.mvc.Controller.flash;
+import static play.mvc.Controller.session;
 import static play.mvc.Results.ok;
 import static play.mvc.Results.redirect;
 
@@ -31,7 +33,7 @@ public class AddNewEventController {
 
     public Result renderViewAddEvent() {
         Result ok = ok(
-                viewAddEvent.render(formFactory.form(newEventForm.class))
+                viewAddEvent.render(formFactory.form(newEventForm.class),(formFactory.form(Search.class)))
         );
         return ok;
     }
@@ -42,11 +44,11 @@ public class AddNewEventController {
         Form<newEventForm> filledForm = formFactory.form(newEventForm.class).bindFromRequest();
         //parses the data from the form
         String eventName = filledForm.get().getEventName();
-        String eventDiscription = filledForm.get().getEventDiscription();
-        String eventCreaterUsername = filledForm.get().getEventCreaterUsername();
+        String eventDescription = filledForm.get().getEventDescription();
+        String eventCreaterUsername = session().get("username");
         String eventLocation = filledForm.get().getEventLocation();
 
-        String addUserSQLString  = "{call EventAdd('" + eventName + "','" + eventDiscription + "','" + eventLocation + "','" + eventCreaterUsername  + "')}";
+        String addUserSQLString  = "{call EventAdd('" + eventName + "','" + eventDescription + "','" + eventLocation + "','" + eventCreaterUsername  + "')}";
 
         try {
             Connection con = db.getConnection();
@@ -63,8 +65,10 @@ public class AddNewEventController {
 
         } catch (SQLException e) {
             Logger.debug(e.getMessage());
-            flash("Message", "Error creating event");
-            return ok();
+            flash("Message", "Error creating event: " + e.getMessage());
+            return redirect(
+                    routes.AddNewEventController.renderViewAddEvent()
+            );
         }
     }
 }

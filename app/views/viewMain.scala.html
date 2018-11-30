@@ -4,7 +4,7 @@
 * two arguments, a `String` for the title of the page and an `Html`
 * object to insert into the body of the page.
 *@
-@(title: String)(content: Html)
+@(title: String)(content: Html)(form: Form[Search])
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,9 +19,19 @@
          * the page content. *@
 	<div class="header">
         <table class="header">
-            <tr><td>
-                <h1 class="header">Meet-up</h1>
+            <tr><td class="headerMU">
+
+                <div class="headerMU">
+                    <form action="@routes.HomeController.index()" class="headerMU">
+                    <button class="headerMU" ><h1 class="headerMU">Meet-up</h1></button>
+                    </form>
+                </div>
+
             </td>
+
+                <td class="header">
+                @viewSearch(form)
+                </td>
 
                 @if(session().containsKey("username")) {
                     <td class="header">

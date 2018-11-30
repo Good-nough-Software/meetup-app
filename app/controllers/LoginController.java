@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import io.ebean.Ebean;
 import io.ebean.SqlQuery;
 import io.ebean.SqlRow;
+import models.Search;
 import models.loginForm;
 import org.apache.commons.codec.digest.DigestUtils;
 import play.data.Form;
@@ -36,7 +37,7 @@ public class LoginController extends Controller {
         session("username", "null");
         session("resetCode", "");
         return ok(
-                viewLogin.render(formFactory.form(loginForm.class))
+                viewLogin.render(formFactory.form(loginForm.class), formFactory.form(Search.class))
         );
     }
 
@@ -57,7 +58,7 @@ public class LoginController extends Controller {
     @Security.Authenticated
     public Result test() {
         return ok(
-                viewLogin.render(formFactory.form(loginForm.class))
+                viewLogin.render(formFactory.form(loginForm.class), formFactory.form(Search.class))
         );
     }
 

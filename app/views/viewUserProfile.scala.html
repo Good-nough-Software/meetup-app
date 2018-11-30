@@ -1,5 +1,7 @@
 @import helper._
-@(form: Form[userProfileForm], events: List[models.Events], message: String)
+
+@(form: Form[userProfileForm], events: List[models.Events], message: String)(searchHeaderForm: Form[Search])
+
 @viewMain("Your Profile") {
 
     <div class="result">
@@ -20,4 +22,4 @@
 
     </div>
 
-}
+}(searchHeaderForm)
