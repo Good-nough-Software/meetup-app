@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import models.Search;
 import models.Location;
+import models.Event;
 import play.db.*;
 
 /**
