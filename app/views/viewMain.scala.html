@@ -17,9 +17,9 @@
     <body>
 	<div class="header">
       <h1><a href="/">Meet-Up!</a></h1>
-	    <div class="search">
-         @viewSearch(form)
-	    </div>
+
+      @viewSearch(form)
+
             @if(session().containsKey("username")) {
                 @if(!session().get("username").equals("null")) {
                     <form class="event" action="@routes.AddNewEventController.renderViewAddEvent()">
