@@ -27,7 +27,7 @@ public class User extends Model {
   @ManyToOne
   public Location location;
 
-  public static final Finder<Long, User> find = new Finder<>(User.class);
+  public static final Finder<Integer, User> find = new Finder<>(User.class);
 
   public boolean equals(User other) {
     if (this.id == other.id) {
