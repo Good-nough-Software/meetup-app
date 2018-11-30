@@ -50,8 +50,8 @@ body {
 .search-container input {
     margin: 0;
     height: 40px;
+    color: black;
     background: white;
-
     font-size: 12px;
     border: none;
     padding: 0 10px;
