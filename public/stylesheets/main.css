@@ -61,20 +61,27 @@ body {
 .search-container button {
     height: 41px;
     margin-top: 11px;
+    background-color: lightgrey;
+    border-width: 0; 		/* FIXME: this is being contaimnated by something*/
 }
 
 #event-add {
-    font-size: 130%;
+    font-size: 160%;
     border-radius: 50%;
+}
+
+.event button {
+    border-width: 2px;
+    border-color: white;
+    background-color: rgba(30, 87, 153, 1);
 }
 
 .profile {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
-
 
 .header button {
     cursor: pointer;
@@ -82,12 +89,15 @@ body {
     font-size: 14px;
     font-weight: bold;
     font-family: arial, helvetica, sans-serif;
-    color: rgba(0, 0, 0, 0.75);
-    background-color: #f2f5f6;
+    color: white;
 }
 .profile button {
-    padding: 5px 5px 5px 5px;
-    border-radius: 4px;
+    padding: 6px 8px 7px 8px;
+    margin: 7px;
+    border-radius: 5px;
+    border-width: 2px;
+    border-color: white;
+    background-color: rgba(30, 87, 153, 1);
 }
 
 .header button:hover {
