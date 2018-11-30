@@ -30,7 +30,7 @@ public class UserProfileController extends Controller {
     FormFactory formFactory;
     public Result renderViewUserProfile(){
         Form<userProfileForm> userProfileForm = formFactory.form(userProfileForm.class);
-        return ok(viewUserProfile.render(userProfileForm, null,""), formFactory.form(Search.class))); //TODO fix the null
+        return ok(viewUserProfile.render(userProfileForm, null,"", formFactory.form(Search.class))); //TODO fix the null
     }
 
     public Result UserProfile() {
@@ -70,7 +70,7 @@ public class UserProfileController extends Controller {
         }
 
 
-        return ok(viewUserProfile.render(userProfileForm, matches,"")); //TODO fix the error
+        return ok(viewUserProfile.render(userProfileForm, matches,"", formFactory.form(Search.class))); //TODO fix the error
 
         /*
         String locations = filledForm.field("locations").getValue().get();
