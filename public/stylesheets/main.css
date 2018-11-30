@@ -105,6 +105,18 @@ body {
     background-color: #d4dee1;
 }
 
+.results-container {
+
+}
+
+.results-item {
+    background-color: white;
+    border-width: 1px;
+    border-color: lightgrey;
+    padding: 5px;
+    max-width: 700px;
+}
+
 div.loginPageButtons {
     width: 100%;
     justify-content: center;
