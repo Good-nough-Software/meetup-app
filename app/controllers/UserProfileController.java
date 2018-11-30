@@ -2,7 +2,7 @@ package controllers;
 
 
 import models.Search;
-import models.Events;
+import models.Event;
 import models.Location;
 import models.userProfileForm;
 import views.html.viewUserProfile;
@@ -40,7 +40,7 @@ public class UserProfileController extends Controller {
 
         Transaction tx = Ebean.beginTransaction();
 
-        List<Events> matches = new ArrayList<>();
+        List<Event> matches = new ArrayList<>();
 
         String select = "SELECT id, locationid, summary, userid, startDate, endDate, name FROM events WHERE userid = '" + filledForm.get().getUsername() + "';";
 
@@ -57,7 +57,7 @@ public class UserProfileController extends Controller {
                 Date end = result.getDate("endDate");
                 String name = result.getString("name");
 
-                Events event = new Events(id, locid, sum, userid, strt, end, name);
+                Event event = new Event(id, locid, sum, userid, strt, end, name);
                 matches.add(event);
             }
 

@@ -9,7 +9,7 @@ import java.sql.Date;
 
 @Entity
 @Table(name="events")
-public class Events {
+public class Event {
 
     @Id
     public int id;
@@ -21,7 +21,7 @@ public class Events {
     public Date endDate;
     public String name;
 
-    public Events(int ID, int locid, String sum, int user, Date start, Date end, String nme){
+    public Event(int ID, int locid, String sum, int user, Date start, Date end, String nme){
         id = ID;
         locationid = locid;
         summary = sum;
@@ -31,9 +31,9 @@ public class Events {
         name = nme;
     }
 
-    public static final Finder<Long, Events> find = new Finder<>(Events.class);
+    public static final Finder<Long, Event> find = new Finder<>(Event.class);
 
-    public boolean equals(Events other){
+    public boolean equals(Event other){
         if(this.id == other.id){
             return true;
         }
