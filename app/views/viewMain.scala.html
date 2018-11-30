@@ -10,55 +10,44 @@
 <html lang="en">
     <head>
         @* Here's where we render the page title `String`. *@
-    <title>@title</title>
+    <title>@title - Meet-Up!</title>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
     </head>
     <body>
-        @* And here's where we render the `Html` object containing
-         * the page content. *@
 	<div class="header">
-        <table class="header">
-            <tr><td>
-                <h1 class="header">Meet-up</h1>
-            </td>
-
-                @if(session().containsKey("username")) {
-                    <td class="header">
-                    @if(!session().get("username").equals("null")) {
-                        <form action="@routes.AddNewEventController.renderViewAddEvent()">
-                            <button type="submit" class="header"><p class="header">Create a new event</p></button>
-                        </form>
-                    }
-                    </td>
-                    <td class="header">
-
-
+            <h1>Meet-Up!</h1>
+	    <div class="search">
+	    <form>
+		<input id="search-bar" type="search"/>
+	    </form>
+	    </div>
+            @if(session().containsKey("username")) {
+                @if(!session().get("username").equals("null")) {
+                    <form class="event" action="@routes.AddNewEventController.renderViewAddEvent()">
+                    <button id="event-add" type="submit" title="Create new event!">+</button>
+		    </form>
+		}
+	    <div class="profile">
                         @if(session().get("username").equals("null")) {
-                            <form class="header" action="@routes.LoginController.renderViewLogin()" >
+                            <form action="@routes.LoginController.renderViewLogin()" >
                                 <button type="submit" class="headerLogin">Login</button>
                             </form>
                         } else {
-                            <form class="header" action="@routes.UserProfileController.renderViewUserProfile()" >
+                            <form action="@routes.UserProfileController.renderViewUserProfile()" >
                                 <button type="submit" class="headerLogin">Profile</button>
                             </form>
+			    <form action="@routes.LoginController.logout()" >
+				<button type="submit" class="headerLogin">Logout</button>
+                            </form>
                         }
-
-                        <form class="header" action="@routes.LoginController.logout()" >
-                            <button type="submit" class="headerLogin">Logout</button>
-                        </form>
-
-
-                    </td>
                 }
-            </tr>
-
-
-        </table>
+	    </div>
 	</div>
 
+	@* And here's where we render the `Html` object containing
+	 * the page content. *@
         @content
-
 
 	<footer>
         <form action="@routes.debugController.main()">
