@@ -2,10 +2,14 @@ package models;
 
 public class userProfileForm {
 
-    public String locations;
+    public String events;
 
-    public userProfileForm(String locations){
-        this.locations = locations;
+    public userProfileForm(String events){
+        this.events = events;
+    }
+
+    public userProfileForm(){
+        this.events = null;
     }
 
 }

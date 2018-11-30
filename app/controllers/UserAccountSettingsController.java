@@ -11,6 +11,12 @@ import views.html.viewUserAccountSettings;
 
 import javax.inject.Inject;
 
+import io.ebean.*;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.List;
+
 public class UserAccountSettingsController extends Controller {
 
     @Inject
@@ -28,15 +34,43 @@ public class UserAccountSettingsController extends Controller {
         String name = filledForm.field("name").getValue().get();
         String email = filledForm.field("email").getValue().get();
         String phone = filledForm.field("phone").getValue().get();
-        String address = filledForm.field("address").getValue().get();
 
-        // if(LoginController.validateUser(username, password) != 1){
-        if (session().get("username").equals("null")) { // TODO replace with new method of autheication
-            Form<userAccountSettingsForm> userAccountSettingsForm = formFactory.form(models.userAccountSettingsForm.class);
-            return ok(viewUserAccountSettings.render(userAccountSettingsForm, "Invalid Username or Password", formFactory.form(Search.class)));
-        } else {
-            return ok("Username: " + username + "\nPassword: " + password + "\nName: " + name + "\nEmail: " + email + "\nPhone: " + phone + "\nAddress" + address);
+      
+        Transaction tx = Ebean.beginTransaction();
+
+        String call = "CALL UPDATE_USER(?, ?, ?, ?, ?)";
+
+        try{
+            Connection dbConnect = tx.getConnection();
+            CallableStatement callable = dbConnect.prepareCall(call);
+
+            callable.setString(1, username);
+            callable.setString(2, password);
+            callable.setString(3, name);
+            callable.setString(4, email);
+            callable.setString(5, phone);
+
+            ResultSet result = callable.executeQuery();
+        }catch(Exception e){
+            Ebean.rollbackTransaction();
+            e.printStackTrace();
+        } finally {
+            Ebean.endTransaction();
         }
+
+
+
+        String queryString = "SELECT username FROM users WHERE username = '" + filledForm.get().getUsername() + "'";
+        SqlQuery query = Ebean.createSqlQuery(queryString);
+        List<SqlRow> rows = query.findList();
+
+        if(rows.isEmpty()) {
+            return ok("Username doesn't exist");
+        } else {
+            return ok("User info Updated");
+        }
+
+
     }
 
 }
