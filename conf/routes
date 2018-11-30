@@ -28,6 +28,8 @@ GET         /debug                    controllers.debugController.main
 
 GET         /viewNewEvent               controllers.AddNewEventController.renderViewAddEvent()
 
+GET         /viewNonUserProfile         controllers.nonCurrentUserProfileController.renderNonCurrentUserProfileView()
+
 POST        /login                    controllers.LoginController.login()
 
 POST        /createNewUser            controllers.newUserController.createNewUser()
