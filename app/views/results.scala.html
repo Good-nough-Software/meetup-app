@@ -1,14 +1,12 @@
 @(form: Form[Search], locations: List[models.Location], search: String)
 
 @viewMain("Meetup App - Results") {
-
-    @viewSearch(form)
-
-    <div class="result">
+    <div class="result-container">
 	@if(locations.isEmpty()){
 	    <h2>No results found ☹, try searching something else!</h2>
 	} else {
 	    @for(location <- locations) {
+		<div class="results-item">
 		<ul>
 		<li>@location.address</li>
 		<li>@location.city</li>
@@ -16,8 +14,8 @@
 		<li>@location.zip</li>
 		<li>@location.country</li>
 		</ul>
+		</div>
 	    }
 	}
-
     </div>
 }(form)
