@@ -4,9 +4,9 @@
 <div class="search-container">
 @helper.form(action = routes.HomeController.results()) {
     @helper.inputText(form("Search"),
-		      'placeholder -> "Search locations..",
+		      'placeholder -> "Search...",
 		      'id -> "search",
 		      'class -> "search-box")
-    <input class="submit" type="submit" value="&#128270;">
+    <button type="submit">&#128270;</button>
 }
 </div>

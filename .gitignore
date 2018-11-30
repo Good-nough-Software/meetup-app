@@ -5,3 +5,4 @@ target
 .ensime*
 *~
 *.log
+conf/evolutions

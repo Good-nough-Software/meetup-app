@@ -1,15 +1,15 @@
 package controllers;
 
-import models.userAccountSettingsForm;
-import views.html.viewUserAccountSettings;
+import models.Search;
 import models.loginForm;
-
-
-import javax.inject.Inject;
+import models.userAccountSettingsForm;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.viewUserAccountSettings;
+
+import javax.inject.Inject;
 
 import io.ebean.*;
 import java.sql.CallableStatement;
@@ -23,7 +23,7 @@ public class UserAccountSettingsController extends Controller {
     FormFactory formFactory;
     public Result renderViewUserAccountSettings(){
         Form<userAccountSettingsForm> userAccountSettingsForm = formFactory.form(userAccountSettingsForm.class);
-        return ok(viewUserAccountSettings.render(userAccountSettingsForm, ""));
+        return ok(viewUserAccountSettings.render(userAccountSettingsForm, "", formFactory.form(Search.class)));
     }
 
     public Result UserAccountSettings() {

@@ -1,17 +1,20 @@
 package controllers;
 
-import models.Events;
+
+import models.Search;
+import models.Event;
 import models.Location;
 import models.userProfileForm;
 import views.html.viewUserProfile;
 import models.loginForm;
-
-
-import javax.inject.Inject;
+import models.userProfileForm;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.viewUserProfile;
+
+import javax.inject.Inject;
 
 import io.ebean.*;
 import java.sql.CallableStatement;
@@ -27,7 +30,7 @@ public class UserProfileController extends Controller {
     FormFactory formFactory;
     public Result renderViewUserProfile(){
         Form<userProfileForm> userProfileForm = formFactory.form(userProfileForm.class);
-        return ok(viewUserProfile.render(userProfileForm, null,"")); //TODO fix the null
+        return ok(viewUserProfile.render(userProfileForm, null,"", formFactory.form(Search.class))); //TODO fix the null
     }
 
     public Result UserProfile() {
@@ -37,7 +40,7 @@ public class UserProfileController extends Controller {
 
         Transaction tx = Ebean.beginTransaction();
 
-        List<Events> matches = new ArrayList<>();
+        List<Event> matches = new ArrayList<>();
 
         String select = "SELECT id, locationid, summary, userid, startDate, endDate, name FROM events WHERE userid = '" + filledForm.get().getUsername() + "';";
 
@@ -54,7 +57,7 @@ public class UserProfileController extends Controller {
                 Date end = result.getDate("endDate");
                 String name = result.getString("name");
 
-                Events event = new Events(id, locid, sum, userid, strt, end, name);
+                Event event = new Event(id, locid, sum, userid, strt, end, name);
                 matches.add(event);
             }
 
@@ -67,7 +70,7 @@ public class UserProfileController extends Controller {
         }
 
 
-        return ok(viewUserProfile.render(userProfileForm, matches,"")); //TODO fix the error
+        return ok(viewUserProfile.render(userProfileForm, matches,"", formFactory.form(Search.class))); //TODO fix the error
 
         /*
         String locations = filledForm.field("locations").getValue().get();
@@ -77,8 +80,8 @@ public class UserProfileController extends Controller {
     /*
         if (session().get("username").equals("null")) {
             Form<userProfileForm> userProfileForm = formFactory.form(models.userProfileForm.class);
-            return ok(viewUserProfile.render(userProfileForm, null, "Username Taken"));
-        } else{
+            return ok(viewUserProfile.render(userProfileForm, null, "Username Taken", formFactory.form(Search.class)));
+        } else {
             return ok("Locations: " + locations);
         }
 

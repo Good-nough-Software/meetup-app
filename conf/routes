@@ -40,3 +40,5 @@ POST        /UserAccountSettings       controllers.UserAccountSettingsController
 POST        /UserProfile               controllers.UserProfileController.UserProfile()
 
 GET        /sendResetPassword          controllers.resetPasswordController.sendResetPassword()
+
+POST        /addNewEvent            controllers.AddNewEventController.addNewEvent()

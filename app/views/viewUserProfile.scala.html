@@ -1,5 +1,7 @@
 @import helper._
-@(form: Form[userProfileForm], events: List[models.Events], message: String)
+
+@(form: Form[userProfileForm], events: List[models.Event], message: String)(searchHeaderForm: Form[Search])
+
 @viewMain("Your Profile") {
 
     @CSRF.formField
@@ -25,4 +27,4 @@
 
     </div>
 
-}
+}(searchHeaderForm)

@@ -2,7 +2,7 @@
 Form[newUserForm] is needed to construct page
 *@
 @import helper._
-@(form: Form[newUserForm])
+@(form: Form[newUserForm])(searchHeaderForm: Form[Search])
 @viewMain("New User") {
     @*
     Tells the action of the form is to use the run the Post login in LoginController
@@ -63,7 +63,7 @@ Form[newUserForm] is needed to construct page
 
 
         <p>
-            <button class="loginPage" type="submit">Create new user!</button>
+            <button class="loginPage" type="submit"><p class="buttonText">Create new user!</p></button>
         </p>
         </div>
 
@@ -71,4 +71,4 @@ Form[newUserForm] is needed to construct page
     }
 
 
-}
+}(searchHeaderForm)
