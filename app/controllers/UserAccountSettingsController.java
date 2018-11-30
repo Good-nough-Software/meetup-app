@@ -35,41 +35,41 @@ public class UserAccountSettingsController extends Controller {
         String email = filledForm.field("email").getValue().get();
         String phone = filledForm.field("phone").getValue().get();
 
-
-        Transaction tx = Ebean.beginTransaction();
-
-        String call = "CALL UPDATE_USER(?, ?, ?, ?, ?)";
-
-        try{
-            Connection dbConnect = tx.getConnection();
-            CallableStatement callable = dbConnect.prepareCall(call);
-
-            callable.setString(1, username);
-            callable.setString(2, password);
-            callable.setString(3, name);
-            callable.setString(4, email);
-            callable.setString(5, phone);
-
-            ResultSet result = callable.executeQuery();
-        }catch(Exception e){
-            Ebean.rollbackTransaction();
-            e.printStackTrace();
-        } finally {
-            Ebean.endTransaction();
-        }
+        Form<userAccountSettingsForm> userAccountSettingsForm = formFactory.form(userAccountSettingsForm.class);
 
 
-
-        String queryString = "SELECT username FROM users WHERE username = '" + filledForm.get().getUsername() + "'";
+        String queryString = "SELECT * FROM users WHERE username = '" + username + "'";
         SqlQuery query = Ebean.createSqlQuery(queryString);
         List<SqlRow> rows = query.findList();
 
-        if(rows.isEmpty()) {
-            return ok("Username doesn't exist");
-        } else {
-            return ok("User info Updated");
-        }
+       Transaction tx = Ebean.beginTransaction();
 
+            String call = "CALL UPDATE_USER(?, ?, ?, ?, ?)";
+
+            try{
+                Connection dbConnect = tx.getConnection();
+                CallableStatement callable = dbConnect.prepareCall(call);
+
+                callable.setString(1, username);
+                callable.setString(2, password);
+                callable.setString(3, name);
+                callable.setString(4, email);
+                callable.setString(5, phone);
+
+                callable.execute();
+
+                session("username", username);
+                flash("Message", "User Information Updated");
+
+            }catch(Exception e){
+                Ebean.rollbackTransaction();
+                e.printStackTrace();
+                flash("Message", "Error in Updating Information");
+            } finally {
+                Ebean.endTransaction();
+                flash("Message", "User Information Updated");
+                return ok(views.html.viewUserAccountSettings.render(userAccountSettingsForm, "User Info Updated"));
+            }
 
     }
 

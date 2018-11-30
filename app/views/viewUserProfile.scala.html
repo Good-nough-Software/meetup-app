@@ -2,10 +2,15 @@
 @(form: Form[userProfileForm], events: List[models.Events], message: String)
 @viewMain("Your Profile") {
 
+    @CSRF.formField
+
+    //remove events
+
+
     <div class="result">
 
         @if(events == null){
-            <h2>No results found ☹, please search and add a new location!</h2>
+            <h2>No results found ☹, please search and add a new event!</h2>
         } else{
             @for(event <- events){
                 <h3>My Events: </h3>

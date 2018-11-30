@@ -3,8 +3,10 @@
 @viewMain("Account Settings") {
 
     @helper.form(routes.UserAccountSettingsController.UserAccountSettings()) {
+        @CSRF.formField
 
         <h1>Account Settings</h1>
+
 
 
         @helper.inputText(form("username"),
@@ -39,11 +41,6 @@
 
         <br>
             <button type="submit">Save Changes</button>
-        <br>
-
-
-        <br>
-            <button type="submit">Reset Password</button>
         <br>
 
     }
