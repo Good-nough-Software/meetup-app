@@ -1,3 +1,5 @@
+-- noinspection SqlNoDataSourceInspectionForFile
+
 -- Setup empty database for Meetup App
 
 CREATE DATABASE IF NOT EXISTS meetup;

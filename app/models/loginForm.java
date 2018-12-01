@@ -2,6 +2,8 @@ package models;
 
 import play.data.validation.Constraints;
 
+import javax.persistence.Entity;
+
 /**
  * @author: Lucas Buccilli
  * Date: 10/19/18
@@ -9,6 +11,7 @@ import play.data.validation.Constraints;
  * Project Name: meetup-app
  * File Name: loginForm
  */
+@Entity
 public class loginForm {
 
     public String username;

@@ -1,0 +1,16 @@
+@import helper._
+
+@(form: userProfileForm)(searchHeaderForm: Form[Search])
+
+@viewMain(form.getName + "'s Profile") {
+
+    <table>
+        <tr><td>Name: @form.getName</td></tr>
+        <tr><td>Email: @form.getEmail</td></tr>
+        <tr><td>Phone: @form.getPhone</td></tr>
+        <tr><td>Location: @form.getCountry, @form.getCity, @form.getAddress, @form.getZip</td></tr>
+        <tr><td>Events: @form.getEvents</td></tr>
+
+    </table>
+
+}(searchHeaderForm)

@@ -1,5 +1,7 @@
 package models;
 
+import javax.persistence.Entity;
+
 /**
  * @author: Lucas Buccilli
  * Date: 11/16/18
@@ -7,6 +9,7 @@ package models;
  * Project Name: meetup-app
  * File Name: newEventForm
  */
+@Entity
 public class newEventForm {
     private String eventName;
     private String eventDescription;

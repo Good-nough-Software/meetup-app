@@ -1,5 +1,7 @@
 package models;
 
+import javax.persistence.Entity;
+
 /**
  * @author: Lucas Buccilli
  * Date: 10/22/18
@@ -7,6 +9,7 @@ package models;
  * Project Name: meetup-app
  * File Name: resetPasswordForm
  */
+@Entity
 public class resetPasswordForm {
     private String email;
     private String resetCode;
