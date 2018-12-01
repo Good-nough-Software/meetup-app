@@ -105,8 +105,9 @@ body {
     background-color: #d4dee1;
 }
 
-.results-container {
-
+.result-container {
+    max-width: 900px;
+    margin: 10px auto;
 }
 
 .results-item {
@@ -114,7 +115,11 @@ body {
     border-width: 1px;
     border-color: lightgrey;
     padding: 5px;
-    max-width: 700px;
+    width: 100%;
+}
+
+.results-item button {
+    float: right;
 }
 
 div.loginPageButtons {
