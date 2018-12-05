@@ -87,6 +87,15 @@ public class LoginControllerTest extends WithApplication {
 
         assertEquals( "jsmith",sessionMap.get("username"));
 
+        request = new Http.RequestBuilder()
+                .method("GET")
+                .uri(controllers.routes.LoginController.logout().url());
+
+        request = CSRFTokenHelper.addCSRFToken(request);
+        result = route(request);
+
+        assertEquals(303, result.status());
+
         jsonNode = (new ObjectMapper()).readTree("{ \"username\": \"noone\", \"password\": \"password\"  }");
         request = new Http.RequestBuilder()
                 .method("POST")

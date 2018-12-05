@@ -1,7 +1,5 @@
-
-
-
-@import helper._
+@ @
+import helper._
 @(form: Form[newEventForm])(searchHeaderForm: Form[Search])
 @viewMain("Create a new event!") {
 
@@ -36,14 +34,56 @@
                         'id -> "eventDescription",
                         'class -> "addEventDescription",
                         '_class -> "loginPage")
-                    @helper.inputText(form("eventLocation"),
+                    @helper.inputText(form("eventCountry"),
                         'required -> "required",
-                        '_label -> "Location",
-                        'placeholder -> "Event Location",
-                        'id -> "eventLocation",
+                        '_label -> "Country",
+                        'placeholder -> "Event Country",
+                        'id -> "eventCountry",
+                        'class -> "loginPage",
+                        '_class -> "loginPage")
+                    @helper.inputText(form("eventState"),
+                        'required -> "required",
+                        '_label -> "State",
+                        'placeholder -> "MI",
+                        'id -> "eventState",
                         'class -> "loginPage",
                         '_class -> "loginPage",
-                        'size -> 75)
+                        'size -> 2)
+                    @helper.inputText(form("eventCity"),
+                        'required -> "required",
+                        '_label -> "City",
+                        'placeholder -> "Event City",
+                        'id -> "eventCity",
+                        'class -> "loginPage",
+                        '_class -> "loginPage")
+                    @helper.inputText(form("eventAddress"),
+                        'required -> "required",
+                        '_label -> "Address",
+                        'placeholder -> "Event Address",
+                        'id -> "eventAddress",
+                        'class -> "loginPage",
+                        '_class -> "loginPage")
+                    @helper.inputText(form("eventZip"),
+                        'required -> "required",
+                        '_label -> "Zip",
+                        'placeholder -> "Event Zip",
+                        'id -> "eventZip",
+                        'class -> "loginPage",
+                        '_class -> "loginPage")
+                    @helper.inputDate(form("startDate"),
+                        'required -> "required",
+                        '_label -> "Start Date",
+                        'placeholder -> "Event Start Date",
+                        'id -> "eventStartDate",
+                        'class -> "loginPage",
+                        '_class -> "loginPage")
+                    @helper.inputDate(form("endDate"),
+                        'required -> "required",
+                        '_label -> "Start Date",
+                        'placeholder -> "Event End Date",
+                        'id -> "eventEndDate",
+                        'class -> "loginPage",
+                        '_class -> "loginPage")
 
 
                     <button type="submit" class="loginPage"><p class="buttonText">Create Event</p></button>

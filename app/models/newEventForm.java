@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.Entity;
+import java.util.Date;
 
 /**
  * @author: Lucas Buccilli
@@ -14,23 +15,40 @@ public class newEventForm {
     private String eventName;
     private String eventDescription;
     private String eventCreaterUsername;
-    private String eventLocation;
+    private String eventCountry;
+    private String eventState;
+    private String eventCity;
+    private String eventZip;
+    private String eventAddress;
+    private Date startDate;
+    private Date endDate;
 
-    public newEventForm(String eventName, String eventDescription, String eventCreaterUsername, String eventLocation) {
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public newEventForm(String eventName, String eventDescription, String eventCreaterUsername, String eventCountry, String eventState, String eventCity, String eventZip, String eventAddress) {
         this.eventName = eventName;
         this.eventDescription = eventDescription;
         this.eventCreaterUsername = eventCreaterUsername;
-        this.eventLocation = eventLocation;
+        this.eventCountry = eventCountry;
+        this.eventState = eventState;
+        this.eventCity = eventCity;
+        this.eventZip = eventZip;
+        this.eventAddress = eventAddress;
     }
-
-    public newEventForm() {
-        this.eventName = "";
-        this.eventDescription = "";
-        this.eventCreaterUsername = "";
-        this.eventLocation = "";
-    }
-
-
 
     public String getEventName() {
         return eventName;
@@ -56,11 +74,44 @@ public class newEventForm {
         this.eventCreaterUsername = eventCreaterUsername;
     }
 
-    public String getEventLocation() {
-        return eventLocation;
+
+    public String getEventCountry() {
+        return eventCountry;
     }
 
-    public void setEventLocation(String eventLocation) {
-        this.eventLocation = eventLocation;
+    public void setEventCountry(String eventCountry) {
+        this.eventCountry = eventCountry;
+    }
+
+    public String getEventState() {
+        return eventState;
+    }
+
+    public void setEventState(String eventState) {
+        this.eventState = eventState;
+    }
+
+    public String getEventCity() {
+        return eventCity;
+    }
+
+    public void setEventCity(String eventCity) {
+        this.eventCity = eventCity;
+    }
+
+    public String getEventZip() {
+        return eventZip;
+    }
+
+    public void setEventZip(String eventZip) {
+        this.eventZip = eventZip;
+    }
+
+    public String getEventAddress() {
+        return eventAddress;
+    }
+
+    public void setEventAddress(String eventAddress) {
+        this.eventAddress = eventAddress;
     }
 }

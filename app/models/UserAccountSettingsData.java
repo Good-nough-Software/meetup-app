@@ -1,4 +1,4 @@
-package controllers;
+package models;
 
 public class UserAccountSettingsData {
     private String username;
