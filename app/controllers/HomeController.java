@@ -46,16 +46,18 @@ public class HomeController extends Controller {
 
         query = query.toLowerCase();
 
-        List<Location> locations = Location.find.all();
+
+        List<Event> events = Event.find.all();
 
         String[] tokens = query.split("\\s+");
-        List<Location> matches = new ArrayList<Location>();
+        ArrayList<Event> matches = new ArrayList<Event>();
         for (String tok : tokens) {
             // Replace with queries to DB
-            for (Location location: locations) {
-                String address = location.toString();
-                if (address.toLowerCase().contains(tok))
-                    matches.add(location);
+            for (Event event: events) {
+                String description = event.toString();
+                if (description.toLowerCase().contains(tok)) {
+                    matches.add(event);
+                }
             }
         }
 

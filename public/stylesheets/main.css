@@ -59,7 +59,7 @@ body {
 }
 
 .search-container button {
-    height: 41px;
+    height: 40px;
     margin-top: 11px;
     background-color: lightgrey;
     border-width: 0; 		/* FIXME: this is being contaimnated by something*/
@@ -90,6 +90,8 @@ body {
     font-weight: bold;
     font-family: arial, helvetica, sans-serif;
     color: white;
+
+    margin-top: 8.25px;
 }
 .profile button {
     padding: 6px 8px 7px 8px;
@@ -105,8 +107,9 @@ body {
     background-color: #d4dee1;
 }
 
-.results-container {
-
+.result-container {
+    max-width: 900px;
+    margin: 10px auto;
 }
 
 .results-item {
@@ -114,7 +117,11 @@ body {
     border-width: 1px;
     border-color: lightgrey;
     padding: 5px;
-    max-width: 700px;
+    width: 100%;
+}
+
+.results-item button {
+    float: right;
 }
 
 div.loginPageButtons {

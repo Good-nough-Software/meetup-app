@@ -21,7 +21,7 @@ public class Location extends Model {
   public String zip;
   public String address;
 
-  public static final Finder<Long, Location> find = new Finder<>(Location.class);
+  public static final Finder<Integer, Location> find = new Finder<>(Location.class);
 
   public boolean equals(Location other) {
     if (this.id == other.id) {

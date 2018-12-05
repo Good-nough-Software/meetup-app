@@ -1,3 +1,5 @@
+-- noinspection SqlNoDataSourceInspectionForFile
+
 -- Setup empty database for Meetup App
 
 CREATE DATABASE IF NOT EXISTS meetup;
@@ -117,5 +119,64 @@ CREATE PROCEDURE UpdateUser
 	END IF;
 
 	END;//
+
+DROP PROCEDURE IF EXISTS RemoveRelation//
+CREATE PROCEDURE RemoveRelation
+	(parameter_eid int,
+	parameter_uid int
+	)
+	BEGIN
+	DELETE FROM relations WHERE parameter_eid = eventid AND parameter_uid = userid;
+
+	END//
+
+DROP PROCEDURE IF EXISTS LocationAdd//
+CREATE PROCEDURE LocationAdd
+	(parameter_country varchar(20),
+	parameter_state varchar(2),
+	parameter_city varchar(32),
+	parameter_zip varchar(9),
+	parameter_address varchar(64)
+	)
+	BEGIN
+	INSERT into locations (country, state, city, zip, address) values 
+		(parameter_country,
+		parameter_state,
+		parameter_city,
+		parameter_zip,
+		parameter_address);
+
+	SELECT id FROM locations WHERE country=parameter_country AND state=parameter_state AND city=parameter_city AND zip=parameter_zip AND address=parameter_address;
+
+	END//
+
+DROP PROCEDURE IF EXISTS EventAdd//
+CREATE PROCEDURE EventAdd
+	(param_eventName varchar(20),
+	param_description varchar(240),
+	param_locCountry varchar(20),
+	param_locState varchar(2),
+	param_locCity varchar(32),
+	param_locZip varchar(9),
+	param_locAddress varchar(32),
+	param_username varchar(32)
+	)
+	BEGIN
+
+	declare v_count int;
+	declare v_id int;
+
+	-- check if location exists
+	select count(*), id into v_count, v_id from locations where param_locCountry=country AND param_locState=state AND param_locCity=City AND param_locZip=zip AND param_locAddress=address;
+
+	IF (v_count  = 0)
+		THEN
+			INSERT INTO locations (country, state, city, zip, address) VALUES (param_locCountry, param_locState, param_locCity, param_locZip, param_locAddress);
+			select  id INTO v_id FROM locations WHERE param_locCountry=country AND param_locState=state AND param_locCity=city AND param_locZip=zip AND param_locAddress=address;
+		END IF;
+	INSERT INTO events (name, summary, locationId, userid) VALUES (param_eventName, param_description, v_id, (SELECT id FROM users WHERE username=param_username));
+	-- add event
+
+	END//
 
 delimiter ;

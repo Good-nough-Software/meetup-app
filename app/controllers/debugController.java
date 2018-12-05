@@ -18,7 +18,7 @@ public class debugController {
 
     public Result main(){
 
-                Controller.flash("debug", session().toString());
+        Controller.flash("debug", session().toString());
         String refererUrl = request().getHeader("referer");
 
                 return redirect(refererUrl);
