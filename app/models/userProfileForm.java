@@ -1,11 +1,11 @@
 package models;
 
 import javax.persistence.Entity;
+import java.util.ArrayList;
 
 @Entity
 public class userProfileForm {
 
-    public String events;
 
     public String username;
     public String password;
@@ -15,6 +15,19 @@ public class userProfileForm {
     public String phone;
     public int location;
     public String country, state, city, zip, address;
+    public ArrayList<String> events;
+
+    public String getEvents() {
+        if (events.isEmpty()) {
+            return "User is not attending any events!";
+        } else {
+            return events.toString().replace("[", "").replace("]", "");
+        }
+    }
+
+    public void setEvents(ArrayList<String> events) {
+        this.events = events;
+    }
 
     public String getCountry() {
         if (country == null){
@@ -65,13 +78,6 @@ public class userProfileForm {
         this.address = address;
     }
 
-    public String getEvents() {
-        return events;
-    }
-
-    public void setEvents(String events) {
-        this.events = events;
-    }
 
     public String getUsername() {
         return username;
@@ -132,10 +138,6 @@ public class userProfileForm {
         this.location = location;
     }
 
-
-    public userProfileForm(String events){
-        this.events = events;
-    }
 
     public userProfileForm(){
         this.events = null;
