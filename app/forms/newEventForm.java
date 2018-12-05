@@ -1,6 +1,5 @@
-package models;
+package forms;
 
-import javax.persistence.Entity;
 import java.util.Date;
 
 /**
@@ -10,7 +9,8 @@ import java.util.Date;
  * Project Name: meetup-app
  * File Name: newEventForm
  */
-@Entity
+
+
 public class newEventForm {
     private String eventName;
     private String eventDescription;

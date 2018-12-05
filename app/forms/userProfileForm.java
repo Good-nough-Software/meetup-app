@@ -1,9 +1,7 @@
-package models;
+package forms;
 
-import javax.persistence.Entity;
 import java.util.ArrayList;
 
-@Entity
 public class userProfileForm {
 
 
@@ -30,7 +28,7 @@ public class userProfileForm {
     }
 
     public String getCountry() {
-        if (country == null){
+        if (country == null) {
             return "Country";
         }
         return country;
@@ -41,7 +39,7 @@ public class userProfileForm {
     }
 
     public String getState() {
-        if(state == null){
+        if (state == null) {
             return "State";
         }
         return state;
@@ -52,7 +50,7 @@ public class userProfileForm {
     }
 
     public String getCity() {
-        if (city == null){
+        if (city == null) {
             return "City";
         }
         return city;
@@ -112,7 +110,7 @@ public class userProfileForm {
     }
 
     public String getName() {
-        if (name == null){
+        if (name == null) {
             return "Name";
         }
         return name;
@@ -139,7 +137,7 @@ public class userProfileForm {
     }
 
 
-    public userProfileForm(){
+    public userProfileForm() {
         this.events = null;
     }
 

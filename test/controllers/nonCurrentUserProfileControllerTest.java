@@ -30,7 +30,7 @@ public class nonCurrentUserProfileControllerTest extends WithApplication {
     public void testIndex() {
         Http.RequestBuilder request = new Http.RequestBuilder()
                 .method(GET)
-                .uri("/viewNonUserProfile");
+                .uri("/viewNonUserProfile/jsmith");
 
         Result result = route(app, request);
         assertEquals(OK, result.status());
@@ -40,7 +40,7 @@ public class nonCurrentUserProfileControllerTest extends WithApplication {
     public void testOne() {
         Http.RequestBuilder request = new Http.RequestBuilder()
                 .method(GET)
-                .uri("/viewNonUserProfile");
+                .uri("/viewNonUserProfile/jsmith");
 
         Result result = route(app, request);
 
@@ -63,8 +63,7 @@ public class nonCurrentUserProfileControllerTest extends WithApplication {
 
         Http.RequestBuilder request = new Http.RequestBuilder()
                 .method(GET)
-                .session("nonUserProfileUsername", "jdoe")
-                .uri("/viewNonUserProfile");
+                .uri("/viewNonUserProfile/hagfkafg");
 
 
         Result result = route(app, request);

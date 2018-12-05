@@ -1,8 +1,6 @@
-package models;
+package forms;
 
-import javax.persistence.Entity;
 
-@Entity
 public class userAccountSettingsForm {
 
     public String username;
@@ -11,7 +9,7 @@ public class userAccountSettingsForm {
     public String phone;
     public String email;
 
-    public userAccountSettingsForm(String username, String password, String name, String phone, String email){
+    public userAccountSettingsForm(String username, String password, String name, String phone, String email) {
         this.username = username;
         this.password = password;
         this.name = name;

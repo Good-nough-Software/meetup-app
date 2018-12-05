@@ -1,8 +1,8 @@
 package controllers;
 
 import com.google.inject.Inject;
+import forms.newEventForm;
 import models.Search;
-import models.newEventForm;
 import play.Logger;
 import play.data.Form;
 import play.data.FormFactory;

@@ -1,4 +1,5 @@
-package models;
+package forms;
+
 
 public class UserAccountSettingsData {
     private String username;
@@ -14,6 +15,7 @@ public class UserAccountSettingsData {
     public String getUsername() {
         return username;
     }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -21,6 +23,7 @@ public class UserAccountSettingsData {
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -28,6 +31,7 @@ public class UserAccountSettingsData {
     public String getPhone() {
         return phone;
     }
+
     public void setPhone(String phone) {
         this.phone = phone;
     }
@@ -35,6 +39,7 @@ public class UserAccountSettingsData {
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -42,6 +47,7 @@ public class UserAccountSettingsData {
     public String getLocations() {
         return locations;
     }
+
     public void setLocations(String locations) {
         this.locations = locations;
     }
@@ -49,6 +55,7 @@ public class UserAccountSettingsData {
     public String getHome() {
         return home;
     }
+
     public void setHome(String home) {
         this.home = home;
     }

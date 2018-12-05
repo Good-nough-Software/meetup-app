@@ -1,12 +1,12 @@
 package controllers;
 
 import com.google.inject.Inject;
+import forms.userProfileForm;
 import io.ebean.Ebean;
 import io.ebean.SqlQuery;
 import io.ebean.SqlRow;
 import io.ebean.Transaction;
 import models.Search;
-import models.userProfileForm;
 import play.Logger;
 import play.data.FormFactory;
 import play.mvc.Result;
@@ -29,7 +29,7 @@ import static play.mvc.Results.redirect;
  * File Name: nonCurrentUserProfileController
  */
 public class nonCurrentUserProfileController {
-    
+
 
     @Inject
     FormFactory formFactory;

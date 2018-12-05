@@ -1,5 +1,6 @@
 package models;
 
+import forms.newEventForm;
 import org.junit.Before;
 import org.junit.Test;
 
