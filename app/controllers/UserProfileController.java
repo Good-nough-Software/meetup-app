@@ -4,14 +4,14 @@ package controllers;
 import models.Search;
 import models.Event;
 import models.Location;
+import models.Relations;
 import models.userProfileForm;
 import views.html.viewUserProfile;
 import models.loginForm;
 import models.userProfileForm;
 import play.data.Form;
 import play.data.FormFactory;
-import play.mvc.Controller;
-import play.mvc.Result;
+import play.mvc.*;
 import views.html.viewUserProfile;
 
 import javax.inject.Inject;
@@ -30,7 +30,7 @@ public class UserProfileController extends Controller {
     FormFactory formFactory;
     public Result renderViewUserProfile(){
         Form<userProfileForm> userProfileForm = formFactory.form(userProfileForm.class);
-        return ok(viewUserProfile.render(userProfileForm, null,"", formFactory.form(Search.class))); //TODO fix the null
+        return ok(viewUserProfile.render(userProfileForm, null,"", formFactory.form(Search.class)));
     }
 
     public Result UserProfile() {
@@ -43,6 +43,8 @@ public class UserProfileController extends Controller {
         List<Event> matches = new ArrayList<>();
 
         String select = "SELECT id, locationid, summary, userid, startDate, endDate, name FROM events WHERE userid = '" + filledForm.get().getUsername() + "';";
+
+        // Be able to remove events (buttons)
 
         try{
             Connection dbConnect = tx.getConnection();
@@ -71,21 +73,46 @@ public class UserProfileController extends Controller {
 
 
         return ok(viewUserProfile.render(userProfileForm, matches,"", formFactory.form(Search.class))); //TODO fix the error
+    }
 
-        /*
-        String locations = filledForm.field("locations").getValue().get();
+    public Result removeEvent(int eid){
+        Form<userProfileForm> userProfileForm = formFactory.form(userProfileForm.class);
+        Form<loginForm> filledForm = formFactory.form(loginForm.class).bindFromRequest();
 
-        return ok("Locations: " + locations);
-        */
-    /*
-        if (session().get("username").equals("null")) {
-            Form<userProfileForm> userProfileForm = formFactory.form(models.userProfileForm.class);
-            return ok(viewUserProfile.render(userProfileForm, null, "Username Taken", formFactory.form(Search.class)));
-        } else {
-            return ok("Locations: " + locations);
+        String userid = filledForm.field("userid").getValue().get();
+        long id = 0;
+
+      //  Relations rel = Relations.find.byId(eid);
+
+        Transaction tx = Ebean.beginTransaction();
+
+        List<Event> matches = new ArrayList<>();
+        String query = "SELECT id FROM relations WHERE eventid = " + eid + " AND userid = " + userid;
+
+        try{
+            Connection connect = tx.getConnection();
+            CallableStatement call = connect.prepareCall(query);
+
+            ResultSet res = call.executeQuery();
+
+            while (res.next()){
+                id = res.getLong("id");
+            }
+
+        }catch (Exception e) {
+            Ebean.rollbackTransaction();
+            e.printStackTrace();
+        } finally{
+            tx.end();
+            Ebean.endTransaction();
         }
 
-    */
 
+
+
+
+        //Relations rel = Relations.find.deleteById(id);
+
+        return ok(viewUserProfile.render(userProfileForm, matches, "", formFactory.form(Search.class))); //TODO fix the error
     }
 }

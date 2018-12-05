@@ -37,7 +37,7 @@ public class UserAccountControllerTest extends WithApplication {
         assertTrue(contentAsString(result).contains("Name"));
         assertTrue(contentAsString(result).contains("Email"));
         assertTrue(contentAsString(result).contains("Phone"));
-        //assertTrue(contentAsString(result).contains("Address"));  add address to html and controller
+        assertTrue(contentAsString(result).contains("Address"));  //add address to controller
     }
 
 }

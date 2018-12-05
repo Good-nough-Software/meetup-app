@@ -1,12 +1,10 @@
 @import helper._
 
-@(form: Form[userProfileForm], events: List[models.Event], message: String)(searchHeaderForm: Form[Search])
+@(form: Form[userProfileForm], events: List[models.Event], message: String, searchHeaderForm: Form[Search])
 
 @viewMain("Your Profile") {
 
     @CSRF.formField
-
-    //remove events
 
 
     <div class="result">
@@ -17,10 +15,11 @@
             @for(event <- events){
                 <h3>My Events: </h3>
                 <ul>
-                <li>@event.name</li>
-                <li>@event.startDate</li>
-                <li>@event.endDate</li>
-                <li>@event.summary</li>
+                    <li>@event.name</li>
+                    <li>@event.startDate</li>
+                    <li>@event.endDate</li>
+                    <li>@event.summary</li>
+                    <li><a href="@controllers.routes.UserProfileController.removeEvent(event.id)">Remove Event</a></li>
                 </ul>
             }
         }

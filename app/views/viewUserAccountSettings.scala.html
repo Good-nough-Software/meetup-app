@@ -1,5 +1,5 @@
 @import helper._
-@(form: Form[userAccountSettingsForm], message: String)(searchHeaderForm: Form[Search])
+@(form: Form[userAccountSettingsForm], message: String, searchHeaderForm: Form[Search])
 @viewMain("Account Settings") {
 
     @helper.form(routes.UserAccountSettingsController.UserAccountSettings()) {
@@ -17,13 +17,13 @@
 
         @helper.inputText(form("password"),
         '_label -> "password",
-        'placeholder -> "Pa55w0rd",
+        'placeholder -> "password",
         'id -> "password")
 
 
         @helper.inputText(form("name"),
         '_label -> "Name",
-        'placeholder -> "John Doe",
+        'placeholder -> "Your Name",
         'id -> "name")
 
 
@@ -35,12 +35,38 @@
 
         @helper.inputText(form("phone"),
         '_label -> "Phone",
-        'placeholder -> "10123456789",
+        'placeholder -> "12345678910",
         'id -> "phone")
 
+        <p>Home Address:</p>
+
+        @helper.inputText(form("address"),
+        '_label -> "Home Address",
+        'placeholder -> "123 Place Lane",
+        'id -> "address")
+
+        @helper.inputText(form("zip"),
+        '_label -> "Zip Code",
+        'placeholder -> "00000",
+        'id -> "zip")
+
+        @helper.inputText(form("city"),
+        '_label -> "City",
+        'placeholder -> "Houghton",
+        'id -> "city")
+
+        @helper.inputText(form("state"),
+        '_label -> "State (2 letter code)",
+        'placeholder -> "Mi",
+        'id -> "state")
+
+        @helper.inputText(form("country"),
+        '_label -> "Country",
+        'placeholder -> "United States",
+        'id -> "country")
 
         <br>
-            <button type="submit">Save Changes</button>
+            <a href="@controllers.routes.UserAccountSettingsController.UserAccountSettings">Submit Changes</a>
         <br>
 
     }
