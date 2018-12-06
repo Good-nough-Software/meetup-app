@@ -1,6 +1,4 @@
-package models;
-
-import javax.persistence.Entity;
+package forms;
 
 /**
  * @author: Lucas Buccilli
@@ -10,7 +8,7 @@ import javax.persistence.Entity;
  * File Name: newUserForm
  */
 
-@Entity
+
 public class newUserForm {
     /**
      * Class for the new user page

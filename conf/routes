@@ -15,31 +15,32 @@ GET         /viewNewUser              controllers.newUserController.renderViewNe
 GET         /viewResetPassword         controllers.resetPasswordController.renderViewResetPassword
 
 
-GET         /viewUserAccountSettings   controllers.UserAccountSettingsController.renderViewUserAccountSettings
+GET         /viewUserAccountSettings             controllers.UserAccountSettingsController.renderViewUserAccountSettings
 
 
-GET         /viewUserProfile           controllers.UserProfileController.renderViewUserProfile
+GET         /viewUserProfile                     controllers.UserProfileController.renderViewUserProfile
 
-GET         /logout                   controllers.LoginController.logout()
+GET         /logout                              controllers.LoginController.logout()
 
-GET         /test                     controllers.LoginController.test()
+GET         /test                                controllers.LoginController.test()
 
-GET         /debug                    controllers.debugController.main
+GET         /debug                               controllers.debugController.main
 
-GET         /viewNewEvent               controllers.AddNewEventController.renderViewAddEvent()
+GET         /viewNewEvent                        controllers.AddNewEventController.renderViewAddEvent()
 
-GET         /viewNonUserProfile         controllers.nonCurrentUserProfileController.renderNonCurrentUserProfileView()
+GET         /viewNonUserProfile/:userName        controllers.nonCurrentUserProfileController.renderNonCurrentUserProfileView(userName: String)
 
-POST        /login                    controllers.LoginController.login()
 
-POST        /createNewUser            controllers.newUserController.createNewUser()
+POST        /login                               controllers.LoginController.login()
 
-GET        /resetPassword            controllers.resetPasswordController.resetPassword()
+POST        /createNewUser                       controllers.newUserController.createNewUser()
 
-POST        /UserAccountSettings       controllers.UserAccountSettingsController.UserAccountSettings()
+GET         /resetPassword                       controllers.resetPasswordController.resetPassword()
 
-POST        /UserProfile               controllers.UserProfileController.UserProfile()
+POST        /UserAccountSettings                 controllers.UserAccountSettingsController.UserAccountSettings()
 
-GET        /sendResetPassword          controllers.resetPasswordController.sendResetPassword()
+POST        /UserProfile                         controllers.UserProfileController.UserProfile()
+
+GET         /sendResetPassword                   controllers.resetPasswordController.sendResetPassword()
 
 POST        /addNewEvent            controllers.AddNewEventController.addNewEvent()

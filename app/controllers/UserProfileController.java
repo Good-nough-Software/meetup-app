@@ -1,13 +1,13 @@
 package controllers;
 
 
-import models.Search;
+import forms.loginForm;
+import forms.userProfileForm;
+import io.ebean.Ebean;
+import io.ebean.Transaction;
 import models.Event;
 import models.Location;
-import models.userProfileForm;
-import views.html.viewUserProfile;
-import models.loginForm;
-import models.userProfileForm;
+import models.Search;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
@@ -15,14 +15,12 @@ import play.mvc.Result;
 import views.html.viewUserProfile;
 
 import javax.inject.Inject;
-
-import io.ebean.*;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserProfileController extends Controller {
 
@@ -79,7 +77,7 @@ public class UserProfileController extends Controller {
         */
     /*
         if (session().get("username").equals("null")) {
-            Form<userProfileForm> userProfileForm = formFactory.form(models.userProfileForm.class);
+            Form<userProfileForm> userProfileForm = formFactory.form(forms.userProfileForm.class);
             return ok(viewUserProfile.render(userProfileForm, null, "Username Taken", formFactory.form(Search.class)));
         } else {
             return ok("Locations: " + locations);
