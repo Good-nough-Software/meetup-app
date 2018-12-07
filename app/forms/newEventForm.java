@@ -18,10 +18,6 @@ public class newEventForm {
     private String eventCountry;
     private String eventState;
     private String eventCity;
-
-    public newEventForm() {
-    }
-
     private String eventZip;
     private String eventAddress;
     private Date startDate;
