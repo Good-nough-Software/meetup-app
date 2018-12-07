@@ -7,12 +7,10 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.test.WithApplication;
 
-import static play.test.Helpers.*;
-import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 import static play.mvc.Http.Status.OK;
-import static play.test.Helpers.GET;
-import static play.test.Helpers.route;
+import static play.test.Helpers.*;
 
 public class UserAccountControllerTest extends WithApplication {
 
@@ -25,7 +23,7 @@ public class UserAccountControllerTest extends WithApplication {
     public void testViewUserAccountSettings() {
         Http.RequestBuilder request = new Http.RequestBuilder()
                 .method(GET)
-                .uri("/viewUserAccountSettings");
+                .uri("/userAccount");
 
         Result result = route(app, request);
         assertEquals(OK, result.status());
