@@ -1,22 +1,24 @@
 @(form: Form[Search], events: List[models.Event], search: String)
 
-@viewMain("Meetup App - Results") {
+@viewMain("Results") {
     <div class="result-container">
 	@if(events.isEmpty()){
 	    <h2>No results found ☹, try searching something else!</h2>
 	} else {
 	    @for(event <- events) {
 		<div class="results-item">
-		<button>Attend Event!</button>
-		<ul>
-		<li>@event.name</li>
-		<li>@event.summary</li>
-		<li>@event.location.address</li>
-		<li>@event.location.city</li>
-		<li>@event.location.state</li>
-		<li>@event.location.zip</li>
-		<li>@event.location.country</li>
-		</ul>
+		@if(session().containsKey("username")) {
+                    @if(!session().get("username").equals("null")) {
+			<form method="GET" action="/event">
+			<button value=@event.id>Attend Event!</button>
+			</form>
+		    }
+		}
+
+		<h3><a href="/event/@event.id">@event.name</a></h3>
+		<hr/>
+		<p>@event.summary</p>
+
 		</div>
 	    }
 	}

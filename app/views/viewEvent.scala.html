@@ -1,0 +1,40 @@
+@(form: Form[Search], event: models.Event, attendees: List[models.User])
+
+@viewMain("Event") {
+    <div class="event">
+	<h1>@event.name</h1>
+	<p>@event.summary</p>
+
+	<h3>Happening at:</h3>
+	<ul>
+	    <li>@event.location.address</li>
+	    <li>@event.location.state</li>
+	    <li>@event.location.city</li>
+	    <li>@event.location.zip</li>
+	    <li>@event.location.country</li>
+	</ul>
+
+	<h2>Attendees</h2>
+
+	    @if(attendees.isEmpty()) {
+		<h3>No one is attending this event</h3>
+	    } else {
+		<ul>
+		@for(user <- attendees) {
+		    <li>
+		    @if(user == null){
+			Error
+		    } else {
+		    @*<a href="/viewNonUserProfile/@user.username">*@
+		    @user.name
+		    @*</a>*@
+		    }
+
+		    </li>
+		}
+		</ul>
+	    }
+
+    </div>
+
+}(form)

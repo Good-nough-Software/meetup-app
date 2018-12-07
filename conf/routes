@@ -44,3 +44,5 @@ POST        /UserProfile                         controllers.UserProfileControll
 GET         /sendResetPassword                   controllers.resetPasswordController.sendResetPassword()
 
 POST        /addNewEvent            controllers.AddNewEventController.addNewEvent()
+
+GET 	    /event/:eventid	       controllers.ViewEventController.event(eventid: String)
