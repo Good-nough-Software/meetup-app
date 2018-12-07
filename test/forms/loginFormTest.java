@@ -1,6 +1,5 @@
-package models;
+package forms;
 
-import forms.loginForm;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,5 +36,6 @@ public class loginFormTest {
     public void setPassword() {
         temp.setPassword("1");
         assertEquals("1", temp.getPassword());
+        loginForm test = new loginForm("1", "1");
     }
 }
