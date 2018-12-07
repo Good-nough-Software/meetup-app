@@ -43,6 +43,8 @@ public class newEventForm {
         this.endDate = endDate;
     }
 
+    public newEventForm() {}
+
     public newEventForm(String eventName, String eventDescription, String eventCreaterUsername, String eventCountry, String eventState, String eventCity, String eventZip, String eventAddress) {
         this.eventName = eventName;
         this.eventDescription = eventDescription;
