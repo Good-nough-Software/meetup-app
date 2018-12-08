@@ -16,7 +16,6 @@ import io.ebean.*;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.util.List;
 
 public class UserAccountSettingsController extends Controller {
 
@@ -35,7 +34,6 @@ public class UserAccountSettingsController extends Controller {
 
         String oldUsername = filledForm.field("username").getValue().get();
         String newUsername = filled.field("username").getValue().get();
-        String oldPassword = filledForm.field("password").getValue().get();
         String newPassword = filled.field("password").getValue().get();
         String name = filled.field("name").getValue().get();
         String email = filled.field("email").getValue().get();
@@ -105,8 +103,8 @@ public class UserAccountSettingsController extends Controller {
                 Connection dbConnect = tx.getConnection();
                 CallableStatement callable = dbConnect.prepareCall(call);
 
-                callable.setString(1, oldUsername);
-                callable.setString(2, newPassword);
+                callable.setString(1, newUsername);
+                callable.setString(2, hashPass);
                 callable.setString(3, name);
                 callable.setString(4, email);
                 callable.setString(5, phone);

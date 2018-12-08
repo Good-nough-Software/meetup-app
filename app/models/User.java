@@ -23,9 +23,21 @@ public class User extends Model {
   public String email;
   public String name;
   public String phone;
+  public int Location;
 
   @ManyToOne
   public Location location;
+
+  public User(int ID, String uname, String pass, String utype, String mail, String nam, String phne, int loc){
+    id = ID;
+    username = uname;
+    password = pass;
+    usertype = utype;
+    email = mail;
+    name = nam;
+    phone = phne;
+    Location = loc;
+  }
 
   public static final Finder<Integer, User> find = new Finder<>(User.class);
 

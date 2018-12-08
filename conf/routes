@@ -3,46 +3,45 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET         /                          controllers.LoginController.renderViewLogin
-GET 	    /home		       controllers.HomeController.index
-GET 	    /results		       controllers.HomeController.results
+GET         /                           controllers.LoginController.renderViewLogin
+GET 	    /home		                controllers.HomeController.index
+GET 	    /results		            controllers.HomeController.results
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file             controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-GET         /viewNewUser              controllers.newUserController.renderViewNewUser
+GET         /viewNewUser                controllers.newUserController.renderViewNewUser
 
-GET         /viewResetPassword         controllers.resetPasswordController.renderViewResetPassword
+GET         /viewResetPassword          controllers.resetPasswordController.renderViewResetPassword
 
-
-GET         /viewUserAccountSettings   controllers.UserAccountSettingsController.renderViewUserAccountSettings
+GET         /viewUserAccountSettings    controllers.UserAccountSettingsController.renderViewUserAccountSettings
 
 GET         /UserAccountSettings        controllers.UserAccountSettingsController.UserAccountSettings
 
-GET         /viewUserProfile           controllers.UserProfileController.renderViewUserProfile
+GET         /viewUserProfile            controllers.UserProfileController.renderViewUserProfile
 
-GET         /logout                   controllers.LoginController.logout()
+GET         /logout                     controllers.LoginController.logout()
 
-GET         /test                     controllers.LoginController.test()
+GET         /test                       controllers.LoginController.test()
 
-GET         /debug                    controllers.debugController.main
+GET         /debug                      controllers.debugController.main
 
 GET         /viewNewEvent               controllers.AddNewEventController.renderViewAddEvent()
 
 GET         /viewNonUserProfile         controllers.nonCurrentUserProfileController.renderNonCurrentUserProfileView()
 
-POST        /login                    controllers.LoginController.login()
+POST        /login                      controllers.LoginController.login()
 
-POST        /createNewUser            controllers.newUserController.createNewUser()
+POST        /createNewUser              controllers.newUserController.createNewUser()
 
-GET        /resetPassword            controllers.resetPasswordController.resetPassword()
+GET         /resetPassword              controllers.resetPasswordController.resetPassword()
 
-POST        /UserAccountSettings       controllers.UserAccountSettingsController.UserAccountSettings()
+POST        /UserAccountSettings        controllers.UserAccountSettingsController.UserAccountSettings()
 
-POST        /UserProfile               controllers.UserProfileController.UserProfile()
+POST        /UserProfile                controllers.UserProfileController.UserProfile()
 
-GET        /sendResetPassword          controllers.resetPasswordController.sendResetPassword()
+GET         /sendResetPassword          controllers.resetPasswordController.sendResetPassword()
 
-POST        /addNewEvent            controllers.AddNewEventController.addNewEvent()
+POST        /addNewEvent                controllers.AddNewEventController.addNewEvent()
 
-POST        /removeEvent                controllers.UserProfileController.removeEvent(arg: String ?= "")
+POST        /removeEvent                controllers.UserProfileController.removeEvent(eid: Int)

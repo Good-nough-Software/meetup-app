@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 @Entity
 public class userProfileForm {
 
-    public String events;
+    public String personal, home, events;
 
     public String username;
     public String password;
@@ -27,6 +27,7 @@ public class userProfileForm {
         this.country = country;
     }
 
+
     public String getState() {
         if(state == null){
             return "State";
@@ -37,6 +38,7 @@ public class userProfileForm {
     public void setState(String state) {
         this.state = state;
     }
+
 
     public String getCity() {
         if (city == null){
@@ -49,6 +51,7 @@ public class userProfileForm {
         this.city = city;
     }
 
+
     public String getZip() {
         return zip;
     }
@@ -56,6 +59,7 @@ public class userProfileForm {
     public void setZip(String zip) {
         this.zip = zip;
     }
+
 
     public String getAddress() {
         return address;
@@ -65,6 +69,16 @@ public class userProfileForm {
         this.address = address;
     }
 
+
+    public String getHome() {
+        return home;
+    }
+
+    public void setHome(String home) {
+        this.home = home;
+    }
+
+
     public String getEvents() {
         return events;
     }
@@ -72,6 +86,16 @@ public class userProfileForm {
     public void setEvents(String events) {
         this.events = events;
     }
+
+
+    public String getPersonal() {
+        return personal;
+    }
+
+    public void setPersonal(String personal) {
+        this.personal = personal;
+    }
+
 
     public String getUsername() {
         return username;
@@ -81,6 +105,7 @@ public class userProfileForm {
         this.username = username;
     }
 
+
     public String getPassword() {
         return password;
     }
@@ -88,6 +113,7 @@ public class userProfileForm {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     public String getUsertype() {
         return usertype;
@@ -97,6 +123,7 @@ public class userProfileForm {
         this.usertype = usertype;
     }
 
+
     public String getEmail() {
         return email;
     }
@@ -104,6 +131,7 @@ public class userProfileForm {
     public void setEmail(String email) {
         this.email = email;
     }
+
 
     public String getName() {
         if (name == null){
@@ -116,6 +144,7 @@ public class userProfileForm {
         this.name = name;
     }
 
+
     public String getPhone() {
         return phone;
     }
@@ -123,6 +152,7 @@ public class userProfileForm {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
 
     public int getLocation() {
         return location;
@@ -133,11 +163,15 @@ public class userProfileForm {
     }
 
 
-    public userProfileForm(String events){
+    public userProfileForm(String personal, String home, String events){
+        this.personal = personal;
+        this.home = home;
         this.events = events;
     }
 
     public userProfileForm(){
+        this.personal = null;
+        this.home = null;
         this.events = null;
     }
 

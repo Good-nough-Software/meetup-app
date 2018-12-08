@@ -1,19 +1,41 @@
 @import helper._
 
-@(form: Form[userProfileForm], events: List[models.Event], message: String, searchHeaderForm: Form[Search])
+@(form: Form[userProfileForm], users: List[models.User], homes: List[models.Location], events: List[models.Event], searchHeaderForm: Form[Search])
 
 @viewMain("Your Profile") {
 
     @CSRF.formField
 
 
-    <div class="result">
+    <div class="viewUserProfile">
+        @if(users == null){
+            <h2>No User Found!</h2>
+        } else{
+            @for(user <- users){
+                @user.name<br>
+                @user.username<br>
+                @user.phone<br>
+                @user.email<br>
+            }
+        }
+
+
+        @if(homes == null){
+            <br>
+        } else{
+            @for(home <- homes){
+                @home.address<br>
+                @home.city, @home.state  @home.zip<br>
+                @home.country<br>
+            }
+        }
+
 
         @if(events == null){
-            <h2>No results found ☹, please search and add a new event!</h2>
+            <h3>No results found ☹, please search and add a new event!</h3>
         } else{
             @for(event <- events){
-                <h3>My Events: </h3>
+                <h4>My Events: </h4>
                 <ul>
                     <li>@event.name</li>
                     <li>@event.startDate</li>

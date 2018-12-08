@@ -21,6 +21,15 @@ public class Location extends Model {
   public String zip;
   public String address;
 
+  public Location(int ID, String cntry, String stat, String cit, String zp, String adres){
+    id = ID;
+    country = cntry;
+    state = stat;
+    city = cit;
+    zip = zp;
+    address = adres;
+  }
+
   public static final Finder<Integer, Location> find = new Finder<>(Location.class);
 
   public boolean equals(Location other) {
