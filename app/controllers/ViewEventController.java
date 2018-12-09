@@ -34,9 +34,6 @@ public class ViewEventController extends Controller {
 
 
         List<User> attendees = new ArrayList<User>();
-
-        System.out.println(userids);
-
         for (int id : userids) {
             attendees.add(User.find.byId(id));
         }
