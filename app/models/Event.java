@@ -26,7 +26,7 @@ public class Event extends Model {
 
     @ManyToOne
     @JoinColumn(name="userid")
-    public User userid;
+    public User user;
 
     @Column(name="startDate")
     public Date startDate;
@@ -36,14 +36,14 @@ public class Event extends Model {
 
     public String name;
 
-    public Event(int ID, int locid, String sum, int user, Date start, Date end, String nme){
-        id = ID;
-        summary = sum;
-        user = User.find.byId(userid);
-        startDate = start;
-        endDate = end;
-        name = nme;
-        location = Location.find.byId(locid);
+    public Event(int id, int locid, String sum, int userid, Date start, Date end, String nme){
+        this.id = id;
+        this.summary = sum;
+        this.user = User.find.byId(userid);
+        this.startDate = start;
+        this.endDate = end;
+        this.name = nme;
+        this.location = Location.find.byId(locid);
     }
 
     public static final Finder<Integer, Event> find = new Finder<>(Event.class);
