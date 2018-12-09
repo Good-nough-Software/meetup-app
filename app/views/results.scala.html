@@ -6,7 +6,7 @@
 	    <h2>No results found ☹, try searching something else!</h2>
 	} else {
 	    @for(event <- events) {
-		<div class="results-item">
+		<div class="event-container">
 		@if(session().containsKey("username")) {
                     @if(!session().get("username").equals("null")) {
 			<form method="GET" action="/event">
