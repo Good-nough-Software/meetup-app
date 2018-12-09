@@ -23,7 +23,10 @@ public class Event extends Model {
     public Location location;
 
     public String summary;
-    public int userid;
+
+    @ManyToOne
+    @JoinColumn(name="userid")
+    public User userid;
 
     @Column(name="startDate")
     public Date startDate;
@@ -36,7 +39,7 @@ public class Event extends Model {
     public Event(int ID, int locid, String sum, int user, Date start, Date end, String nme){
         id = ID;
         summary = sum;
-        userid = user;
+        user = User.find.byId(userid);
         startDate = start;
         endDate = end;
         name = nme;
