@@ -49,6 +49,9 @@ public class AddNewEventController {
         String eventDescription = filledForm.get().getEventDescription();
         String eventCreaterUsername = session().get("username");
         String eventCountry = filledForm.get().getEventCountry();
+        if (eventCountry == null || eventCountry.isEmpty()) {
+            eventCountry = "United States";
+        }
         String eventState = filledForm.get().getEventState();
         String eventCity = filledForm.get().getEventCity();
         String eventAddress = filledForm.get().getEventAddress();
