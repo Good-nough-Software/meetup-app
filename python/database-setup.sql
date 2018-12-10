@@ -159,7 +159,9 @@ CREATE PROCEDURE EventAdd
 	param_locCity varchar(32),
 	param_locZip varchar(9),
 	param_locAddress varchar(32),
-	param_username varchar(32)
+	param_username varchar(32),
+	param_startDate date,
+	param_endDate date
 	)
 	BEGIN
 
@@ -174,7 +176,7 @@ CREATE PROCEDURE EventAdd
 			INSERT INTO locations (country, state, city, zip, address) VALUES (param_locCountry, param_locState, param_locCity, param_locZip, param_locAddress);
 			select  id INTO v_id FROM locations WHERE param_locCountry=country AND param_locState=state AND param_locCity=city AND param_locZip=zip AND param_locAddress=address;
 		END IF;
-	INSERT INTO events (name, summary, locationId, userid) VALUES (param_eventName, param_description, v_id, (SELECT id FROM users WHERE username=param_username));
+		INSERT INTO events (name, summary, locationId, userid, startDate, endDate) VALUES (param_eventName, param_description, v_id, (SELECT id FROM users WHERE username=param_username), param_startDate, param_endDate);
 	-- add event
 
 	END//
