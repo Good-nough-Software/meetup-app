@@ -3,7 +3,7 @@ Form[newUserForm] is needed to construct page
 *@
 @import forms.newUserForm
 @import helper._
-@(form: Form[newUserForm])(searchHeaderForm: Form[Search])
+@(form: Form[newUserForm])(searchHeaderForm: Form[forms.Search])
 @viewMain("New User") {
     @*
     Tells the action of the form is to use the run the Post login in LoginController

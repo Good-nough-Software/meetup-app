@@ -2,11 +2,11 @@ package controllers;
 
 import forms.loginForm;
 import forms.userAccountSettingsForm;
+import forms.Search;
 import io.ebean.Ebean;
 import io.ebean.SqlQuery;
 import io.ebean.SqlRow;
 import io.ebean.Transaction;
-import models.Search;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;

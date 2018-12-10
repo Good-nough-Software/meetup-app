@@ -3,7 +3,7 @@ package controllers;
 
 import com.google.inject.Inject;
 import forms.loginForm;
-import models.Search;
+import forms.Search;
 import models.User;
 import org.apache.commons.codec.digest.DigestUtils;
 import play.data.Form;

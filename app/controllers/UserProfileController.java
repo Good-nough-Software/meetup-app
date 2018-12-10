@@ -3,11 +3,11 @@ package controllers;
 
 import forms.loginForm;
 import forms.userProfileForm;
+import forms.Search;
 import io.ebean.Ebean;
 import io.ebean.Transaction;
 import models.Event;
 import models.Location;
-import models.Search;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;

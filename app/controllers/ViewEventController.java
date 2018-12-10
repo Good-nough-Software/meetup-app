@@ -10,7 +10,7 @@ import play.db.ebean.Transactional;
 import models.Event;
 import models.Relation;
 import models.User;
-import models.Search;
+import forms.Search;
 import java.util.List;
 import java.util.ArrayList;
 

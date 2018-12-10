@@ -2,11 +2,11 @@ package controllers;
 
 import com.google.inject.Inject;
 import forms.userProfileForm;
+import forms.Search;
 import io.ebean.Ebean;
 import io.ebean.SqlQuery;
 import io.ebean.SqlRow;
 import io.ebean.Transaction;
-import models.Search;
 import play.Logger;
 import play.data.FormFactory;
 import play.mvc.Result;

@@ -10,7 +10,7 @@ import io.ebean.SqlRow;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
-import models.Search;
+import forms.Search;
 import models.Location;
 import models.Event;
 import play.db.*;

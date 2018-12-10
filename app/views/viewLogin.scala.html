@@ -4,7 +4,7 @@ Form[loginForm] is needed to construct page
 
 @import forms.loginForm
 @import helper._
-@(form: Form[loginForm])(searchHeaderForm: Form[Search])
+@(form: Form[loginForm])(searchHeaderForm: Form[forms.Search])
 @viewMain("Login to Meet-up") {
     @*
     Tells the action of the form is to use the run the Post login in LoginController
