@@ -7,7 +7,7 @@ import play.data.Form;
 import play.data.FormFactory;
 // import models.EventIdForm;
 import models.Event;
-import models.Relations;
+import models.Relation;
 import models.User;
 import models.Search;
 import java.util.List;
@@ -27,7 +27,7 @@ public class ViewEventController extends Controller {
 
         Event event = Event.find.byId(eventid);
 
-        List<Integer> userids = Relations.find.query()
+        List<Integer> userids = Relation.find.query()
             .select("user")
             .where().eq("eventid", eventid)
             .findSingleAttributeList();
