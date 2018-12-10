@@ -7,7 +7,6 @@ import play.data.Form;
 import play.data.FormFactory;
 import play.data.DynamicForm;
 import play.db.ebean.Transactional;
-import forms.Attend;
 import models.Event;
 import models.Relation;
 import models.User;
