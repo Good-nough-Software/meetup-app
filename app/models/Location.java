@@ -12,25 +12,27 @@ import io.ebean.*;
 @Table(name="locations")
 public class Location extends Model {
 
-  @Id
-  public int id;
+    @Id
+    public int id;
 
-  public String country;
-  public String state;
-  public String city;
-  public String zip;
-  public String address;
+    public String country;
+    public String state;
+    public String city;
+    public String zip;
+    public String address;
 
-  public static final Finder<Integer, Location> find = new Finder<>(Location.class);
+    public static final Finder<Integer, Location> find = new Finder<>(Location.class);
 
-  public boolean equals(Location other) {
-    if (this.id == other.id) {
-      return true;
+
+
+    public boolean equals(Location other) {
+        if (this.id == other.id) {
+            return true;
+        }
+        return false;
     }
-    return false;
-  }
 
-  public String toString() {
-    return address + "\n" + city + " " + state + " " + zip + "\n" + country;
-  }
+    public String toString() {
+        return address + "\n" + city + " " + state + " " + zip + "\n" + country;
+    }
 }
