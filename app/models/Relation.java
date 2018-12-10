@@ -28,6 +28,16 @@ public class Relation extends Model {
 
     public static final Finder<Integer, Relation> find = new Finder<>(Relation.class);
 
+    public Relation(int userid, int eventid) {
+        this.user = User.find.byId(userid);
+        this.event = Event.find.byId(eventid);
+    }
+
+    public Relation(int userid, Event event) {
+        this.user = User.find.byId(userid);
+        this.event = event;
+    }
+
     public boolean equals(Relation other) {
         if (this.id == other.id) {
             return true;
