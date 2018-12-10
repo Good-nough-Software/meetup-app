@@ -1,35 +1,48 @@
-@(form: Form[Search], event: models.Event, attendees: List[models.User])
+@(search: Form[Search], event: models.Event, attendees: List[models.User])
+
+@import helper.form
 
 @viewMain("Event") {
-    <div class="event">
+
+    <div class="event-container">
+
+	@helper.form(action = routes.ViewEventController.viewEvent(event.id)) {
+	    <input type="hidden" name="attend" value=@event.id>
+	    <button value=@event.id>Attend Event!</button>
+	}
 	<h1>@event.name</h1>
 	<p>@event.summary</p>
 
 	<h3>Happening at:</h3>
 	<ul>
-	    <li>@event.location.address</li>
-	    <li>@event.location.state</li>
-	    <li>@event.location.city</li>
-	    <li>@event.location.zip</li>
-	    <li>@event.location.country</li>
+	    @if(!event.location.address.isEmpty()) {
+		<li>@event.location.address</li>
+	    }
+	    @if(!event.location.state.isEmpty()) {
+		<li>@event.location.state</li>
+	    }
+	    @if(!event.location.city.isEmpty()) {
+		<li>@event.location.city</li>
+	    }
+	    @if(!event.location.zip.isEmpty()) {
+		<li>@event.location.zip</li>
+	    }
+	    @if(!event.location.country.isEmpty()) {
+		<li>@event.location.country</li>
+	    }
 	</ul>
 
 	<h2>Attendees</h2>
 
 	    @if(attendees.isEmpty()) {
-		<h3>No one is attending this event</h3>
+		<h3>Be the first to attend this event!</h3>
 	    } else {
 		<ul>
 		@for(user <- attendees) {
 		    <li>
-		    @if(user == null){
-			Error
-		    } else {
-		    @*<a href="/viewNonUserProfile/@user.username">*@
+		    <a href="/user/@user.username">
 		    @user.name
-		    @*</a>*@
-		    }
-
+		    </a>
 		    </li>
 		}
 		</ul>
@@ -37,4 +50,4 @@
 
     </div>
 
-}(form)
+}(search)

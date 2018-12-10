@@ -3,10 +3,8 @@ package controllers;
 
 import com.google.inject.Inject;
 import forms.loginForm;
-import io.ebean.Ebean;
-import io.ebean.SqlQuery;
-import io.ebean.SqlRow;
 import models.Search;
+import models.User;
 import org.apache.commons.codec.digest.DigestUtils;
 import play.data.Form;
 import play.data.FormFactory;
@@ -34,6 +32,10 @@ public class LoginController extends Controller {
     FormFactory formFactory;
 
     public Result renderViewLogin() {
+        // if already logged in redirect
+        if (session().containsKey("username") && !session().get("username").equals("null")) {
+            return redirect("/");
+        }
         session("username", "null");
         session("resetCode", "");
         return ok(
@@ -77,9 +79,9 @@ public class LoginController extends Controller {
         //get loginForm information from the form that was filled inside of viewLogin
         loginForm validatedLoginForm = filledForm.get();
 
-
+        int userid = userValidate(validatedLoginForm.getUsername(), validatedLoginForm.getPassword());
         //user was not found or had incorrect password
-        if (!userValidate(validatedLoginForm.getUsername(), validatedLoginForm.getPassword())) {
+        if (userid <= 0) {
 
             session("username", "null");
             flash("Message", "Wrong username or password");
@@ -89,37 +91,33 @@ public class LoginController extends Controller {
 
         } else {
             session("username", validatedLoginForm.getUsername());
+            session("userid", Integer.toString(userid));
             return redirect(
                     routes.HomeController.index()
             );
         }
     }
 
-    //returns t/f if user name and password is valid
-    public boolean userValidate(String username, String password) {
+    // Returns the user id > 0 if user name and password is valid
+    public int userValidate(String username, String password) {
 
-        //get hased password
+        // get hased password
         String hashPassword = DigestUtils.sha1Hex(password);
 
-        //dont use this if the procedure does not return a table. Use the method in newUserController
-        String queryString = "{call UserValidate('" + username + "','" + hashPassword + "')}";
-
-
-        SqlQuery query = Ebean.createSqlQuery(queryString);
-
-
-        List<SqlRow> rows = query.findList();
-
-        //Logger.debug(rows.toString());
-
-        for (SqlRow row : rows) {
-            if (!row.toString().equals("{count(*)=0}")) {
-                //username with password exists, add username to session
-                return true;
-            }
+        int userid;
+        try {
+            userid = User.find.query()
+                .select("id")
+                .where()
+                .eq("username", username)
+                .eq("password", hashPassword)
+                .findSingleAttribute();
+        } catch (NullPointerException e) {
+            // Username not found
+            return -1;
         }
 
-        return false;
+        return userid;
     }
 
 }

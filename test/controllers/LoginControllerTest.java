@@ -24,7 +24,7 @@ public class LoginControllerTest extends WithApplication {
     public void testViewLogin() {
         Http.RequestBuilder request = new Http.RequestBuilder()
                 .method(GET)
-                .uri("/");
+                .uri("/login");
 
         Result result = route(app, request);
         assertEquals(OK, result.status());
