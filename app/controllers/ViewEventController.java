@@ -28,6 +28,13 @@ public class ViewEventController extends Controller {
 
         int userid = Integer.parseInt(session().get("userid"));
 
+        if (Relation.find.query()
+            .where()
+            .eq("userid", userid)
+            .eq("eventid", eventid).findOne() != null) {
+            return; // User already attending event
+        }
+
         Relation relate = new Relation(userid, event);
         relate.save();
     }
