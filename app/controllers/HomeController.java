@@ -62,6 +62,6 @@ public class HomeController extends Controller {
         }
 
         Form<Search> form = formFactory.form(Search.class);
-        return ok(views.html.results.render(form, matches, query));
+        return ok(views.html.results.render(form, matches));
     }
 }

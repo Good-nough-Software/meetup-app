@@ -1,16 +1,21 @@
 package controllers;
 
 import com.google.inject.Inject;
+import forms.userProfileForm;
 import io.ebean.Ebean;
+import io.ebean.SqlQuery;
+import io.ebean.SqlRow;
 import io.ebean.Transaction;
 import models.Search;
-import models.userProfileForm;
+import play.Logger;
 import play.data.FormFactory;
 import play.mvc.Result;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import static play.mvc.Controller.session;
 import static play.mvc.Results.ok;
@@ -25,22 +30,33 @@ import static play.mvc.Results.redirect;
  */
 public class nonCurrentUserProfileController {
 
+
     @Inject
     FormFactory formFactory;
 
-    public Result renderNonCurrentUserProfileView() {
+    public Result renderNonCurrentUserProfileView(String usernameFromRequest) {
 
         String userName;
 
         //check if the session has the key, prevents null pointer error
         //if user has he session key set the username
         //if not set it to a generic one
-        if (session().containsKey("nonUserProfileUsername")) {
-            userName = session("nonUserProfileUsername");
-            //get information from database
+        String queryString = "SELECT * FROM users WHERE username = '" + usernameFromRequest + "'";
+        //returns list where username is username
+        SqlQuery query = Ebean.createSqlQuery(queryString);
+
+
+        List<SqlRow> rows = query.findList();
+
+        if (rows.isEmpty()) {
+            //username does not exists
+            Logger.debug("User does not exist");
+            userName = "jdoe";
         } else {
-            userName = "jsmith";
+            //username taken
+            userName = usernameFromRequest;
         }
+
 
         //check if user is looking at there own profile
         //if so direct to their profile page
@@ -85,38 +101,59 @@ public class nonCurrentUserProfileController {
 
         //add events user is attending
 
-//        List<Event> matches = new ArrayList<>();
-//        tx = Ebean.beginTransaction();
-//        select = "SELECT id, locationid, summary, userid, startDate, endDate, name FROM events WHERE userid = '" + userID + "';";
-//
-//        try{
-//            Connection dbConnect = tx.getConnection();
-//            CallableStatement call = dbConnect.prepareCall(select);
-//            ResultSet result = call.executeQuery();
-//            while(result.next()){
-//                int id = result.getInt("id");
-//                int locid = result.getInt("locationid");
-//                String sum = result.getString("summary");
-//                int userid = result.getInt("userid");
-//                Date strt = result.getDate("startDate");
-//                Date end = result.getDate("endDate");
-//                String name = result.getString("name");
-//
-//                Event event = new Event(id, locid, sum, userid, strt, end, name);
-//                matches.add(event);
-//            }
-//
-//        } catch (Exception e){
-//            Ebean.rollbackTransaction();
-//            e.printStackTrace();
-//        } finally {
-//            tx.end();
-//            Ebean.endTransaction();
-//        }
-//
-//
-//        //Events, will look like shit
-//        temp.setEvents(matches.toString());
+
+        List<Integer> eventIds = new ArrayList<Integer>();
+
+        tx = Ebean.beginTransaction();
+        select = "SELECT eventid FROM relations WHERE userid = '" + userID + "';";
+
+        try {
+            Connection dbConnect = tx.getConnection();
+            CallableStatement call = dbConnect.prepareCall(select);
+            ResultSet result = call.executeQuery();
+            while (result.next()) {
+                int eventID = result.getInt("eventid");
+                eventIds.add(eventID);
+            }
+
+        } catch (Exception e) {
+            Ebean.rollbackTransaction();
+            e.printStackTrace();
+        } finally {
+            tx.end();
+            Ebean.endTransaction();
+        }
+
+
+        ArrayList<String> events = new ArrayList<String>();
+
+        for (Integer eventIDS : eventIds) {
+
+            tx = Ebean.beginTransaction();
+            select = "SELECT name FROM events WHERE id = '" + eventIDS + "';";
+
+            try {
+                Connection dbConnect = tx.getConnection();
+                CallableStatement call = dbConnect.prepareCall(select);
+                ResultSet result = call.executeQuery();
+                while (result.next()) {
+                    String eventID = result.getString("name");
+                    events.add(eventID);
+                }
+
+            } catch (Exception e) {
+                Ebean.rollbackTransaction();
+                e.printStackTrace();
+            } finally {
+                tx.end();
+                Ebean.endTransaction();
+            }
+        }
+
+        temp.setEvents(events);
+        Logger.debug(events.toString());
+
+
 
         //gets location of user if location id was found
         if (locationId != -1) {

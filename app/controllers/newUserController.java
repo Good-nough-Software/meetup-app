@@ -1,12 +1,12 @@
 package controllers;
 
 import com.google.inject.Inject;
+import forms.loginForm;
+import forms.newUserForm;
 import io.ebean.Ebean;
 import io.ebean.SqlQuery;
 import io.ebean.SqlRow;
 import models.Search;
-import models.loginForm;
-import models.newUserForm;
 import org.apache.commons.codec.digest.DigestUtils;
 import play.Logger;
 import play.data.Form;

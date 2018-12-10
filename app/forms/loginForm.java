@@ -1,8 +1,4 @@
-package models;
-
-import play.data.validation.Constraints;
-
-import javax.persistence.Entity;
+package forms;
 
 /**
  * @author: Lucas Buccilli
@@ -11,12 +7,12 @@ import javax.persistence.Entity;
  * Project Name: meetup-app
  * File Name: loginForm
  */
-@Entity
+
 public class loginForm {
 
     public String username;
     public String password;
-  
+
 
     public String getUsername() {
         return username;
@@ -39,7 +35,7 @@ public class loginForm {
         this.password = password;
     }
 
-    public loginForm(){
+    public loginForm() {
         this.username = null;
         this.password = null;
     }

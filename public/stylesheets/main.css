@@ -112,15 +112,19 @@ body {
     margin: 10px auto;
 }
 
-.results-item {
+.event-container {
+    max-width: 900px;
+    margin: 15px;
+    margin-left: auto;
+    margin-right: auto;
     background-color: white;
     border-width: 1px;
     border-color: lightgrey;
-    padding: 5px;
+    padding: 12px;
     width: 100%;
 }
 
-.results-item button {
+.event-container button {
     float: right;
 }
 
@@ -242,6 +246,7 @@ textarea.addEventDescription {
 }
 
 footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
+    width: 100%;
 }

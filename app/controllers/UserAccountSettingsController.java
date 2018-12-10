@@ -1,8 +1,12 @@
 package controllers;
 
+import forms.loginForm;
+import forms.userAccountSettingsForm;
+import io.ebean.Ebean;
+import io.ebean.SqlQuery;
+import io.ebean.SqlRow;
+import io.ebean.Transaction;
 import models.Search;
-import models.loginForm;
-import models.userAccountSettingsForm;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
@@ -10,8 +14,6 @@ import play.mvc.Result;
 import views.html.viewUserAccountSettings;
 
 import javax.inject.Inject;
-
-import io.ebean.*;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
