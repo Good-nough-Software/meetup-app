@@ -32,6 +32,10 @@ public class LoginController extends Controller {
     FormFactory formFactory;
 
     public Result renderViewLogin() {
+        // if already logged in redirect
+        if (session().containsKey("username") && !session().get("username").equals("null")) {
+            return redirect("/");
+        }
         session("username", "null");
         session("resetCode", "");
         return ok(
