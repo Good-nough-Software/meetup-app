@@ -3,7 +3,7 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET         /                         controllers.LoginController.renderViewLogin
+GET         /                         controllers.HomeController.index
 GET         /home                     controllers.HomeController.index
 GET         /results                  controllers.HomeController.results
 
@@ -19,6 +19,8 @@ GET         /userAccount              controllers.UserAccountSettingsController.
 
 
 GET         /profile                  controllers.UserProfileController.renderViewUserProfile
+
+GET         /login                    controllers.LoginController.renderViewLogin
 
 GET         /logout                   controllers.LoginController.logout()
 
