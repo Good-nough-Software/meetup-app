@@ -1,5 +1,7 @@
 @(searchForm: Form[Search], events: List[models.Event])
 
+@import helper.form
+
 @viewMain("Results") {
     <div class="result-container">
 	@if(events.isEmpty()){
@@ -7,11 +9,11 @@
 	} else {
 	    @for(event <- events) {
 		<div class="event-container">
-		@if(session().containsKey("username")) {
-                    @if(!session().get("username").equals("null")) {
-			<form method="GET" action="/event">
+		@if(session().containsKey("username") &&
+		    !session().get("username").equals("null")) {
+		    @helper.form(routes.ViewEventController.viewEvent(event.id)) {
+			<input type="hidden" name="attend" value=@event.id>
 			<button value=@event.id>Attend Event!</button>
-			</form>
 		    }
 		}
 
@@ -23,4 +25,4 @@
 	    }
 	}
     </div>
-}(form)
+}(searchForm)
