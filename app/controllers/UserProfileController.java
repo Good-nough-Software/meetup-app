@@ -3,7 +3,6 @@ package controllers;
 import io.ebean.SqlQuery;
 import io.ebean.SqlRow;
 import models.Search;
-import forms.loginForm;
 import forms.userProfileForm;
 import io.ebean.Ebean;
 import io.ebean.Transaction;
@@ -30,13 +29,11 @@ public class UserProfileController extends Controller {
     @Inject
     FormFactory formFactory;
     public Result renderViewUserProfile(){
-        Form<userProfileForm> userProfileForm = formFactory.form(userProfileForm.class);
         return UserProfile(); //ok(views.html.viewUserProfile.render(userProfileForm,null,null,null, formFactory.form(Search.class)));
     }
 
     public Result UserProfile() {
         Form<userProfileForm> userProfileForm = formFactory.form(userProfileForm.class);
-        Form<loginForm> filledForm = formFactory.form(loginForm.class).bindFromRequest();
         String username = session("username");
 
         /*if(!filledForm.field("username").getValue().get().isEmpty()) {
@@ -124,34 +121,57 @@ public class UserProfileController extends Controller {
             Ebean.endTransaction();
         }
 
-        Transaction tx = Ebean.beginTransaction();
-        List<Event> matches = new ArrayList<>();
-        String select = "SELECT * FROM events WHERE userid = '"
-                + id + "';";
+        List<Integer> eids = new ArrayList<>();
+        Transaction tax = Ebean.beginTransaction();
+        String select2 = "SELECT eventid FROM relations WHERE userid = '" + id + "'";
 
-        try{
-            Connection dbConnect = tx.getConnection();
-            CallableStatement call = dbConnect.prepareCall(select);
+        try {
+            Connection dbConnect = tax.getConnection();
+            CallableStatement call = dbConnect.prepareCall(select2);
             ResultSet result = call.executeQuery();
             while(result.next()){
-                int id3 = result.getInt("id");
-                int locid = result.getInt("locationid");
-                String sum = result.getString("summary");
-                int userid = result.getInt("userid");
-                Date strt = result.getDate("startDate");
-                Date end = result.getDate("endDate");
-                String name2 = result.getString("name");
-
-                Event event = new Event(id3, locid, sum, userid, strt, end, name2);
-                matches.add(event);
+                int eid = result.getInt("eventid");
+                eids.add(eid);
             }
-
         } catch (Exception e){
             Ebean.rollbackTransaction();
             e.printStackTrace();
         } finally {
-            tx.end();
+            tax.end();
             Ebean.endTransaction();
+        }
+
+        List<Event> matches = new ArrayList<>();
+
+        for(int eid : eids) {
+            Transaction tx = Ebean.beginTransaction();
+            String select = "SELECT * FROM events WHERE id = '" + eid + "';";
+
+            try {
+                Connection dbConnect = tx.getConnection();
+
+                CallableStatement call2 = dbConnect.prepareCall(select);
+                ResultSet result = call2.executeQuery();
+                while (result.next()) {
+                    int id3 = result.getInt("id");
+                    int locid = result.getInt("locationid");
+                    String sum = result.getString("summary");
+                    int userid = result.getInt("userid");
+                    Date strt = result.getDate("startDate");
+                    Date end = result.getDate("endDate");
+                    String name2 = result.getString("name");
+
+                    Event event = new Event(id3, locid, sum, userid, strt, end, name2);
+                    matches.add(event);
+                }
+
+            } catch (Exception e) {
+                Ebean.rollbackTransaction();
+                e.printStackTrace();
+            } finally {
+                tx.end();
+                Ebean.endTransaction();
+            }
         }
 
 
@@ -164,9 +184,8 @@ public class UserProfileController extends Controller {
 
     public Result removeEvent(int eid){
         //int eid = Integer.parseInt(eventid);
-        Form<loginForm> filledForm = formFactory.form(loginForm.class).bindFromRequest();
 
-        int userid = Integer.parseInt(filledForm.field("userid").getValue().get());
+        int userid = Integer.parseInt(session("userid"));
 
         Transaction tx = Ebean.beginTransaction();
 

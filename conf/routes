@@ -42,13 +42,13 @@ POST        /createNewUser            controllers.newUserController.createNewUse
 
 POST        /UserAccountSettings      controllers.UserAccountSettingsController.UserAccountSettings()
 
-POST        /removeEvent/:eventid     controllers.UserProfileController.removeEvent(eventid: Integer)
+GET        /removeEvent/:eventid     controllers.UserProfileController.removeEvent(eventid: Integer)
 
 GET         /resetPassword            controllers.resetPasswordController.resetPassword()
 
 POST        /settings                 controllers.UserAccountSettingsController.UserAccountSettings()
 
-POST         /UserProfile              controllers.UserProfileController.UserProfile()
+POST        /UserProfile              controllers.UserProfileController.UserProfile()
 
 GET         /sendResetPassword        controllers.resetPasswordController.sendResetPassword()
 

@@ -27,8 +27,8 @@ public class User extends Model {
   public int Location;
 
   @ManyToOne
-  @JoinColumn(name="location")
-  public Location location;
+  @JoinColumn(name="locations")
+  public Location locations;
 
   public User(int ID, String uname, String pass, String utype, String mail, String nam, String phne, int loc){
     id = ID;
