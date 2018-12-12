@@ -3,45 +3,55 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET         /                           controllers.LoginController.renderViewLogin
-GET 	    /home		                controllers.HomeController.index
-GET 	    /results		            controllers.HomeController.results
+GET         /                         controllers.HomeController.index
+GET         /home                     controllers.HomeController.index
+GET         /results                  controllers.HomeController.results
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file             controllers.Assets.versioned(path="/public", file: Asset)
 
-GET         /viewNewUser                controllers.newUserController.renderViewNewUser
+GET         /newuser                  controllers.newUserController.renderViewNewUser
 
-GET         /viewResetPassword          controllers.resetPasswordController.renderViewResetPassword
+GET         /resetpassword            controllers.resetPasswordController.renderViewResetPassword
 
-GET         /viewUserAccountSettings    controllers.UserAccountSettingsController.renderViewUserAccountSettings
+GET         /viewUserAccountSettings  controllers.UserAccountSettingsController.renderViewUserAccountSettings
 
-GET         /UserAccountSettings        controllers.UserAccountSettingsController.UserAccountSettings
+GET         /UserAccountSettings      controllers.UserAccountSettingsController.UserAccountSettings
 
-GET         /viewUserProfile            controllers.UserProfileController.renderViewUserProfile
+GET         /userAccount              controllers.UserAccountSettingsController.renderViewUserAccountSettings
 
-GET         /logout                     controllers.LoginController.logout()
+GET         /viewUserProfile          controllers.UserProfileController.renderViewUserProfile
 
-GET         /test                       controllers.LoginController.test()
+GET         /logout                   controllers.LoginController.logout()
 
-GET         /debug                      controllers.debugController.main
+GET         /profile                  controllers.UserProfileController.renderViewUserProfile
 
-GET         /viewNewEvent               controllers.AddNewEventController.renderViewAddEvent()
+GET         /login                    controllers.LoginController.renderViewLogin
 
-GET         /viewNonUserProfile         controllers.nonCurrentUserProfileController.renderNonCurrentUserProfileView()
+GET         /test                     controllers.LoginController.test()
 
-POST        /login                      controllers.LoginController.login()
+GET         /debug                    controllers.debugController.main
 
-POST        /createNewUser              controllers.newUserController.createNewUser()
+GET         /newevent                 controllers.AddNewEventController.renderViewAddEvent()
 
-GET         /resetPassword              controllers.resetPasswordController.resetPassword()
+GET         /user/:userName           controllers.nonCurrentUserProfileController.renderNonCurrentUserProfileView(userName: String)
 
-POST        /UserAccountSettings        controllers.UserAccountSettingsController.UserAccountSettings()
+POST        /login                    controllers.LoginController.login()
 
-POST        /UserProfile                controllers.UserProfileController.UserProfile()
+POST        /createNewUser            controllers.newUserController.createNewUser()
 
-GET         /sendResetPassword          controllers.resetPasswordController.sendResetPassword()
+POST        /UserAccountSettings      controllers.UserAccountSettingsController.UserAccountSettings()
 
-POST        /addNewEvent                controllers.AddNewEventController.addNewEvent()
+POST        /removeEvent/:eventid     controllers.UserProfileController.removeEvent(eventid: Integer)
 
-POST        /removeEvent                controllers.UserProfileController.removeEvent(eid: Int)
+GET         /resetPassword            controllers.resetPasswordController.resetPassword()
+
+POST        /settings                 controllers.UserAccountSettingsController.UserAccountSettings()
+
+POST         /UserProfile              controllers.UserProfileController.UserProfile()
+
+GET         /sendResetPassword        controllers.resetPasswordController.sendResetPassword()
+
+POST        /addNewEvent              controllers.AddNewEventController.addNewEvent()
+
+GET         /event/:eventid           controllers.ViewEventController.viewEvent(eventid: Integer)

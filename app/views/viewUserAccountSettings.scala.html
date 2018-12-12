@@ -1,5 +1,7 @@
 @import helper._
-@(form: Form[userAccountSettingsForm], message: String, searchHeaderForm: Form[Search])
+@import forms.userAccountSettingsForm
+@(form: Form[userAccountSettingsForm], message: String)(searchHeaderForm: Form[Search])
+
 @viewMain("Account Settings") {
 
     @helper.form(routes.UserAccountSettingsController.UserAccountSettings()) {

@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 import io.ebean.Model;
 import io.ebean.Finder;
 
@@ -26,6 +27,7 @@ public class User extends Model {
   public int Location;
 
   @ManyToOne
+  @JoinColumn(name="location")
   public Location location;
 
   public User(int ID, String uname, String pass, String utype, String mail, String nam, String phne, int loc){

@@ -1,0 +1,53 @@
+@(search: Form[Search], event: models.Event, attendees: List[models.User])
+
+@import helper.form
+
+@viewMain("Event") {
+
+    <div class="event-container">
+
+	@helper.form(action = routes.ViewEventController.viewEvent(event.id)) {
+	    <input type="hidden" name="attend" value=@event.id>
+	    <button value=@event.id>Attend Event!</button>
+	}
+	<h1>@event.name</h1>
+	<p>@event.summary</p>
+
+	<h3>Happening at:</h3>
+	<ul>
+	    @if(!event.location.address.isEmpty()) {
+		<li>@event.location.address</li>
+	    }
+	    @if(!event.location.state.isEmpty()) {
+		<li>@event.location.state</li>
+	    }
+	    @if(!event.location.city.isEmpty()) {
+		<li>@event.location.city</li>
+	    }
+	    @if(!event.location.zip.isEmpty()) {
+		<li>@event.location.zip</li>
+	    }
+	    @if(!event.location.country.isEmpty()) {
+		<li>@event.location.country</li>
+	    }
+	</ul>
+
+	<h2>Attendees</h2>
+
+	    @if(attendees.isEmpty()) {
+		<h3>Be the first to attend this event!</h3>
+	    } else {
+		<ul>
+		@for(user <- attendees) {
+		    <li>
+		    <a href="/user/@user.username">
+		    @user.name
+		    </a>
+		    </li>
+		}
+		</ul>
+	    }
+
+    </div>
+
+}(search)

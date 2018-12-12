@@ -1,8 +1,8 @@
 package controllers;
 
 import com.google.inject.Inject;
+import forms.newEventForm;
 import models.Search;
-import models.newEventForm;
 import play.Logger;
 import play.data.Form;
 import play.data.FormFactory;
@@ -13,6 +13,8 @@ import views.html.viewAddEvent;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static play.mvc.Controller.flash;
 import static play.mvc.Controller.session;
@@ -46,9 +48,21 @@ public class AddNewEventController {
         String eventName = filledForm.get().getEventName();
         String eventDescription = filledForm.get().getEventDescription();
         String eventCreaterUsername = session().get("username");
-        String eventLocation = filledForm.get().getEventLocation();
+        String eventCountry = filledForm.get().getEventCountry();
+        if (eventCountry == null || eventCountry.isEmpty()) {
+            eventCountry = "United States";
+        }
+        String eventState = filledForm.get().getEventState();
+        String eventCity = filledForm.get().getEventCity();
+        String eventAddress = filledForm.get().getEventAddress();
+        String eventZip = filledForm.get().getEventZip();
+        Date startDate = filledForm.get().getStartDate();
+        Date endDate = filledForm.get().getEndDate();
 
-        String addUserSQLString  = "{call EventAdd('" + eventName + "','" + eventDescription + "','" + eventLocation + "','" + eventCreaterUsername  + "')}";
+        String startDateF = new SimpleDateFormat("yyyy-MM-dd").format(startDate);
+        String endDateF = new SimpleDateFormat("yyyy-MM-dd").format(endDate);
+
+        String addUserSQLString = "{call EventAdd('" + eventName + "','" + eventDescription + "','" + eventCountry + "','" + eventState + "','" + eventCity + "','" + eventZip + "','" + eventAddress + "','" + eventCreaterUsername + "','" + startDateF + "','" + endDateF + "')}";
 
         try {
             Connection con = db.getConnection();

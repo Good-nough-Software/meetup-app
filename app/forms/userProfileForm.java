@@ -1,11 +1,10 @@
-package models;
+package forms;
 
-import javax.persistence.Entity;
+import java.util.ArrayList;
 
-@Entity
 public class userProfileForm {
 
-    public String personal, home, events;
+    public String personal, home;
 
     public String username;
     public String password;
@@ -15,9 +14,22 @@ public class userProfileForm {
     public String phone;
     public int location;
     public String country, state, city, zip, address;
+    public ArrayList<String> events;
+
+    public String getEvents() {
+        if (events.isEmpty()) {
+            return "User is not attending any events!";
+        } else {
+            return events.toString().replace("[", "").replace("]", "");
+        }
+    }
+
+    public void setEvents(ArrayList<String> events) {
+        this.events = events;
+    }
 
     public String getCountry() {
-        if (country == null){
+        if (country == null) {
             return "Country";
         }
         return country;
@@ -29,7 +41,7 @@ public class userProfileForm {
 
 
     public String getState() {
-        if(state == null){
+        if (state == null) {
             return "State";
         }
         return state;
@@ -41,7 +53,7 @@ public class userProfileForm {
 
 
     public String getCity() {
-        if (city == null){
+        if (city == null) {
             return "City";
         }
         return city;
@@ -76,15 +88,6 @@ public class userProfileForm {
 
     public void setHome(String home) {
         this.home = home;
-    }
-
-
-    public String getEvents() {
-        return events;
-    }
-
-    public void setEvents(String events) {
-        this.events = events;
     }
 
 
@@ -134,7 +137,7 @@ public class userProfileForm {
 
 
     public String getName() {
-        if (name == null){
+        if (name == null) {
             return "Name";
         }
         return name;
@@ -163,13 +166,13 @@ public class userProfileForm {
     }
 
 
-    public userProfileForm(String personal, String home, String events){
+    public userProfileForm(String personal, String home, ArrayList<String> events){
         this.personal = personal;
         this.home = home;
         this.events = events;
     }
 
-    public userProfileForm(){
+    public userProfileForm() {
         this.personal = null;
         this.home = null;
         this.events = null;

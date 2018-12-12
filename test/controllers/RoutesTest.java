@@ -46,21 +46,14 @@ public class RoutesTest extends WithApplication {
 
         request = Helpers.fakeRequest()
                 .method(GET)
-                .uri("/viewNewUser");
+                .uri("/newuser");
 
         result = route(app, request);
         TestCase.assertEquals(200, result.status());
 
         request = Helpers.fakeRequest()
                 .method(GET)
-                .uri("/viewResetPassword");
-
-        result = route(app, request);
-        TestCase.assertEquals(200, result.status());
-
-        request = Helpers.fakeRequest()
-                .method(GET)
-                .uri("/");
+                .uri("/resetpassword");
 
         result = route(app, request);
         TestCase.assertEquals(200, result.status());
@@ -73,10 +66,6 @@ public class RoutesTest extends WithApplication {
         TestCase.assertEquals(200, result.status());
 
 
-
-        request = Helpers.fakeRequest()
-                .method(GET)
-                .uri("/viewResetPassword");
 
         result = route(app, request);
         TestCase.assertEquals(200, result.status());

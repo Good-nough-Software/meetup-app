@@ -24,7 +24,7 @@ public class LoginControllerTest extends WithApplication {
     public void testViewLogin() {
         Http.RequestBuilder request = new Http.RequestBuilder()
                 .method(GET)
-                .uri("/");
+                .uri("/login");
 
         Result result = route(app, request);
         assertEquals(OK, result.status());
@@ -86,6 +86,15 @@ public class LoginControllerTest extends WithApplication {
 
 
         assertEquals( "jsmith",sessionMap.get("username"));
+
+        request = new Http.RequestBuilder()
+                .method("GET")
+                .uri(controllers.routes.LoginController.logout().url());
+
+        request = CSRFTokenHelper.addCSRFToken(request);
+        result = route(request);
+
+        assertEquals(303, result.status());
 
         jsonNode = (new ObjectMapper()).readTree("{ \"username\": \"noone\", \"password\": \"password\"  }");
         request = new Http.RequestBuilder()
