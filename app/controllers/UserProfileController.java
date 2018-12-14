@@ -1,13 +1,12 @@
 package controllers;
 
 
-import forms.loginForm;
-import forms.userProfileForm;
 import forms.Search;
+import forms.userProfileForm;
 import io.ebean.Ebean;
 import io.ebean.Transaction;
-import models.Event;
-import models.Location;
+import play.Logger;
+import play.api.db.Database;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
@@ -15,51 +14,39 @@ import play.mvc.Result;
 import views.html.viewUserProfile;
 
 import javax.inject.Inject;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
 
 public class UserProfileController extends Controller {
+
+    int locationID = -1;
 
     @Inject
     FormFactory formFactory;
     public Result renderViewUserProfile(){
-        Form<userProfileForm> userProfileForm = formFactory.form(userProfileForm.class);
-        return ok(viewUserProfile.render(userProfileForm, null,"", formFactory.form(Search.class))); //TODO fix the null
-    }
 
-    public Result UserProfile() {
-        Form<userProfileForm> userProfileForm = formFactory.form(userProfileForm.class);
-        Form<loginForm> filledForm = formFactory.form(loginForm.class).bindFromRequest();
-        List<Location> locals = Location.find.all();
+        userProfileForm userProfileForm = new userProfileForm();
 
         Transaction tx = Ebean.beginTransaction();
 
-        List<Event> matches = new ArrayList<>();
+        String select = "SELECT email, name, phone, location FROM users WHERE username = '" + session().get("username") + "';";
 
-        String select = "SELECT id, locationid, summary, userid, startDate, endDate, name FROM events WHERE userid = '" + filledForm.get().getUsername() + "';";
+        Logger.debug(select);
+        userProfileForm.setUsername(session().get("username"));
 
-        try{
+        try {
             Connection dbConnect = tx.getConnection();
             CallableStatement call = dbConnect.prepareCall(select);
             ResultSet result = call.executeQuery();
-            while(result.next()){
-                int id = result.getInt("id");
-                int locid = result.getInt("locationid");
-                String sum = result.getString("summary");
-                int userid = result.getInt("userid");
-                Date strt = result.getDate("startDate");
-                Date end = result.getDate("endDate");
-                String name = result.getString("name");
+            while (result.next()) {
 
-                Event event = new Event(id, locid, sum, userid, strt, end, name);
-                matches.add(event);
+                userProfileForm.setName(result.getString("name"));
+                userProfileForm.setPhone(result.getString("phone"));
+                userProfileForm.setEmail(result.getString("email"));
+                locationID = result.getInt("location");
+                Logger.debug("Location ID from loading " + locationID);
             }
 
-        } catch (Exception e){
+        } catch (Exception e) {
             Ebean.rollbackTransaction();
             e.printStackTrace();
         } finally {
@@ -67,23 +54,215 @@ public class UserProfileController extends Controller {
             Ebean.endTransaction();
         }
 
-
-        return ok(viewUserProfile.render(userProfileForm, matches,"", formFactory.form(Search.class))); //TODO fix the error
-
-        /*
-        String locations = filledForm.field("locations").getValue().get();
-
-        return ok("Locations: " + locations);
-        */
-    /*
-        if (session().get("username").equals("null")) {
-            Form<userProfileForm> userProfileForm = formFactory.form(forms.userProfileForm.class);
-            return ok(viewUserProfile.render(userProfileForm, null, "Username Taken", formFactory.form(Search.class)));
-        } else {
-            return ok("Locations: " + locations);
+        if (locationID == -1) {
+            locationID = 0;
         }
 
-    */
+        tx = Ebean.beginTransaction();
+
+
+        select = "SELECT country, state, city, zip, address FROM locations WHERE id = '" + locationID + "';";
+
+        Logger.debug(select);
+        try {
+            Connection dbConnect = tx.getConnection();
+            CallableStatement call = dbConnect.prepareCall(select);
+            ResultSet result = call.executeQuery();
+            while (result.next()) {
+                userProfileForm.setAddress(result.getString("address"));
+                userProfileForm.setCountry(result.getString("country"));
+                userProfileForm.setState(result.getString("state"));
+                userProfileForm.setZip(result.getString("zip"));
+                userProfileForm.setCity(result.getString("city"));
+            }
+
+        } catch (Exception e) {
+            Ebean.rollbackTransaction();
+            e.printStackTrace();
+            flash("Message", e.getMessage());
+            return redirect(
+                    routes.UserProfileController.renderViewUserProfile()
+            );
+        } finally {
+            tx.end();
+            Ebean.endTransaction();
+        }
+        Logger.debug("Done Loading info");
+
+        Form<userProfileForm> form = formFactory.form(userProfileForm.class).fill(userProfileForm);
+
+        return ok(viewUserProfile.render(form, "", formFactory.form(Search.class)));
+    }
+
+
+    @Inject
+    Database db;
+
+    public Result UpdateUserProfile() {
+        Logger.debug("Starting update");
+
+
+        Connection conn = db.getConnection();
+
+        try {
+            PreparedStatement select = conn.prepareStatement(
+                    "SELECT location FROM users WHERE username = ?;"
+            );
+
+            select.setString(1, session().get("username"));
+            Logger.debug("Select" + select.toString());
+            ResultSet rs = select.executeQuery();
+            while (rs.next()) {
+                locationID = rs.getInt("location");
+            }
+        } catch (Exception e) {
+            Logger.debug(e.getMessage());
+            flash("Message", e.getMessage());
+            return redirect(
+                    routes.UserProfileController.renderViewUserProfile()
+            );
+        }
+
+        Logger.debug("Location Id start of execution " + locationID);
+        Form<userProfileForm> filledForm = formFactory.form(userProfileForm.class).bindFromRequest();
+        filledForm.get().setUsername(session().get("username"));
+
+//        UpdateUser
+//                (parameter_username varchar(32),
+//                        parameter_password varchar(40),
+//                        parameter_name varchar(32),
+//                        parameter_email varchar(32),
+//                        parameter_phone char(11))
+
+        //update users set password = parameter_password where users.username = parameter_username;
+
+        String addUserSQLString = "{call UpdateUser('" + filledForm.get().getUsername() + "','" + "','" + filledForm.get().getName() + "','" + filledForm.get().getEmail() + "','" + filledForm.get().getPhone() + "')}";
+
+        try {
+            Connection con = db.getConnection();
+            Logger.debug("Preparing call: " + addUserSQLString);
+            CallableStatement userAddQuery;
+            userAddQuery = con.prepareCall(addUserSQLString);
+            Logger.debug("Prepared: " + userAddQuery.toString());
+            userAddQuery.execute();
+            Logger.debug("Executed");
+
+        } catch (SQLException e) {
+            Logger.debug(e.getMessage());
+            flash("Message", "Error updating user");
+            return ok();
+        }
+
+        Logger.debug("LocationID " + Integer.toString(locationID));
+
+
+        //user does not have a location
+        if (locationID == 0) {
+
+            //insert into users (username, email, password, name) values(parameter_username, parameter_email, parameter_password, parameter_name);
+            //country VARCHAR(20),
+            //       state   VARCHAR(2),
+            //       city    VARCHAR(32),
+            //       zip     VARCHAR(9),
+            //       address VARCHAR(64),
+            try {
+
+//                //check if location exists
+//                PreparedStatement select = conn.prepareCall(
+//                        "SELECT id FROM locations WHERE country = ? AND state = ? AND city = ? AND zip = ? AND address = ? ;"
+//                );
+//
+//                select.setString(1, filledForm.get().getCountry());
+//                select.setString(2, filledForm.get().getState());
+//                select.setString(3, filledForm.get().getCity());
+//                select.setString(4, filledForm.get().getZip());
+//                select.setString(5, filledForm.get().getAddress());
+//                Logger.debug("Select" + select.toString());
+//                ResultSet rs = select.executeQuery();
+//                while (rs.next()) {
+//                    locationID = rs.getInt("id");
+//                    Logger.debug("Location Found at " + locationID);
+//                }
+//
+//                if(locationID == 0) {
+
+                PreparedStatement insert = conn.prepareStatement
+                        ("INSERT into locations (country, state, city, zip, address) values(?, ?, ?, ?, ?);");
+                insert.setString(1, filledForm.get().getCountry());
+                insert.setString(2, filledForm.get().getState());
+                insert.setString(3, filledForm.get().getCity());
+                insert.setString(4, filledForm.get().getZip());
+                insert.setString(5, filledForm.get().getAddress());
+                insert.execute();
+
+                PreparedStatement select = conn.prepareCall(
+                        "SELECT id FROM locations WHERE country = ? AND state = ? AND city = ? AND zip = ? AND address = ? ;"
+                );
+
+                select.setString(1, filledForm.get().getCountry());
+                select.setString(2, filledForm.get().getState());
+                select.setString(3, filledForm.get().getCity());
+                select.setString(4, filledForm.get().getZip());
+                select.setString(5, filledForm.get().getAddress());
+                Logger.debug("Select" + select.toString());
+                ResultSet rs = select.executeQuery();
+                while (rs.next()) {
+                    locationID = rs.getInt("id");
+                }
+
+
+                PreparedStatement update = conn.prepareCall(
+                        "UPDATE users SET location = ? WHERE username = ?;"
+                );
+                update.setInt(1, locationID);
+                update.setString(2, session().get("username"));
+                update.execute();
+
+
+            } catch (Exception e) {
+                Logger.debug(e.getMessage());
+                flash("Message", e.getMessage());
+                return redirect(
+                        routes.UserProfileController.renderViewUserProfile()
+                );
+
+            }
+
+        } else {
+            Logger.debug("User has location");
+            try {
+                PreparedStatement update = conn.prepareStatement
+                        ("UPDATE locations SET state = ?, city = ?, address = ?, zip = ?, country = ? WHERE id = ?;");
+
+                update.setString(1, filledForm.get().getState());
+                update.setString(2, filledForm.get().getCity());
+                update.setString(3, filledForm.get().getAddress());
+                update.setString(4, filledForm.get().getZip());
+                update.setString(5, filledForm.get().getCountry());
+                update.setInt(6, locationID);
+                Logger.debug(update.toString());
+                update.executeUpdate();
+
+            } catch (Exception e) {
+                Logger.debug(e.getMessage());
+                flash("Message", e.getMessage());
+                return redirect(
+                        routes.UserProfileController.renderViewUserProfile()
+                );
+
+            }
+
+        }
+
+
+        return redirect(
+                routes.UserProfileController.renderViewUserProfile()
+        );
+
+
+
+
+
 
     }
 }

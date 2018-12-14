@@ -1,24 +1,95 @@
 @import forms.userProfileForm
-@(form: Form[userProfileForm], events: List[models.Event], message: String)(searchHeaderForm: Form[forms.Search])
+@import views.html.helper.CSRF
+@(form: Form[userProfileForm], message: String)(searchHeaderForm: Form[forms.Search])
 
 @viewMain("Your Profile") {
 
-    <div class="result">
-
-        @if(events == null){
-            <h2>No results found ☹, please search and add a new location!</h2>
-        } else{
-            @for(event <- events){
-                <h3>My Events: </h3>
-                <ul>
-                <li>@event.name</li>
-                <li>@event.startDate</li>
-                <li>@event.endDate</li>
-                <li>@event.summary</li>
-                </ul>
+    @helper.form(routes.UserProfileController.UpdateUserProfile()) {
+        @CSRF.formField
+        @*
+        This creates the neceessary html to populate the fields of the loginForm
+        *@
+        <div class="loginPage">
+            <h1 class ="loginPage">Edit Profile</h1>
+            @if(flash.containsKey("Message")) {
+                <p class="Error">
+                @flash.get("Message")
+                </p>
             }
-        }
+
+            @helper.inputText(form("firstName"),
+                'required -> "required",
+                '_label -> "First Name",
+                'placeholder -> form.get().getFirstName,
+                'id -> "firstName",
+                'class -> "loginPage",
+                '_class -> "loginPage")
+            @helper.inputText(form("lastName"),
+                'required -> "required",
+                '_label -> "Last Name",
+                'placeholder -> form.get().getName,
+                'id -> "lastName",
+                'class -> "loginPage",
+                '_class -> "loginPage")
+            @helper.inputText(form("email"),
+                'required -> "required",
+                '_label -> "Email",
+                'placeholder -> form.get().getEmail,
+                'id -> "email",
+                'class -> "loginPage",
+                '_class -> "loginPage")
+            @helper.inputText(form("phone"),
+                'required -> "required",
+                '_label -> "Phone",
+                'placeholder -> form.get().getPhone,
+                'id -> "phone",
+                'class -> "loginPage",
+                '_class -> "loginPage")
+            @helper.inputText(form("state"),
+                'required -> "required",
+                '_label -> "State",
+                'placeholder -> form.get().getState,
+                'id -> "eventState",
+                'class -> "loginPage",
+                '_class -> "loginPage",
+                'size -> 2)
+            @helper.inputText(form("city"),
+                'required -> "required",
+                '_label -> "City",
+                'placeholder -> form.get().getCity,
+                'id -> "eventCity",
+                'class -> "loginPage",
+                '_class -> "loginPage")
+            @helper.inputText(form("address"),
+                'required -> "required",
+                '_label -> "Address",
+                'placeholder -> form.get().getAddress,
+                'id -> "eventAddress",
+                'class -> "loginPage",
+                '_class -> "loginPage")
+
+            @helper.inputText(form("zip"),
+                'required -> "required",
+                '_label -> "Zip Code",
+                'placeholder -> form.get().getZip,
+                'id -> "zip",
+                'class -> "loginPage",
+                '_class -> "loginPage")
+            @helper.inputText(form("country"),
+                'required -> "required",
+                '_label -> "Country",
+                'placeholder -> form.get().getCountry,
+                'id -> "country",
+                'class -> "loginPage",
+                '_class -> "loginPage")
+
+
+            <p>
+                <button class="loginPage" type="submit"><p class="buttonText">Update!</p></button>
+            </p>
+        </div>
 
     </div>
+    }
 
 }(searchHeaderForm)
