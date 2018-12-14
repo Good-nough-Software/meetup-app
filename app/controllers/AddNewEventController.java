@@ -34,6 +34,10 @@ public class AddNewEventController {
     FormFactory formFactory;
 
     public Result renderViewAddEvent() {
+        if (!session().containsKey("username") || session().get("username").equals("null")) {
+            return redirect("/login");
+        }
+
         Result ok = ok(
                 viewAddEvent.render(formFactory.form(newEventForm.class),(formFactory.form(Search.class)))
         );
