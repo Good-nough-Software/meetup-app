@@ -58,12 +58,9 @@ public class nonCurrentUserProfileControllerTest extends WithApplication {
     public void testTwo() throws Exception {
 
 
-        JsonNode jsonNode = (new ObjectMapper()).readTree("{ \"nonUserProfileUsername\": \"jdoe\" }");
-
-
         Http.RequestBuilder request = new Http.RequestBuilder()
                 .method(GET)
-                .uri("/user/hagfkafg");
+                .uri("/user/jdoe");
 
 
         Result result = route(app, request);
