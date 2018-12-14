@@ -15,30 +15,30 @@ import io.ebean.Finder;
 @Table(name="users")
 public class User extends Model {
 
-  @Id
-  public int id;
+    @Id
+    public int id;
 
-  public String username;
-  public String password;
-  public String usertype;
-  public String email;
-  public String name;
-  public String phone;
+    public String username;
+    public String password;
+    public String usertype;
+    public String email;
+    public String name;
+    public String phone;
 
-  @ManyToOne
-  @JoinColumn(name="location")
-  public Location location;
+    @ManyToOne
+    @JoinColumn(name="location")
+    public Location location;
 
-  public static final Finder<Integer, User> find = new Finder<>(User.class);
+    public static final Finder<Integer, User> find = new Finder<>(User.class);
 
-  public boolean equals(User other) {
-    if (this.id == other.id) {
-      return true;
+    public boolean equals(User other) {
+        if (this.id == other.id) {
+            return true;
+        }
+        return false;
     }
-    return false;
-  }
 
-  public String toString() {
-    return username + "\n" + password + " " + usertype + " " + email + "\n" + phone;
-  }
+    public String toString() {
+        return username + "\n" + password + " " + usertype + " " + email + "\n" + phone;
+    }
 }
