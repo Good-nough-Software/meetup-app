@@ -31,6 +31,9 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result index() {
+        if (!session().containsKey("username")){
+            session("username", "null");
+        }
         Form<Search> form = formFactory.form(Search.class);
         return ok(views.html.index.render(form));
     }
