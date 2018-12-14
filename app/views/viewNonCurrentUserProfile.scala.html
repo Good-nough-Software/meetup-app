@@ -1,15 +1,26 @@
 @import forms.userProfileForm
-@(form: userProfileForm)(searchHeaderForm: Form[forms.Search])
+@(user: models.User, events: List[models.Event])(searchHeaderForm: Form[forms.Search])
 
-@viewMain(form.getName + "'s Profile") {
+@viewMain(user.name + "'s Profile") {
 
+    <div class="event-container">
     <table>
-        <tr><td>Name: @form.getName</td></tr>
-        <tr><td>Email: @form.getEmail</td></tr>
-        <tr><td>Phone: @form.getPhone</td></tr>
-        <tr><td>Location: @form.getCountry, @form.getCity, @form.getAddress, @form.getZip</td></tr>
-        <tr><td>Events: @form.getEvents</td></tr>
-
+        <tr><td>Name: @user.name</td></tr>
+        <tr><td>Email: @user.email</td></tr>
+	@if(user.phone != null) {
+            <tr><td>Phone: @user.phone</td></tr>
+	    }
+	@if(user.location != null) {
+            <tr><td>Location: @user.location.country, @user.location.city, @user.location.address, @user.location.zip</td></tr>
+	    }
     </table>
+
+    <h3>Events attending: </h3>
+    <ul>
+	@for(event <- events) {
+	    <li><a href="/event/@event.id">@event.name</a></li>
+	}
+    </ul>
+    </div>
 
 }(searchHeaderForm)

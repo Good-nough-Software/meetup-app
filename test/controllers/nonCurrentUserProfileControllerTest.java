@@ -44,13 +44,15 @@ public class nonCurrentUserProfileControllerTest extends WithApplication {
 
         Result result = route(app, request);
 
+        assertEquals(OK, result.status());
+
         assertTrue(contentAsString(result).contains("Name: John Smith"));
 
         assertTrue(contentAsString(result).contains("Email: jsmith@gmail.com"));
 
         assertTrue(contentAsString(result).contains("Phone: 12311234567"));
 
-        assertTrue(contentAsString(result).contains("Location: United States, Houghton, 1701 Woodland rd, 49931"));
+        assertTrue(contentAsString(result).contains("Location: United States, Hancock, 1701 Woodland rd, 49931"));
 
     }
 
@@ -58,12 +60,9 @@ public class nonCurrentUserProfileControllerTest extends WithApplication {
     public void testTwo() throws Exception {
 
 
-        JsonNode jsonNode = (new ObjectMapper()).readTree("{ \"nonUserProfileUsername\": \"jdoe\" }");
-
-
         Http.RequestBuilder request = new Http.RequestBuilder()
                 .method(GET)
-                .uri("/user/hagfkafg");
+                .uri("/user/jdoe");
 
 
         Result result = route(app, request);
