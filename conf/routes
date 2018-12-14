@@ -18,7 +18,7 @@ GET         /resetpassword            controllers.resetPasswordController.render
 GET         /userAccount              controllers.UserAccountSettingsController.renderViewUserAccountSettings
 
 
-GET         /profile                  controllers.UserProfileController.renderViewUserProfile
+GET         /profile                  controllers.nonCurrentUserProfileController.renderProfile
 
 GET         /login                    controllers.LoginController.renderViewLogin
 
