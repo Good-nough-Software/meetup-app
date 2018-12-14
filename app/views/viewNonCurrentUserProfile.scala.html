@@ -3,6 +3,7 @@
 
 @viewMain(user.name + "'s Profile") {
 
+    <div class="event-container">
     <table>
         <tr><td>Name: @user.name</td></tr>
         <tr><td>Email: @user.email</td></tr>
@@ -18,6 +19,6 @@
 	    <li><a href="/event/@event.id">@event.name</a></li>
 	}
     </ul>
-
+    </div>
 
 }(searchHeaderForm)
