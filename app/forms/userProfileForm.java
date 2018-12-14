@@ -5,15 +5,17 @@ import java.util.ArrayList;
 public class userProfileForm {
 
 
-    public String username;
-    public String password;
-    public String usertype;
-    public String email;
-    public String name;
-    public String phone;
-    public int location;
+    public String username = "";
+    public String password = "";
+    public String usertype = "";
+    public String email = "";
+    public String name = "";
+    public String phone = "";
+    public int location = 0;
     public String country, state, city, zip, address;
     public ArrayList<String> events;
+    public String firstName = "";
+    public String lastName = "";
 
     public String getEvents() {
         if (events.isEmpty()) {
@@ -40,7 +42,7 @@ public class userProfileForm {
 
     public String getState() {
         if (state == null) {
-            return "State";
+            return "NA";
         }
         return state;
     }
@@ -61,6 +63,9 @@ public class userProfileForm {
     }
 
     public String getZip() {
+        if (zip == null) {
+            return "Zip";
+        }
         return zip;
     }
 
@@ -69,6 +74,9 @@ public class userProfileForm {
     }
 
     public String getAddress() {
+        if (address == null) {
+            return "Address";
+        }
         return address;
     }
 
@@ -78,6 +86,9 @@ public class userProfileForm {
 
 
     public String getUsername() {
+        if (username == null) {
+            return "Username";
+        }
         return username;
     }
 
@@ -109,18 +120,44 @@ public class userProfileForm {
         this.email = email;
     }
 
+    public String getFirstName() {
+        if (firstName == null) {
+            return "FirstName";
+        }
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        if (lastName == null) {
+            return "LastName";
+        }
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getName() {
         if (name == null) {
             return "Name";
         }
-        return name;
+        return getFirstName() + " " + getLastName();
     }
 
     public void setName(String name) {
-        this.name = name;
+        setFirstName(name.substring(0, name.indexOf(" ")));
+        setLastName(name.substring(name.indexOf(" ") + 1));
     }
 
     public String getPhone() {
+        if (phone == null) {
+            return "Phone";
+        }
         return phone;
     }
 
