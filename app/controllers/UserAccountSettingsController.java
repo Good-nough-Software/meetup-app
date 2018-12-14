@@ -29,11 +29,11 @@ public class UserAccountSettingsController extends Controller {
             return redirect("/login");
         }
 
-        User user = User.find.byId(Integer.parseInt(session().get("userid")));
+        // User user = User.find.byId(Integer.parseInt(session().get("userid")));
 
 
         Form<userAccountSettingsForm> userAccountSettingsForm = formFactory.form(userAccountSettingsForm.class);
-        return ok(viewUserAccountSettings.render(userAccountSettingsForm, user, "", formFactory.form(Search.class)));
+        return ok(viewUserAccountSettings.render(userAccountSettingsForm, "", formFactory.form(Search.class)));
     }
 
     public Result UserAccountSettings() {
