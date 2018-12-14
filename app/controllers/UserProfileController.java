@@ -118,6 +118,9 @@ public class UserProfileController extends Controller {
         } catch (Exception e) {
             Logger.debug(e.getMessage());
             flash("Message", e.getMessage());
+            try {
+                conn.close();
+            }catch (Exception f){}
             return redirect(
                     routes.UserProfileController.renderViewUserProfile()
             );
@@ -150,8 +153,12 @@ public class UserProfileController extends Controller {
         } catch (SQLException e) {
             Logger.debug(e.getMessage());
             flash("Message", "Error updating user");
+            try {
+                conn.close();
+            }catch (Exception n){}
             return ok();
         }
+
 
         Logger.debug("LocationID " + Integer.toString(locationID));
 
@@ -222,6 +229,9 @@ public class UserProfileController extends Controller {
             } catch (Exception e) {
                 Logger.debug(e.getMessage());
                 flash("Message", e.getMessage());
+                try {
+                    conn.close();
+                }catch (Exception n){}
                 return redirect(
                         routes.UserProfileController.renderViewUserProfile()
                 );
@@ -246,13 +256,20 @@ public class UserProfileController extends Controller {
             } catch (Exception e) {
                 Logger.debug(e.getMessage());
                 flash("Message", e.getMessage());
+                try {
+                    conn.close();
+                }catch (Exception n){}
                 return redirect(
                         routes.UserProfileController.renderViewUserProfile()
                 );
 
             }
 
+
         }
+        try {
+            conn.close();
+        }catch (Exception e){}
 
 
         return redirect(

@@ -245,6 +245,10 @@ textarea.addEventDescription {
     height: 150px;
 }
 
+p.Error{
+    text-align: center;
+}
+
 footer {
     position: fixed;
     bottom: 0;

@@ -4,7 +4,7 @@
 
 @viewMain("Your Profile") {
 
-    @helper.form(routes.UserProfileController.UpdateUserProfile()) {
+    @helper.form(routes.UserProfileController.UpdateUserProfile() ){
         @CSRF.formField
         @*
         This creates the neceessary html to populate the fields of the loginForm
