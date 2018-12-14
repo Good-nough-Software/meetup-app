@@ -75,10 +75,8 @@ public class newUserController extends Controller {
                 Logger.debug("Prepared: " + userAddQuery.toString()) ;
                 userAddQuery.execute();
                 Logger.debug("Executed");
-                //set username to user
-                session("username", username);
                 return redirect(
-                        routes.HomeController.index()
+                        routes.LoginController.renderViewLogin()
                 );
 
             } catch (SQLException e) {
