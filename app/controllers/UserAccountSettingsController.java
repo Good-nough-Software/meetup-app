@@ -24,6 +24,10 @@ public class UserAccountSettingsController extends Controller {
     @Inject
     FormFactory formFactory;
     public Result renderViewUserAccountSettings(){
+        if (!session().containsKey("username") || session().get("username").equals("null") || !session().containsKey("userid")) {
+            return redirect("/login");
+        }
+
         Form<userAccountSettingsForm> userAccountSettingsForm = formFactory.form(userAccountSettingsForm.class);
         return ok(viewUserAccountSettings.render(userAccountSettingsForm, "", formFactory.form(Search.class)));
     }
