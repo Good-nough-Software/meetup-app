@@ -17,6 +17,7 @@ GET         /resetpassword            controllers.resetPasswordController.render
 
 GET         /userAccount              controllers.UserAccountSettingsController.renderViewUserAccountSettings
 
+GET         /userProfile              controllers.UserProfileController.renderViewUserProfile
 
 GET         /profile                  controllers.nonCurrentUserProfileController.renderProfile
 
@@ -41,7 +42,7 @@ GET         /resetPassword            controllers.resetPasswordController.resetP
 
 POST        /settings                 controllers.UserAccountSettingsController.UserAccountSettings()
 
-POST        /UserProfile              controllers.UserProfileController.UserProfile()
+POST        /updateProfile              controllers.UserProfileController.UpdateUserProfile
 
 GET         /sendResetPassword        controllers.resetPasswordController.sendResetPassword()
 
