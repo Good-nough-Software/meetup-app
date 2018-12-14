@@ -12,6 +12,7 @@ import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.viewUserAccountSettings;
+import models.User;
 
 import javax.inject.Inject;
 import java.sql.CallableStatement;
@@ -28,8 +29,11 @@ public class UserAccountSettingsController extends Controller {
             return redirect("/login");
         }
 
+        User user = User.find.byId(Integer.parseInt(session().get("userid")));
+
+
         Form<userAccountSettingsForm> userAccountSettingsForm = formFactory.form(userAccountSettingsForm.class);
-        return ok(viewUserAccountSettings.render(userAccountSettingsForm, "", formFactory.form(Search.class)));
+        return ok(viewUserAccountSettings.render(userAccountSettingsForm, user, "", formFactory.form(Search.class)));
     }
 
     public Result UserAccountSettings() {
@@ -41,7 +45,7 @@ public class UserAccountSettingsController extends Controller {
         String email = filledForm.field("email").getValue().get();
         String phone = filledForm.field("phone").getValue().get();
 
-      
+
         Transaction tx = Ebean.beginTransaction();
 
         String call = "CALL UPDATE_USER(?, ?, ?, ?, ?)";
